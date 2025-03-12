@@ -65,75 +65,24 @@ function setupSectionAnimations() {
     });
 }
 
-
-// Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     // Add skills to the skills container
     const skillsContainer = document.getElementById('skills-container');
     if (skillsContainer) {
-        skills.forEach(skill => {
-            const skillElement = document.createElement('div');
-            skillElement.className = 'skill-tag';
-            skillElement.innerHTML = `
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="${skill.svgPath}" fill="${skill.color}"/>
-                </svg>
-                ${skill.name}
-            `;
-            skillsContainer.appendChild(skillElement);
-        });
+      skills.forEach(skill => {
+        const skillElement = document.createElement('div');
+        skillElement.className = 'skill-tag';
+        
+        // Define which logos need an outline (white drop-shadow)
+        const outlineSkills = ["Node.js", "Express.js", "Next.js"];
+        const imgClass = outlineSkills.includes(skill.name) ? 'skill-logo outline' : 'skill-logo';
+        
+        skillElement.innerHTML = `
+          <img src="${skill.logoUrl}" width="16" height="16" alt="${skill.name} logo" class="${imgClass}" style="vertical-align:middle; margin-right:4px;"/>
+          ${skill.name}
+        `;
+        skillsContainer.appendChild(skillElement);
+      });
     }
-
-    // Add recent projects (No longer needed on homepage)
-    // const recentProjects = document.getElementById('recent-projects');
-    // if (recentProjects) {
-    //     // Show only 2 most recent projects
-    //     projects.slice(0, 2).forEach(project => {
-    //         const projectElement = document.createElement('div');
-    //         projectElement.className = 'work-item';
-
-    //         let websiteLink = '';
-    //         if (project.website) {
-    //             websiteLink = `
-    //                 <div class="work-links">
-    //                     <a href="${project.website}" class="work-link">
-    //                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    //                             <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
-    //                             <path d="M12 8L8 12L12 16L16 12L12 8Z" fill="currentColor"/>
-    //                         </svg>
-    //                         Website
-    //                     </a>
-    //                 </div>
-    //             `;
-    //         }
-
-    //         projectElement.innerHTML = `
-    //             <div class="work-title">
-    //                 <span>${project.title}</span>
-    //             </div>
-    //             <p class="work-description">${project.description}</p>
-    //             ${websiteLink}
-    //         `;
-
-    //         recentProjects.appendChild(projectElement);
-    //     });
-    // }
-
-    // Add recent blog posts (No longer needed on homepage)
-    // const recentPosts = document.getElementById('recent-posts');
-    // if (recentPosts) {
-    //     // Show only 2 most recent posts
-    //     blogPosts.slice(0, 2).forEach(post => {
-    //         const postElement = document.createElement('div');
-    //         postElement.className = 'blog-post';
-    //         postElement.innerHTML = `
-    //             <h3 class="blog-title"><a href="pages/writings.html#${post.slug}">${post.title}</a></h3>
-    //             <span class="blog-date">${post.date}</span>
-    //         `;
-    //         recentPosts.appendChild(postElement);
-    //     });
-    // }
-
-
-    setupSectionAnimations(); // Initialize scroll-in section animations
-});
+  });
+  

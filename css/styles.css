@@ -550,7 +550,9 @@ a:hover::after {
     margin-top: 25px; /* Reduced top margin */
     margin-bottom: 30px; /* Reduced bottom margin */
 }
-
+.skill-logo.outline {
+    filter: drop-shadow(0 0 2px #fff);
+  }
 .social-link {
     display: inline-block;
     color: var(--secondary-color);
