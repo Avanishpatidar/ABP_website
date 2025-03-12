@@ -1,27 +1,30 @@
-// Array of projects
 const projects = [
     {
-        title: "Plant Disease Detection (50+ users)",
-        description: "A machine learning model for plant disease detection using Convolutional Neural Networks (CNNs). Provides solutions for detected diseases, including fertilizer and organic treatment recommendations.",
-        website: "#",
+        title: "Aradhya Manpower Supplier",
+        description: "An official company website built using React.js and Vercel for CMS. Developed career and contact pages with SMTP server integration for handling inquiries.",
+        website: "https://www.aradhyamanpowersupplier.com/",
+        github: "https://github.com/aradhyamanpowersolutions/website",
         featured: true
     },
     {
-        title: "News Aggregator (35+ users)",
-        description: "A news application with server-side using Node.js and Express.js, integrated with the News API to fetch and display news articles. Implements category selection for countries and news interests.",
-        website: "#",
-        featured: true
-    },
-    {
-        title: "AI-Pharma (20+ users)",
-        description: "A Node.js and Express.js server that fetches data from the Gemini API for generating content. Users can input the name of a medicine and receive information on 14 parameters, including composition, side effects, benefits, dosage, and alternative remedies.",
-        website: "#",
-        featured: true
-    },
-    {
-        title: "Ypsilon IT Solution Internship",
-        description: "Internship focused on Python programming and Django. Worked on projects for course management, developed backend functionalities, integrated APIs, and ensured code quality and security.",
+        title: "IPL Chatbot",
+        description: "A chatbot designed to provide IPL statistics from 2008 to 2024, fetching ball-by-ball and match data. Uses PostgreSQL and FastAPI for the backend, with a React frontend.",
         website: null,
-        featured: false
+        github: "https://github.com/Avanishpatidar/ipl-chatbot",
+        featured: true
+    },
+    {
+        title: "AI-Pharma",
+        description: "An AI-powered chatbot using the MERN stack and Gemini API to fetch medicine-related data across 14 parameters, including composition, side effects, and alternatives.",
+        website: "https://ai-pharma.vercel.app/",
+        github: "https://github.com/Avanishpatidar/AI_PHARMA",
+        featured: true
+    },
+    {
+        title: "News Aggregator",
+        description: "A news application that aggregates headlines from multiple sources across different countries. Built with React, integrated with News API.",
+        website: "https://news-aggregator-xts7.vercel.app/",
+        github: "https://github.com/Avanishpatidar/news-aggregator",
+        featured: true
     }
 ];
