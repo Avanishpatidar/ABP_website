@@ -564,7 +564,7 @@ a:hover::after {
 }
 
 .social-link::after {
-    display: none;
+    color: var(--primary-color);
 }
 
 /* Media queries */
