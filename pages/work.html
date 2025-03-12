@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Work - Avanish Patidar</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">about</a>
+                <a href="work.html" class="nav-link active">work</a>
+                <a href="writings.html" class="nav-link">writings</a>
+            </nav>
+        </div>
+
+        <div class="content">
+            <section id="work" class="section">
+                <h1 class="section-title">My Work</h1>
+                <p class="section-text">
+                    A showcase of my projects and contributions in software development, machine learning, and web technologies.
+                </p>
+
+                <div id="projects-container">
+                    </div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../data/projects.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const projectsContainer = document.getElementById('projects-container');
+
+            projects.forEach(project => {
+                const projectElement = document.createElement('div');
+                projectElement.className = 'work-item';
+
+                let websiteLink = '';
+                if (project.website) {
+                    websiteLink = `
+                        <div class="work-links">
+                            <a href="${project.website}" class="work-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 20C7.59 20 4 16.41 4 12C4 7.59 7.59 4 12 4C16.41 4 20 7.59 20 12C20 16.41 16.41 20 12 20Z" fill="currentColor"/>
+                                    <path d="M12 8L8 12L12 16L16 12L12 8Z" fill="currentColor"/>
+                                </svg>
+                                Website
+                            </a>
+                        </div>
+                    `;
+                }
+
+                projectElement.innerHTML = `
+                    <div class="work-title">
+                        <span>${project.title}</span>
+                        </div>
+                    <p class="work-description">${project.description}</p>
+                    ${websiteLink}
+                `;
+
+                projectsContainer.appendChild(projectElement);
+            });
+             // Initialize section animations (if needed on this page)
+            // setupSectionAnimations(); // You can call setupSectionAnimations here if you want animations on the work page sections too
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Writings - Avanish Patidar</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    </head>
+<body>
+    <div class="container">
+        <div class="sidebar">
+            <nav class="nav">
+                <a href="../index.html" class="nav-link">about</a>
+                <a href="work.html" class="nav-link">work</a>
+                <a href="writings.html" class="nav-link active">writings</a>
+            </nav>
+        </div>
+
+        <div class="content">
+            <section id="writings" class="section">
+                <h1 class="section-title">Blogs</h1>
+                <p class="section-text">
+                    A collection of my thoughts, tutorials, and insights on technology,
+                    programming, and machine learning.
+                </p>
+
+                <div id="blog-posts-container">
+                    </div>
+            </section>
+            <section id="blog-content" class="section" style="display: none;">
+                <div id="post-content"></div>
+            </section>
+        </div>
+    </div>
+
+    <script src="../blog/blog-list.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/main.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const blogPostsContainer = document.getElementById('blog-posts-container');
+            const blogContent = document.getElementById('blog-content');
+            const postContent = document.getElementById('post-content');
+            const backToPostsBtn = document.getElementById('back-to-posts');
+
+            // Display all blog posts
+            blogPosts.forEach(post => {
+                const postElement = document.createElement('div');
+                postElement.className = 'blog-post';
+                postElement.innerHTML = `
+                    <h3 class="blog-title"><a href="#" data-slug="${post.slug}">${post.title}</a></h3>
+                    <span class="blog-date">${post.date}</span>
+                `;
+                blogPostsContainer.appendChild(postElement);
+            });
+
+            // Add event listeners to blog post titles
+            document.querySelectorAll('.blog-title a').forEach(link => {
+                link.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    const slug = e.target.dataset.slug;
+                    const post = blogPosts.find(p => p.slug === slug);
+
+                    try {
+                        const response = await fetch(`../blog/posts/${slug}.md`); // Correct path to blog posts
+                        const markdown = await response.text();
+
+                        // Use marked.js to convert markdown to HTML
+                        postContent.innerHTML = `
+                            <h1 class="section-title glow-text">${post.title}</h1> <!- Apply glow to blog post titles -->
+                            <p class="blog-date">${post.date}</p>
+                            <div class="blog-content">
+                                ${marked.parse(markdown)}
+                            </div>
+                        `;
+                        // Hide posts list, show content
+                        document.getElementById('writings').style.display = 'none';
+                        blogContent.style.display = 'block';
+
+                        // Update page title
+                        document.title = `${post.title} - Avanish Patidar`;
+
+                        // **Add copy buttons to code blocks after content is loaded**
+                        addCopyButtonsToCodeBlocks(); // Call the function here!
+
+
+                    } catch (error) {
+                        console.error('Error loading blog post:', error);
+                    }
+                });
+            });
+
+            // Back button functionality
+            backToPostsBtn.addEventListener('click', (e) => {
+                e.preventDefault();
+
+                document.getElementById('writings').style.display = 'block';
+                blogContent.style.display = 'none';
+                document.title = 'Writings - Avanish Patidar';
+            });
+
+            // Initialize section animations (if needed on this page)
+            // setupSectionAnimations(); // You can call setupSectionAnimations here if you want animations on the writings page sections too
+        });
+    </script>
+</body>
+</html>
