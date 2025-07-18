@@ -26,14 +26,74 @@
     --button-hover-shadow: 0 0 15px rgba(102, 204, 255, 0.4); /* Button hover shadow */
 }
 
+/* --- UI/UX ENHANCEMENTS --- */
+
+/* Dark theme */
+.dark-theme {
+  --primary-color: #e0e0e0;
+  --secondary-color: #bbbbbb;
+  --accent-color: #66ccff;
+  --bg-color: #10131a;
+  --card-bg-color: rgba(30, 34, 44, 0.85);
+  --glow-color: rgba(102, 204, 255, 0.3);
+  --button-bg: rgba(102, 204, 255, 0.10);
+  --button-hover-bg: #66ccff;
+  --button-border: 1px solid rgba(102, 204, 255, 0.2);
+  --button-hover-shadow: 0 0 15px rgba(102, 204, 255, 0.3);
+  --code-bg-color: #23263a;
+  --code-text-color: #e0e0e0;
+  --code-accent-color: #8be9fd;
+  --code-comment-color: #6272a4;
+}
+
 body {
-    background-color: var(--bg-color);
-    color: var(--primary-color);
-    padding: 20px;
-    max-width: 1200px;
-    margin: 0 auto;
-    line-height: 1.6;
-    transition: background-color 0.3s ease;
+  background: linear-gradient(135deg, #0f2027 0%, #203a43 50%, #2c5364 100%);
+}
+
+/* Glassmorphism for cards */
+.section, .work-item, .blog-post, .about-content {
+  background: rgba(30, 34, 44, 0.7);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.18);
+  backdrop-filter: blur(8px);
+  border-radius: 18px;
+  border: 1px solid rgba(102, 204, 255, 0.08);
+}
+
+/* Enhanced fadeInSection */
+.fadeInSection {
+  opacity: 1 !important;
+  transform: translateY(0) scale(1.03);
+  transition: opacity 0.8s cubic-bezier(0.23, 1, 0.32, 1), transform 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+/* Nav hover animation */
+.nav-hover-animate {
+  animation: navPulse 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes navPulse {
+  0% { transform: scale(1); box-shadow: none; }
+  50% { transform: scale(1.08); box-shadow: 0 0 12px var(--accent-color); }
+  100% { transform: scale(1); box-shadow: none; }
+}
+
+/* Pop/bounce for skill tags */
+.pop-animate {
+  animation: popBounce 0.35s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@keyframes popBounce {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+  100% { transform: scale(1); }
+}
+
+/* Loader background for dark mode */
+.dark-theme .loader-container {
+  background-color: #10131a;
+}
+
+/* Loader accent for dark mode */
+.dark-theme .loader {
+  border-top: 3px solid #66ccff;
 }
 
 a {
