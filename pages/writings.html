@@ -5,42 +5,44 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Writings - Avanish Patidar</title>
     <link rel="stylesheet" href="../css/styles.css">
-    </head>
+    <meta name="description" content="Read Avanish Patidar's thoughts, tutorials, and insights on technology, programming, and development.">
+</head>
 <body>
     <div id="loader" class="loader-container">
         <div class="loader"></div>
     </div>
+    
     <div class="container">
-        <div class="sidebar">
+        <aside class="sidebar">
             <nav class="nav">
-                <a href="../index.html" class="nav-link">about</a>
-                <a href="work.html" class="nav-link">work</a>
-                <a href="writings.html" class="nav-link active">writings</a>
+                <a href="../index.html" class="nav-link">About</a>
+                <a href="work.html" class="nav-link">Work</a>
+                <a href="writings.html" class="nav-link active">Writings</a>
             </nav>
-        </div>
+        </aside>
 
-        <div class="content">
+        <main class="content">
             <section id="writings" class="section">
-                <h1 class="section-title">Blogs</h1>
+                <h1 class="section-title text-gradient">My Writings</h1>
                 <p class="section-text">
-                    A collection of my thoughts, tutorials, and insights on technology,
-                    programming and fun :)
+                    A collection of my thoughts, tutorials, and insights on technology, programming, and development. Sharing knowledge and experiences from my journey as a developer.
                 </p>
 
                 <div id="blog-posts-container">
-                    </div>
+                    <!-- Blog posts will be populated by JavaScript -->
+                </div>
             </section>
+            
             <section id="blog-content" class="section" style="display: none;">
-                <div id="post-content"></div>
+                <div id="post-content">
+                    <!-- Individual blog post content will be loaded here -->
+                </div>
             </section>
-        </div>
+        </main>
     </div>
 
-    <script src="../blog/blog-list.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-    <script src="../js/main.js"></script>
     <button class="theme-toggle" id="theme-toggle" aria-label="Toggle theme">
-        <svg id="theme-icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <svg id="theme-icon" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <circle cx="12" cy="12" r="5"></circle>
             <path d="M12 1v2"></path>
             <path d="M12 21v2"></path>
@@ -52,20 +54,27 @@
             <path d="M18.36 5.64l1.42-1.42"></path>
         </svg>
     </button>
+
+    <script src="../blog/blog-list.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script src="../js/main.js"></script>
     <script src="../js/ui-enhancements.js"></script>
+    
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const blogPostsContainer = document.getElementById('blog-posts-container');
             const blogContent = document.getElementById('blog-content');
             const postContent = document.getElementById('post-content');
-            const backToPostsBtn = document.getElementById('back-to-posts');
 
             // Display all blog posts
-            blogPosts.forEach(post => {
+            blogPosts.forEach((post, index) => {
                 const postElement = document.createElement('div');
                 postElement.className = 'blog-post';
+                postElement.style.animationDelay = `${index * 0.1}s`;
                 postElement.innerHTML = `
-                    <h3 class="blog-title"><a href="#" data-slug="${post.slug}">${post.title}</a></h3>
+                    <h3 class="blog-title">
+                        <a href="#" data-slug="${post.slug}">${post.title}</a>
+                    </h3>
                     <span class="blog-date">${post.date}</span>
                 `;
                 blogPostsContainer.appendChild(postElement);
@@ -79,17 +88,27 @@
                     const post = blogPosts.find(p => p.slug === slug);
 
                     try {
-                        const response = await fetch(`../blog/posts/${slug}.md`); // Correct path to blog posts
+                        const response = await fetch(`../blog/posts/${slug}.md`);
                         const markdown = await response.text();
 
                         // Use marked.js to convert markdown to HTML
                         postContent.innerHTML = `
-                            <h1 class="section-title glow-text">${post.title}</h1> <!- Apply glow to blog post titles -->
-                            <p class="blog-date">${post.date}</p>
+                            <div class="text-center mb-lg">
+                                <a href="#" id="back-to-posts" class="view-button">
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M19 12H5"></path>
+                                        <path d="M12 19l-7-7 7-7"></path>
+                                    </svg>
+                                    Back to Posts
+                                </a>
+                            </div>
+                            <h1 class="section-title text-gradient text-center">${post.title}</h1>
+                            <p class="blog-date text-center mb-lg">${post.date}</p>
                             <div class="blog-content">
                                 ${marked.parse(markdown)}
                             </div>
                         `;
+                        
                         // Hide posts list, show content
                         document.getElementById('writings').style.display = 'none';
                         blogContent.style.display = 'block';
@@ -97,27 +116,41 @@
                         // Update page title
                         document.title = `${post.title} - Avanish Patidar`;
 
-                        // **Add copy buttons to code blocks after content is loaded**
-                        addCopyButtonsToCodeBlocks(); // Call the function here!
+                        // Add copy buttons to code blocks after content is loaded
+                        if (typeof addCopyButtonsToCodeBlocks === 'function') {
+                            addCopyButtonsToCodeBlocks();
+                        }
 
+                        // Add back button functionality
+                        document.getElementById('back-to-posts').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            document.getElementById('writings').style.display = 'block';
+                            blogContent.style.display = 'none';
+                            document.title = 'Writings - Avanish Patidar';
+                        });
 
                     } catch (error) {
                         console.error('Error loading blog post:', error);
+                        postContent.innerHTML = `
+                            <div class="text-center">
+                                <h2 class="section-title text-gradient">Post Not Found</h2>
+                                <p class="section-text">Sorry, the blog post could not be loaded.</p>
+                                <a href="#" id="back-to-posts-error" class="view-button">Back to Posts</a>
+                            </div>
+                        `;
+                        
+                        document.getElementById('writings').style.display = 'none';
+                        blogContent.style.display = 'block';
+                        
+                        document.getElementById('back-to-posts-error').addEventListener('click', (e) => {
+                            e.preventDefault();
+                            document.getElementById('writings').style.display = 'block';
+                            blogContent.style.display = 'none';
+                            document.title = 'Writings - Avanish Patidar';
+                        });
                     }
                 });
             });
-
-            // Back button functionality
-            backToPostsBtn.addEventListener('click', (e) => {
-                e.preventDefault();
-
-                document.getElementById('writings').style.display = 'block';
-                blogContent.style.display = 'none';
-                document.title = 'Writings - Avanish Patidar';
-            });
-
-            // Initialize section animations (if needed on this page)
-            // setupSectionAnimations(); // You can call setupSectionAnimations here if you want animations on the writings page sections too
         });
     </script>
 </body>
