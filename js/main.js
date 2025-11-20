@@ -81,6 +81,22 @@ document.addEventListener('DOMContentLoaded', () => {
           <img src="${skill.logoUrl}" width="16" height="16" alt="${skill.name} logo" class="${imgClass}" style="vertical-align:middle; margin-right:4px;"/>
           ${skill.name}
         `;
+
+        // Apply dynamic hover effect based on skill color
+        skillElement.addEventListener('mouseenter', () => {
+            skillElement.style.borderColor = skill.color;
+            skillElement.style.backgroundColor = `${skill.color}15`; // 15 is approx 8% opacity in hex
+            skillElement.style.boxShadow = `0 4px 12px -2px ${skill.color}40`; // 40 is approx 25% opacity
+            skillElement.style.color = "#fff";
+        });
+
+        skillElement.addEventListener('mouseleave', () => {
+            skillElement.style.borderColor = '';
+            skillElement.style.backgroundColor = '';
+            skillElement.style.boxShadow = '';
+            skillElement.style.color = '';
+        });
+
         skillsContainer.appendChild(skillElement);
       });
     }
