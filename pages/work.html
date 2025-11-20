@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Work - Avanish Patidar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
@@ -43,7 +46,7 @@
 
                 if (project.website) {
                     buttons += `
-                        <a href="${project.website}" class="work-button" target="_blank">
+                        <a href="${project.website}" class="work-link" target="_blank">
                             🌍 Visit Website
                         </a>
                     `;
@@ -51,7 +54,7 @@
 
                 if (project.github) {
                     buttons += `
-                        <a href="${project.github}" class="work-button github-button" target="_blank">
+                        <a href="${project.github}" class="work-link" target="_blank">
                             💻 View on GitHub
                         </a>
                     `;
