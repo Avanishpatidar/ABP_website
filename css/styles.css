@@ -1,4 +1,4 @@
-/* styles.css - Updated for Deep Black / AMOLED Layout and Clean Design */
+/* styles.css - Updated for Deep Black / AMOLED, Rounded UI, and Mobile Responsiveness */
 @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@300;400;500;600;700&display=swap');
 
 * {
@@ -12,24 +12,27 @@
 :root {
     /* Deep Black / AMOLED Theme Palette */
     --bg-color: #000000;
-    --card-bg-color: #0a0a0a; /* Subtle lift from background */
+    --card-bg-color: #0a0a0a; /* Very subtle difference */
     --primary-color: #ffffff;
-    --secondary-color: #cccccc; /* Higher contrast for readability on deep black */
+    --secondary-color: #b0b0b0; /* Slightly brighter than before for better readability */
     --accent-color: #66ccff; /* Clean Cyan */
+    --highlight-color: #ffffff; /* For emphasized text */
 
-    /* Code Block Colors - Neutral / Monochrome to avoid purple */
+    /* Code Block Colors */
     --code-bg-color: #111111;
     --code-text-color: #e0e0e0;
     --code-accent-color: #66ccff;
     --code-comment-color: #777777;
 
     /* Visual Effects */
-    --glow-color: rgba(102, 204, 255, 0.2); /* Subtler glow */
-    --card-border: 1px solid #222222; /* Clean border instead of heavy shadows */
-    --card-hover-border: 1px solid var(--accent-color);
+    --glow-color: rgba(102, 204, 255, 0.15);
+    --card-border: 1px solid #1f1f1f;
+    --card-hover-border: 1px solid rgba(102, 204, 255, 0.5);
+    --card-radius: 20px; /* Rounded Cards */
+    --button-radius: 50px; /* Rounded / Pill Buttons */
 
     /* Button Styles */
-    --button-bg: transparent;
+    --button-bg: #111111;
     --button-hover-bg: rgba(102, 204, 255, 0.1);
     --button-border: 1px solid #333333;
 }
@@ -37,30 +40,30 @@
 body {
     background-color: var(--bg-color);
     color: var(--primary-color);
-    padding: 40px 20px; /* Increased top/bottom padding */
-    max-width: 1400px; /* Increased max-width for "cleaner" look */
+    padding: 40px 20px;
+    max-width: 1200px;
     margin: 0 auto;
-    line-height: 1.6;
+    line-height: 1.7;
     font-size: 16px;
     transition: background-color 0.3s ease;
 }
 
 a {
-    color: var(--primary-color);
+    color: var(--accent-color);
     text-decoration: none;
     transition: all 0.2s ease;
     position: relative;
 }
 
 a:hover {
-    color: var(--accent-color);
+    color: var(--highlight-color);
 }
 
 /* Layout */
 .container {
     display: flex;
-    margin-top: 60px; /* More breathing room */
-    gap: 60px; /* Increased gap between sidebar and content */
+    margin-top: 40px;
+    gap: 60px;
     position: relative;
     opacity: 0;
     transform: translateY(10px);
@@ -75,7 +78,7 @@ a:hover {
 }
 
 .sidebar {
-    width: 240px;
+    width: 220px;
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -92,7 +95,7 @@ a:hover {
     top: 60px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .nav-link {
@@ -100,25 +103,30 @@ a:hover {
     color: var(--secondary-color);
     font-size: 16px;
     font-weight: 500;
-    padding: 10px 0;
-    text-align: left; /* Aligned left for cleaner list look */
+    padding: 12px 20px;
+    text-align: left;
+    border-radius: var(--button-radius); /* Rounded Nav Links */
     transition: all 0.2s ease;
-    opacity: 0.7;
+    border: 1px solid transparent;
+    opacity: 0.8;
 }
 
 .nav-link:hover, .nav-link.active {
     color: var(--primary-color);
+    background-color: var(--button-bg);
+    border: var(--button-border);
     opacity: 1;
 }
 
 .nav-link.active {
     color: var(--accent-color);
-    font-weight: 600;
+    border-color: var(--accent-color);
+    background-color: rgba(102, 204, 255, 0.05);
 }
 
 /* Section styles */
 .section {
-    margin-bottom: 100px; /* More space between sections */
+    margin-bottom: 100px;
     opacity: 0;
     transform: translateY(10px);
     animation: fadeInSection 0.8s ease forwards;
@@ -138,64 +146,76 @@ a:hover {
 }
 
 .section-title {
-    font-size: 40px;
-    margin-bottom: 30px;
+    font-size: 42px;
+    margin-bottom: 25px;
     font-weight: 700;
-    letter-spacing: -0.02em;
+    letter-spacing: -0.03em;
     color: var(--primary-color);
-    text-align: left; /* Align left for modern feel */
-    position: relative;
+    text-align: left;
 }
 
 .section-text {
     font-size: 18px;
     color: var(--secondary-color);
-    margin-bottom: 30px;
+    margin-bottom: 25px;
     max-width: 800px;
     line-height: 1.8;
     text-align: left;
 }
 
+.section-text strong, .section-text em {
+    color: var(--highlight-color);
+    font-style: normal;
+    font-weight: 600;
+}
+
 /* About Section Specifics */
 .about-content .section-title.main-name {
-    text-align: left;
-    font-size: 48px;
+    font-size: 56px; /* Larger Name */
     margin-bottom: 20px;
-    background: linear-gradient(to right, #fff, #ccc); /* Subtle gradient text */
+    background: linear-gradient(90deg, #ffffff 0%, #bbbbbb 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .about-content .main-buttons {
-    justify-content: flex-start; /* Align left */
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
     margin-bottom: 40px;
+    flex-wrap: wrap;
 }
 
 .social-links {
-    justify-content: flex-start; /* Align left */
-    gap: 25px;
+    display: flex;
+    justify-content: flex-start;
+    gap: 15px;
+    flex-wrap: wrap;
+    margin-top: 10px;
 }
 
-/* Work items - Clean Cards */
+/* Work items - Rounded Cards */
 .work-item {
-    margin-bottom: 25px;
-    padding: 30px;
-    border-radius: 4px; /* Sharper corners */
+    margin-bottom: 30px;
+    padding: 35px;
+    border-radius: var(--card-radius);
     background-color: var(--card-bg-color);
     border: var(--card-border);
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
     position: relative;
+    overflow: hidden;
 }
 
 .work-item:hover {
-    transform: translateY(-2px);
-    border-color: rgba(102, 204, 255, 0.5);
+    transform: translateY(-4px);
+    border-color: var(--accent-color);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
 }
 
 .work-title {
-    font-size: 24px;
-    margin-bottom: 10px;
-    font-weight: 600;
+    font-size: 26px;
+    margin-bottom: 12px;
+    font-weight: 700;
     color: var(--primary-color);
 }
 
@@ -208,61 +228,79 @@ a:hover {
 
 .work-links {
     display: flex;
-    gap: 15px;
+    gap: 12px;
+    flex-wrap: wrap;
 }
 
-.work-link {
+/* Buttons & Links */
+.view-button, .work-link, .social-link {
     display: inline-flex;
     align-items: center;
-    color: var(--secondary-color);
-    font-size: 14px;
-    padding: 8px 0;
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid transparent;
+    justify-content: center;
+    background-color: var(--button-bg);
+    border: var(--button-border);
+    color: var(--primary-color);
+    border-radius: var(--button-radius); /* Pill Shape */
+    padding: 12px 24px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    text-decoration: none;
+    gap: 10px;
+    white-space: nowrap;
 }
 
-.work-link:hover {
+.view-button:hover, .work-link:hover, .social-link:hover {
+    background-color: var(--button-hover-bg);
+    border-color: var(--accent-color);
     color: var(--accent-color);
-    background-color: transparent;
-    border-bottom: 1px solid var(--accent-color);
-    transform: none;
-    box-shadow: none;
+    transform: translateY(-2px);
 }
 
-.work-link svg {
-    margin-right: 8px;
+/* Social Links as Icon Buttons */
+.social-link {
+    padding: 12px 20px;
+}
+
+/* Icons in Buttons */
+.view-button svg, .work-link svg, .social-link svg {
     width: 18px;
     height: 18px;
+    fill: currentColor;
+    transition: fill 0.2s ease;
 }
 
-/* Blog post - List View */
+.work-link svg path, .social-link svg path {
+    fill: currentColor; /* Ensure paths inherit color */
+}
+
+/* Blog post - Rounded List View */
 .blog-post {
     display: flex;
     flex-direction: column;
-    margin-bottom: 20px;
-    padding: 25px;
-    border-radius: 4px;
+    margin-bottom: 25px;
+    padding: 30px;
+    border-radius: var(--card-radius);
     background-color: var(--card-bg-color);
     border: var(--card-border);
     transition: all 0.2s ease;
 }
 
 .blog-post:hover {
-    transform: translateY(-2px);
-    border-color: rgba(102, 204, 255, 0.5);
-    background-color: var(--card-bg-color); /* Keep bg same */
-    box-shadow: none;
+    transform: translateY(-3px);
+    border-color: var(--accent-color);
+    background-color: #0e0e0e;
 }
 
 .blog-title {
-    font-size: 20px;
-    font-weight: 600;
+    font-size: 22px;
+    font-weight: 700;
     margin-bottom: 8px;
 }
 
 .blog-title a {
     color: var(--primary-color);
+    text-decoration: none;
 }
 
 .blog-title a:hover {
@@ -270,9 +308,10 @@ a:hover {
 }
 
 .blog-date {
-    color: #666;
+    color: #777;
     font-size: 14px;
     display: block;
+    margin-top: 5px;
 }
 
 /* Blog content */
@@ -295,20 +334,40 @@ a:hover {
     font-size: 18px;
 }
 
+.blog-content ul, .blog-content ol {
+    margin-bottom: 25px;
+    padding-left: 25px;
+    color: var(--secondary-color);
+}
+
+.blog-content li {
+    margin-bottom: 10px;
+}
+
+.blog-content a {
+    color: var(--accent-color);
+    border-bottom: 1px solid var(--accent-color);
+}
+
+.blog-content a:hover {
+    color: var(--highlight-color);
+    border-bottom-color: var(--highlight-color);
+}
+
 /* Code block styling */
 .blog-content pre {
     background-color: var(--code-bg-color);
     color: var(--code-text-color);
-    padding: 20px;
-    border-radius: 4px;
-    border: 1px solid #333;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #222;
     margin-bottom: 30px;
     overflow-x: auto;
+    font-size: 15px;
 }
 
 .blog-content pre code {
     font-family: 'Fira Code', monospace;
-    font-size: 14px;
 }
 
 /* Copy button for code blocks */
@@ -318,19 +377,20 @@ a:hover {
     right: 10px;
     background-color: rgba(255, 255, 255, 0.05);
     color: var(--secondary-color);
-    border: none;
-    padding: 6px 12px;
-    border-radius: 4px;
+    border: 1px solid #333;
+    padding: 6px 14px;
+    border-radius: 20px; /* Pill */
     font-size: 12px;
     cursor: pointer;
-    opacity: 0.7;
+    opacity: 0.8;
     transition: all 0.2s ease;
 }
 
 .code-copy-button:hover {
     opacity: 1;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: var(--primary-color);
+    background-color: var(--accent-color);
+    color: #000;
+    border-color: var(--accent-color);
 }
 
 /* Skills section */
@@ -340,48 +400,26 @@ a:hover {
     gap: 12px;
     margin-top: 30px;
     margin-bottom: 40px;
-    justify-content: flex-start; /* Align left */
+    justify-content: flex-start;
 }
 
 .skill-tag {
-    background-color: #111;
+    background-color: #151515;
     border: 1px solid #333;
-    border-radius: 4px;
-    padding: 8px 16px;
+    border-radius: 50px; /* Pill Tags */
+    padding: 10px 20px;
     font-size: 14px;
     color: var(--secondary-color);
     transition: all 0.2s ease;
-    box-shadow: none;
+    display: inline-flex;
+    align-items: center;
 }
 
 .skill-tag:hover {
     border-color: var(--accent-color);
     color: var(--primary-color);
     transform: translateY(-2px);
-    background-color: #151515;
-}
-
-/* Buttons */
-.view-button {
-    display: inline-flex;
-    align-items: center;
-    background-color: transparent;
-    border: 1px solid #444;
-    color: var(--primary-color);
-    border-radius: 4px;
-    padding: 10px 24px;
-    margin-top: 20px;
-    transition: all 0.2s ease;
-    font-weight: 500;
-    font-size: 15px;
-}
-
-.view-button:hover {
-    border-color: var(--accent-color);
-    color: var(--accent-color);
-    background-color: transparent;
-    transform: translateY(-2px);
-    box-shadow: none;
+    background-color: rgba(102, 204, 255, 0.1);
 }
 
 /* Footer */
@@ -398,6 +436,8 @@ a:hover {
 @media (max-width: 1024px) {
     .container {
         gap: 40px;
+        padding-left: 10px;
+        padding-right: 10px;
     }
     .sidebar {
         width: 200px;
@@ -405,30 +445,58 @@ a:hover {
 }
 
 @media (max-width: 768px) {
+    body {
+        padding: 20px 15px;
+    }
+
     .container {
         flex-direction: column;
         margin-top: 20px;
+        gap: 40px;
     }
 
     .sidebar {
         width: 100%;
-        margin-bottom: 40px;
+        align-items: flex-start;
     }
 
     .nav {
         flex-direction: row;
+        flex-wrap: wrap;
         position: static;
-        border-bottom: 1px solid #222;
-        padding-bottom: 15px;
-        overflow-x: auto;
+        width: 100%;
+        gap: 10px;
     }
 
     .nav-link {
-        padding: 5px 15px;
-        white-space: nowrap;
+        padding: 8px 16px;
+        font-size: 14px;
     }
 
-    .section-title, .about-content .section-title.main-name {
+    .about-content .section-title.main-name {
+        font-size: 40px;
+    }
+
+    .section-title {
         font-size: 32px;
+    }
+
+    .work-item {
+        padding: 25px;
+    }
+
+    .work-title {
+        font-size: 22px;
+    }
+
+    .main-buttons, .work-links, .social-links {
+        flex-direction: column;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .view-button, .work-link, .social-link {
+        width: 100%;
+        justify-content: center;
     }
 }
