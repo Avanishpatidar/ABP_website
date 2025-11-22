@@ -197,7 +197,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth'
             });
         });
+        scrollTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
     }
+
+    // Mobile Scroll Animation Observer
+    const animatedItems = document.querySelectorAll('.work-item, .strength-card');
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('in-view');
+            } else {
+                entry.target.classList.remove('in-view');
+            }
+        });
+    }, {
+        threshold: 0.5, // Trigger when 50% visible
+        rootMargin: "0px 0px -10% 0px" // Trigger slightly before bottom
+    });
+
+    animatedItems.forEach(item => {
+        scrollObserver.observe(item);
+    });
 
     // Initialize animations
     setupSectionAnimations();

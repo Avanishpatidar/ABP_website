@@ -307,7 +307,7 @@ body {
 }
 
 .section-text {
-    font-size: 18px;
+    font-size: 14px;
     color: var(--secondary-text);
     margin-bottom: 32px;
     max-width: 640px;
@@ -346,13 +346,17 @@ body {
     align-items: center;
     gap: 8px;
     background: transparent;
-    border: none;
+    border: 1px solid #333;
+    /* Pill border */
     color: var(--secondary-text);
-    padding: 0;
-    font-size: 15px;
+    padding: 8px 16px;
+    /* Pill padding */
+    border-radius: 999px;
+    /* Pill shape */
+    font-size: 14px;
     font-weight: 500;
     text-decoration: none;
-    transition: color var(--transition-fast);
+    transition: all 0.2s ease;
 }
 
 .view-button svg,
@@ -369,6 +373,10 @@ body {
     transform: none;
     background: transparent;
     box-shadow: none;
+    border-color: var(--highlight-color);
+    background: rgba(255, 112, 67, 0.1);
+    /* Subtle orange tint */
+    color: var(--primary-text);
 }
 
 .view-button:hover svg,
@@ -411,36 +419,26 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 0;
-    border-top: 1px dashed var(--highlight-color);
-    border-right: 1px dashed var(--highlight-color);
-    transition: width 0.3s ease, height 0.3s ease 0.3s;
-    /* Top then Right */
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(to right, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to bottom, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to left, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to top, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px);
+    background-size: 0% 1px, 1px 0%, 0% 1px, 1px 0%;
+    background-position: 50% 0%, 100% 50%, 50% 100%, 0% 50%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
     pointer-events: none;
 }
 
 .strength-card::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 0;
-    border-left: 1px dashed var(--highlight-color);
-    transition: height 0.3s ease;
-    /* Left draws down */
-    pointer-events: none;
+    display: none;
+    /* Not needed for center-out animation */
 }
 
-.strength-card:hover::before {
-    width: 100%;
-    height: 100%;
-}
 
-.strength-card:hover::after {
-    height: 100%;
-}
 
 .strength-card:hover {
     background: rgba(255, 255, 255, 0.02);
@@ -517,36 +515,50 @@ body {
     position: absolute;
     top: 0;
     left: 0;
-    width: 0;
-    height: 0;
-    border-top: 1px dashed var(--highlight-color);
-    border-right: 1px dashed var(--highlight-color);
-    transition: width 0.3s ease, height 0.3s ease 0.3s;
-    /* Top then Right */
+    right: 0;
+    bottom: 0;
+    background-image:
+        repeating-linear-gradient(to right, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to bottom, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to left, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to top, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px);
+    background-size: 0% 1px, 1px 0%, 0% 1px, 1px 0%;
+    background-position: 50% 0%, 100% 50%, 50% 100%, 0% 50%;
+    background-repeat: no-repeat;
+    transition: background-size 0.3s ease;
     pointer-events: none;
 }
 
 .work-item::after {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 1px;
-    height: 0;
-    border-left: 1px dashed var(--highlight-color);
-    transition: height 0.3s ease;
-    /* Left draws down */
-    pointer-events: none;
+    display: none;
+    /* Not needed for center-out animation */
 }
 
-.work-item:hover::before {
-    width: 100%;
-    height: 100%;
+
+
+/* Mobile Scroll Animation (In-View State) - now handled by ::before */
+
+/* Desktop: hover only */
+@media (min-width: 769px) {
+
+    .work-item:hover::before,
+    .strength-card:hover::before,
+    .skill-tag:hover {
+        background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+    }
 }
 
-.work-item:hover::after {
-    height: 100%;
+/* Mobile: scroll animation only */
+@media (max-width: 768px) {
+
+    .work-item.in-view::before,
+    .strength-card.in-view::before,
+    .skill-tag.in-view {
+        background-size: 100% 1px, 1px 100%, 100% 1px, 1px 100%;
+    }
 }
+
+
 
 .work-item:hover {
     background: rgba(255, 255, 255, 0.02);
@@ -585,7 +597,8 @@ body {
     align-items: center;
     gap: 6px;
     font-size: 14px;
-    color: var(--muted-text);
+    color: var(--highlight-color);
+    /* Orange for experience links */
     text-decoration: none;
     padding: 0;
     background: transparent;
@@ -605,44 +618,57 @@ body {
 
 /* Skills Chips (if used) */
 .skills-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 12px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 16px;
     margin-top: 40px;
 }
 
 .skill-tag {
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: 8px;
     background: transparent;
-    border: 1px dashed var(--highlight-color);
-    /* Dashed orange border */
-    padding: 8px 16px;
+    padding: 10px 16px;
     border-radius: 4px;
     font-size: 14px;
     color: var(--secondary-text);
     font-family: 'Fira Code', monospace;
-    /* Terminal font */
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+
+    /* Dashed border effect - initial state invisible */
+    background-image:
+        repeating-linear-gradient(to right, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to bottom, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to left, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px),
+        repeating-linear-gradient(to top, var(--highlight-color) 0px, var(--highlight-color) 4px, transparent 4px, transparent 8px);
+    background-size: 0% 1px, 1px 0%, 0% 1px, 1px 0%;
+    background-position: 50% 0%, 100% 50%, 50% 100%, 0% 50%;
+    background-repeat: no-repeat;
 }
 
-/* Skill tag prefix removed as requested */
 
-.skill-tag:hover {
-    transform: none;
-    color: var(--primary-text);
-    background: rgba(255, 112, 67, 0.1);
-    /* Subtle orange tint */
-    border-color: var(--highlight-color);
-}
 
 .skill-logo {
-    filter: grayscale(100%);
+    /* Logos are colorful by default */
+    filter: none;
+}
+
+/* Add white outline to dark logos for visibility */
+.skill-logo.outline {
+    filter: drop-shadow(0 0 1px rgba(255, 255, 255, 0.8));
 }
 
 .skill-tag:hover .skill-logo {
-    filter: grayscale(0%);
+    /* No change needed on hover */
+    filter: none;
+}
+
+.skill-tag:hover .skill-logo.outline {
+    filter: drop-shadow(0 0 2px rgba(255, 255, 255, 1));
 }
 
 /* Blog List */
