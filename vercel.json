@@ -1,6 +1,5 @@
 {
     "rewrites": [
-      { "source": "/work", "destination": "/pages/work.html" },
       { "source": "/blogs", "destination": "/pages/writings.html" }
     ]
   }

@@ -1,28 +1,35 @@
 const projects = [
     {
-        title: "Aradhya Manpower Supplier",
-        description: "An official company website built using React.js and Vercel for CMS. Developed career and contact pages with SMTP server integration for handling inquiries.",
-        website: "https://www.aradhyamanpowersupplier.com/",
-        github: "https://github.com/aradhyamanpowersolutions/website",
+        title: "TradeIQ – AI-Powered Automated Trading Platform",
+        description: "A real-time financial intelligence platform that scrapes BSE/NSE announcements, analyzes disclosures using Gemini LLM, and extracts signals. Features a no-code strategy builder and integrates with Zerodha, Dhan, and Angel One APIs.",
+        website: null,
+        github: null, // Add link if available
         featured: true
     },
     {
-        title: "IPL Chatbot",
-        description: "A chatbot designed to provide IPL statistics from 2008 to 2024, fetching ball-by-ball and match data. Uses PostgreSQL and FastAPI for the backend, with a React frontend.",
+        title: "AI Live Assist Platform",
+        description: "Real-time communication app with text, voice, and video. Features screen sharing with AI understanding and Vision AI for analyzing images and drawings. Built with low-latency WebSockets.",
+        website: null,
+        github: null, // Add link if available
+        featured: true
+    },
+    {
+        title: "IPL AI Chatbot",
+        description: "Conversational analytics bot processing 300k+ rows of IPL data. Converts natural language questions to SQL queries for deep insights like matchups and head-to-head stats.",
         website: null,
         github: "https://github.com/Avanishpatidar/ipl-chatbot",
         featured: true
     },
     {
-        title: "AI-Pharma",
-        description: "An AI-powered chatbot using the MERN stack and Gemini API to fetch medicine-related data across 14 parameters, including composition, side effects, and alternatives.",
-        website: "https://ai-pharma.vercel.app/",
-        github: "https://github.com/Avanishpatidar/AI_PHARMA",
+        title: "Aradhya Manpower Supplier",
+        description: "Fully dynamic company website with Payload CMS for job management and SMTP integration for forms. Deployed on Vercel.",
+        website: "https://www.aradhyamanpowersupplier.com/",
+        github: "https://github.com/aradhyamanpowersolutions/website",
         featured: true
     },
     {
-        title: "News Aggregator",
-        description: "A news application that aggregates headlines from multiple sources across different countries. Built with React, integrated with News API.",
+        title: "News Aggregator App",
+        description: "Aggregates news from multiple countries with category sorting and filtering. Features a clean, modern UI.",
         website: "https://news-aggregator-xts7.vercel.app/",
         github: "https://github.com/Avanishpatidar/news-aggregator",
         featured: true
