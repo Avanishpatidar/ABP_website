@@ -1,6 +1,10 @@
 {
   "rewrites": [
     {
+      "source": "/",
+      "destination": "/index.html"
+    },
+    {
       "source": "/writings",
       "destination": "/pages/writings.html"
     },
@@ -9,5 +13,6 @@
       "destination": "/pages/writings.html"
     }
   ],
-  "cleanUrls": true
+  "cleanUrls": true,
+  "trailingSlash": false
 }
