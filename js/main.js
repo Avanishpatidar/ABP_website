@@ -75,56 +75,92 @@ document.addEventListener('DOMContentLoaded', () => {
     // Add categorized skills to the skills container
     const skillsContainer = document.getElementById('skills-container');
     if (skillsContainer && typeof skillsData !== 'undefined') {
-        Object.entries(skillsData).forEach(([category, skills]) => {
-            // Create category container
-            const categoryDiv = document.createElement('div');
-            categoryDiv.className = 'skill-category';
+        const categories = Object.entries(skillsData);
+        const initialVisibleCount = 2; // Number of categories to show initially
 
-            // Create category title
-            const categoryTitle = document.createElement('div');
-            categoryTitle.className = 'skill-category-title';
-            categoryTitle.textContent = category;
-            categoryDiv.appendChild(categoryTitle);
+        const renderSkills = (showAll = false) => {
+            skillsContainer.innerHTML = ''; // Clear existing content
 
-            // Create skills grid
-            const skillsGrid = document.createElement('div');
-            skillsGrid.className = 'skill-category-grid';
+            categories.forEach(([category, skills], index) => {
+                if (!showAll && index >= initialVisibleCount) return;
 
-            // Add skills to grid
-            skills.forEach(skill => {
-                const skillElement = document.createElement('div');
-                skillElement.className = 'skill-tag';
+                // Create category container
+                const categoryDiv = document.createElement('div');
+                categoryDiv.className = 'skill-category';
+                // Add animation delay based on index
+                categoryDiv.style.animationDelay = `${index * 0.1}s`;
+                categoryDiv.classList.add('fade-in');
 
-                // Define which logos need an outline (white drop-shadow)
-                const outlineSkills = ["Node.js", "Express.js", "Next.js", "Payload CMS", "Vercel", "Railway"];
-                const imgClass = outlineSkills.includes(skill.name) ? 'skill-logo outline' : 'skill-logo';
+                // Create category title
+                const categoryTitle = document.createElement('div');
+                categoryTitle.className = 'skill-category-title';
+                categoryTitle.textContent = category;
+                categoryDiv.appendChild(categoryTitle);
 
-                skillElement.innerHTML = `
-                    <img src="${skill.logoUrl}" alt="${skill.name} logo" class="${imgClass}" />
-                    ${skill.name}
-                `;
+                // Create skills grid
+                const skillsGrid = document.createElement('div');
+                skillsGrid.className = 'skill-category-grid';
 
-                // Apply dynamic hover effect based on skill color
-                skillElement.addEventListener('mouseenter', () => {
-                    skillElement.style.borderColor = skill.color;
-                    skillElement.style.backgroundColor = `${skill.color}15`;
-                    skillElement.style.boxShadow = `0 8px 20px -4px ${skill.color}40`;
-                    skillElement.style.color = "#fff";
+                // Add skills to grid
+                skills.forEach(skill => {
+                    const skillElement = document.createElement('div');
+                    skillElement.className = 'skill-tag';
+
+                    // Define which logos need an outline (white drop-shadow)
+                    const outlineSkills = ["Node.js", "Express.js", "Next.js", "Payload CMS", "Vercel", "Railway"];
+                    const imgClass = outlineSkills.includes(skill.name) ? 'skill-logo outline' : 'skill-logo';
+
+                    skillElement.innerHTML = `
+                        <img src="${skill.logoUrl}" alt="${skill.name} logo" class="${imgClass}" />
+                        ${skill.name}
+                    `;
+
+                    // Apply dynamic hover effect based on skill color
+                    skillElement.addEventListener('mouseenter', () => {
+                        skillElement.style.borderColor = skill.color;
+                        skillElement.style.backgroundColor = `${skill.color}15`;
+                        skillElement.style.boxShadow = `0 8px 20px -4px ${skill.color}40`;
+                        skillElement.style.color = "#fff";
+                    });
+
+                    skillElement.addEventListener('mouseleave', () => {
+                        skillElement.style.borderColor = '';
+                        skillElement.style.backgroundColor = '';
+                        skillElement.style.boxShadow = '';
+                        skillElement.style.color = '';
+                    });
+
+                    skillsGrid.appendChild(skillElement);
                 });
 
-                skillElement.addEventListener('mouseleave', () => {
-                    skillElement.style.borderColor = '';
-                    skillElement.style.backgroundColor = '';
-                    skillElement.style.boxShadow = '';
-                    skillElement.style.color = '';
-                });
-
-                skillsGrid.appendChild(skillElement);
+                categoryDiv.appendChild(skillsGrid);
+                skillsContainer.appendChild(categoryDiv);
             });
 
-            categoryDiv.appendChild(skillsGrid);
-            skillsContainer.appendChild(categoryDiv);
-        });
+            // Add "Show More" / "Show Less" button
+            if (categories.length > initialVisibleCount) {
+                const toggleBtnContainer = document.createElement('div');
+                toggleBtnContainer.className = 'skills-toggle-container';
+
+                const toggleBtn = document.createElement('button');
+                toggleBtn.className = 'view-button skills-toggle-btn';
+                toggleBtn.innerHTML = showAll ? 'Show Less' : 'Show More Tools';
+
+                toggleBtn.addEventListener('click', () => {
+                    renderSkills(!showAll);
+                    // If showing less, scroll back to skills section
+                    if (showAll) {
+                        document.getElementById('skills').scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+
+                toggleBtnContainer.appendChild(toggleBtn);
+                skillsContainer.appendChild(toggleBtnContainer);
+            }
+        };
+
+        // Initial render
+        renderSkills(false);
     }
 
     // Render Projects
@@ -180,14 +216,18 @@ document.addEventListener('DOMContentLoaded', () => {
     if (mobileBtn && mobileOverlay) {
         mobileBtn.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
+            const chatbotToggle = document.getElementById('chatbot-toggle');
+            
             if (isMenuOpen) {
                 mobileOverlay.classList.add('active');
                 mobileBtn.textContent = '// CLOSE';
                 document.body.style.overflow = 'hidden'; // Prevent scrolling
+                if (chatbotToggle) chatbotToggle.style.display = 'none';
             } else {
                 mobileOverlay.classList.remove('active');
                 mobileBtn.textContent = '// MENU';
                 document.body.style.overflow = '';
+                if (chatbotToggle) chatbotToggle.style.display = '';
             }
         });
 
@@ -198,6 +238,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 mobileOverlay.classList.remove('active');
                 mobileBtn.textContent = '// MENU';
                 document.body.style.overflow = '';
+                const chatbotToggle = document.getElementById('chatbot-toggle');
+                if (chatbotToggle) chatbotToggle.style.display = '';
             });
         });
     }
@@ -250,4 +292,29 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Initialize animations
     setupSectionAnimations();
+
+    // Theme Toggle Logic
+    const themeToggleBtn = document.getElementById('theme-toggle');
+    const body = document.body;
+    const themeText = themeToggleBtn ? themeToggleBtn.querySelector('.theme-toggle-text') : null;
+
+    // Check for saved preference and update text
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'light') {
+        body.classList.add('light-mode');
+        if (themeText) themeText.textContent = 'Light';
+    }
+
+    if (themeToggleBtn) {
+        themeToggleBtn.addEventListener('click', () => {
+            body.classList.toggle('light-mode');
+            const isLight = body.classList.contains('light-mode');
+            localStorage.setItem('theme', isLight ? 'light' : 'dark');
+            
+            // Update text label
+            if (themeText) {
+                themeText.textContent = isLight ? 'Light' : 'Dark';
+            }
+        });
+    }
 });
