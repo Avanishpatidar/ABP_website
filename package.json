@@ -1,0 +1,14 @@
+{
+  "name": "avanish-website",
+  "version": "1.0.0",
+  "description": "Avanish Patidar Portfolio",
+  "main": "index.html",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@google/generative-ai": "^0.1.3",
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0"
+  }
+}
