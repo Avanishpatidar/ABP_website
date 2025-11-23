@@ -1,18 +1,12 @@
 {
-  "rewrites": [
+  "routes": [
     {
-      "source": "/",
-      "destination": "/index.html"
+      "src": "/writings",
+      "dest": "/pages/writings.html"
     },
     {
-      "source": "/writings",
-      "destination": "/pages/writings.html"
-    },
-    {
-      "source": "/blogs",
-      "destination": "/pages/writings.html"
+      "src": "/blogs",
+      "dest": "/pages/writings.html"
     }
-  ],
-  "cleanUrls": true,
-  "trailingSlash": false
+  ]
 }
