@@ -89,16 +89,44 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     closeBtn.addEventListener('click', toggleChat);
 
-    // Simple Markdown Parser
+    // Enhanced Markdown Parser with Code Syntax Highlighting
     const parseMarkdown = (text) => {
         let html = text
             .replace(/&/g, "&amp;")
             .replace(/</g, "&lt;")
             .replace(/>/g, "&gt;")
+            // Code blocks with syntax highlighting
+            .replace(/```([\s\S]*?)```/g, (match, code) => {
+                return `<pre><code class="code-block">${code.trim()}</code></pre>`;
+            })
+            // Inline code
+            .replace(/`([^`]+)`/g, '<code class="inline-code">$1</code>')
             .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
             .replace(/\*(.*?)\*/g, '<em>$1</em>')
             .replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank">$1</a>');
         return html;
+    };
+
+    // Show typing indicator
+    const showTypingIndicator = () => {
+        const typingDiv = document.createElement('div');
+        typingDiv.className = 'term-msg bot typing-indicator';
+        typingDiv.id = 'typing-indicator';
+        typingDiv.innerHTML = `
+            <div class="msg-prefix">virtual-abp:</div>
+            <div class="msg-content">
+                <span class="typing-cursor">|</span>
+            </div>
+        `;
+        messagesContainer.appendChild(typingDiv);
+        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        return typingDiv;
+    };
+
+    // Remove typing indicator
+    const removeTypingIndicator = () => {
+        const indicator = document.getElementById('typing-indicator');
+        if (indicator) indicator.remove();
     };
 
     // Add Message to Terminal
@@ -113,6 +141,7 @@ document.addEventListener('DOMContentLoaded', () => {
         msgDiv.innerHTML = prefixSpan + contentSpan;
         messagesContainer.appendChild(msgDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
+        
         return msgDiv;
     };
 
@@ -131,6 +160,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>
             `;
             inputField.value = '';
+            chatHistory = [];
             return;
         }
 
@@ -139,15 +169,55 @@ document.addEventListener('DOMContentLoaded', () => {
         inputField.value = '';
         chatHistory.push({ role: 'user', text: text });
 
-        // 2. Create Bot Message Placeholder
+        // 2. Create Bot Message Placeholder with blinking cursor
         const botMsgDiv = document.createElement('div');
         botMsgDiv.className = `term-msg bot`;
-        botMsgDiv.innerHTML = `<div class="msg-prefix">virtual-abp:</div><div class="msg-content"></div>`;
+        botMsgDiv.innerHTML = `<div class="msg-prefix">virtual-abp:<span class="typing-cursor">|</span></div><div class="msg-content"></div>`;
         messagesContainer.appendChild(botMsgDiv);
         messagesContainer.scrollTop = messagesContainer.scrollHeight;
         
+        const prefixDiv = botMsgDiv.querySelector('.msg-prefix');
         const contentDiv = botMsgDiv.querySelector('.msg-content');
         let fullText = "";
+        let displayedText = "";
+        let typewriterQueue = [];
+        let isTyping = false;
+
+        // Typewriter effect function
+        const typeWriter = async () => {
+            if (isTyping) return;
+            isTyping = true;
+            
+            while (typewriterQueue.length > 0) {
+                const char = typewriterQueue.shift();
+                displayedText += char;
+                
+                // Hide tool calls
+                const jsonIndex = displayedText.indexOf(':::JSON');
+                let visibleText = displayedText;
+                if (jsonIndex !== -1) {
+                    visibleText = displayedText.substring(0, jsonIndex);
+                }
+                
+                contentDiv.innerHTML = parseMarkdown(visibleText) + '<span class="typing-cursor">|</span>';
+                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                
+                // Variable speed: faster for spaces, slower for other chars
+                const delay = char === ' ' ? 10 : (char === '\n' ? 20 : 25);
+                await new Promise(resolve => setTimeout(resolve, delay));
+            }
+            
+            // Remove cursor from prefix and content when done
+            prefixDiv.innerHTML = 'virtual-abp:';
+            const jsonIndex = displayedText.indexOf(':::JSON');
+            let finalText = displayedText;
+            if (jsonIndex !== -1) {
+                finalText = displayedText.substring(0, jsonIndex);
+            }
+            contentDiv.innerHTML = parseMarkdown(finalText);
+            
+            isTyping = false;
+        };
 
         try {
             const response = await fetch('/api/chat', {
@@ -179,21 +249,26 @@ document.addEventListener('DOMContentLoaded', () => {
                             if (data.text) {
                                 fullText += data.text;
                                 
-                                // Hide tool calls
-                                const jsonIndex = fullText.indexOf(':::JSON');
-                                let displayText = fullText;
-                                if (jsonIndex !== -1) {
-                                    displayText = fullText.substring(0, jsonIndex);
+                                // Add new characters to typewriter queue
+                                for (let char of data.text) {
+                                    typewriterQueue.push(char);
                                 }
                                 
-                                contentDiv.innerHTML = parseMarkdown(displayText);
-                                messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                                // Start typewriter if not already running
+                                if (!isTyping) {
+                                    typeWriter();
+                                }
                             }
                         } catch (e) {
                             console.error("Error parsing stream", e);
                         }
                     }
                 }
+            }
+            
+            // Wait for typewriter to finish
+            while (typewriterQueue.length > 0 || isTyping) {
+                await new Promise(resolve => setTimeout(resolve, 50));
             }
 
             chatHistory.push({ role: 'model', text: fullText });
@@ -235,7 +310,8 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
         } catch (error) {
-            contentDiv.textContent = "Error: Connection failed.";
+            removeTypingIndicator();
+            contentDiv.textContent = "Error: Connection failed. Please try again.";
             console.error('Chat Error:', error);
         }
     };
