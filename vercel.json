@@ -1,1 +1,13 @@
-{}
+{
+  "rewrites": [
+    {
+      "source": "/writings",
+      "destination": "/pages/writings.html"
+    },
+    {
+      "source": "/blogs",
+      "destination": "/pages/writings.html"
+    }
+  ],
+  "cleanUrls": true
+}
