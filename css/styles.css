@@ -54,6 +54,28 @@ body {
     gap: 120px;
     opacity: 0;
     animation: fadeIn 1s var(--transition-smooth) forwards;
+    position: relative;
+    z-index: 10;
+    /* Above particle background */
+}
+
+/* GitHub Graph Container */
+.github-graph-container {
+    width: 100%;
+    overflow-x: auto;
+    border-radius: 8px;
+}
+
+.github-graph-container img {
+    display: block;
+    min-width: 600px;
+    /* Ensure graph is readable */
+}
+
+@media (max-width: 768px) {
+    .github-graph-container img {
+        min-width: 100%;
+    }
 }
 
 @media (max-width: 1024px) {
