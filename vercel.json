@@ -1,12 +1,4 @@
 {
-  "routes": [
-    {
-      "src": "/writings",
-      "dest": "/pages/writings.html"
-    },
-    {
-      "src": "/blogs",
-      "dest": "/pages/writings.html"
-    }
-  ]
+  "cleanUrls": true,
+  "trailingSlash": false
 }
