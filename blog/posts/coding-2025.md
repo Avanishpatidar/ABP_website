@@ -1,4 +1,4 @@
-![Coding in 2025](/public/images/blog/coding_2025_blog_header.png)
+![Coding in 2025](/images/blog/coding_2025_blog_header.png)
 
 # Coding in 2025: How AI Agents are Redefining Software Engineering
 

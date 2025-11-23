@@ -1,4 +1,4 @@
-![Agentic AI](/public/images/blog/agentic_ai_blog_header.png)
+![Agentic AI](/images/blog/agentic_ai_blog_header.png)
 
 # The Rise of Agentic AI: From Chatbots to Autonomous Workers
 
