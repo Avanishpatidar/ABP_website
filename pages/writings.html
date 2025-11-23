@@ -4,7 +4,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Writings - Avanish Patidar</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>Blog - Avanish Patidar | AI, Coding & Tech Insights</title>
+    <meta name="title" content="Blog - Avanish Patidar | AI, Coding & Tech Insights">
+    <meta name="description" content="Read my thoughts on AI agents, software engineering, and modern development. Real developer insights on Cursor, Copilot, agentic AI, and building production systems.">
+    <meta name="keywords" content="AI blog, software engineering blog, Cursor vs Copilot, agentic AI, coding in 2024, AI agents, tech blog, developer blog">
+    <meta name="author" content="Avanish Patidar">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://avanishpatidar.me/writings">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://avanishpatidar.me/writings">
+    <meta property="og:title" content="Blog - Avanish Patidar | AI, Coding & Tech Insights">
+    <meta property="og:description" content="Real developer insights on AI agents, software engineering, and modern development tools.">
+    <meta property="og:image" content="https://avanishpatidar.me/images/blog-og.png">
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://avanishpatidar.me/writings">
+    <meta property="twitter:title" content="Blog - Avanish Patidar | AI, Coding & Tech Insights">
+    <meta property="twitter:description" content="Real developer insights on AI agents, software engineering, and modern development tools.">
+    <meta property="twitter:image" content="https://avanishpatidar.me/images/blog-og.png">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="alternate icon" href="/favicon.svg">
+    <link rel="mask-icon" href="/favicon.svg" color="#FF7043">
+    
+    <!-- Structured Data - Blog Schema -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      "name": "Avanish Patidar's Blog",
+      "description": "Insights on AI agents, software engineering, and modern development",
+      "url": "https://avanishpatidar.me/writings",
+      "author": {
+        "@type": "Person",
+        "name": "Avanish Patidar"
+      }
+    }
+    </script>
+    
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -132,6 +175,60 @@
                 blogPostsContainer.appendChild(postElement);
             });
 
+            // Function to update meta tags for SEO
+            function updateMetaTags(post) {
+                const url = `https://avanishpatidar.me/writings#${post.slug}`;
+                const image = `https://avanishpatidar.me/images/blog/${post.slug.replace(/-/g, '_')}_blog_header.png`;
+                
+                // Update meta tags
+                updateMeta('description', post.summary);
+                updateMeta('og:title', post.title);
+                updateMeta('og:description', post.summary);
+                updateMeta('og:url', url);
+                updateMeta('og:image', image);
+                updateMeta('twitter:title', post.title);
+                updateMeta('twitter:description', post.summary);
+                updateMeta('twitter:image', image);
+                
+                // Add Article Schema
+                const script = document.createElement('script');
+                script.type = 'application/ld+json';
+                script.text = JSON.stringify({
+                    "@context": "https://schema.org",
+                    "@type": "BlogPosting",
+                    "headline": post.title,
+                    "description": post.summary,
+                    "datePublished": post.date,
+                    "author": {
+                        "@type": "Person",
+                        "name": "Avanish Patidar"
+                    },
+                    "url": url,
+                    "image": image
+                });
+                
+                // Remove old schema if exists
+                const oldScript = document.querySelector('script[type="application/ld+json"]');
+                if (oldScript && oldScript.textContent.includes('BlogPosting')) {
+                    oldScript.remove();
+                }
+                document.head.appendChild(script);
+            }
+            
+            function updateMeta(name, content) {
+                let meta = document.querySelector(`meta[name="${name}"], meta[property="${name}"]`);
+                if (!meta) {
+                    meta = document.createElement('meta');
+                    if (name.startsWith('og:') || name.startsWith('twitter:')) {
+                        meta.setAttribute('property', name);
+                    } else {
+                        meta.setAttribute('name', name);
+                    }
+                    document.head.appendChild(meta);
+                }
+                meta.setAttribute('content', content);
+            }
+
             // Refactored function to load blog post
             async function loadBlogPost(slug) {
                 const post = blogPosts.find(p => p.slug === slug);
@@ -153,7 +250,10 @@
 
                     document.getElementById('writings').style.display = 'none';
                     blogContent.style.display = 'block';
+                    
+                    // Update SEO meta tags dynamically
                     document.title = `${post.title} - Avanish Patidar`;
+                    updateMetaTags(post);
 
                     // Scroll to top
                     window.scrollTo(0, 0);

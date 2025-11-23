@@ -1,6 +1,12 @@
 // Array of blog posts with metadata
 const blogPosts = [
     {
+        title: "Cursor vs Copilot: My Honest Take After 3 Months",
+        slug: "cursor-vs-copilot",
+        date: "Nov 23, 2024",
+        summary: "I switched from GitHub Copilot to Cursor. Here's what actually happened—no BS, just real developer experience."
+    },
+    {
         title: "The Rise of Agentic AI: From Chatbots to Autonomous Workers",
         slug: "agentic-ai",
         date: "Nov 23, 2025",
