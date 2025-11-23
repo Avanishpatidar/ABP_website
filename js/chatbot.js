@@ -198,11 +198,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
             chatHistory.push({ role: 'model', text: fullText });
 
-            // Handle Tool Call (Email)
+            // Handle Tool Calls (Email & WhatsApp)
             const jsonMatch = fullText.match(/:::JSON\s*({[\s\S]*?})\s*:::/);
             if (jsonMatch) {
                 try {
                     const toolData = JSON.parse(jsonMatch[1]);
+                    
                     if (toolData.tool === 'send_email') {
                         const { subject, body } = toolData;
                         const mailtoLink = `mailto:avanish.patidar07@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
@@ -214,6 +215,19 @@ document.addEventListener('DOMContentLoaded', () => {
                         messagesContainer.scrollTop = messagesContainer.scrollHeight;
                         
                         window.open(mailtoLink, '_blank');
+                    }
+                    
+                    if (toolData.tool === 'send_whatsapp') {
+                        const { phone, message } = toolData;
+                        const whatsappLink = `https://wa.me/${phone.replace(/\+/g, '')}?text=${encodeURIComponent(message)}`;
+                        
+                        const actionDiv = document.createElement('div');
+                        actionDiv.className = 'term-msg bot';
+                        actionDiv.innerHTML = `<div class="msg-prefix">system:</div><div class="msg-content">Opening WhatsApp... <a href="${whatsappLink}" target="_blank">[Click here if it didn't open]</a></div>`;
+                        messagesContainer.appendChild(actionDiv);
+                        messagesContainer.scrollTop = messagesContainer.scrollHeight;
+                        
+                        window.open(whatsappLink, '_blank');
                     }
                 } catch (e) {
                     console.error("Error parsing tool JSON", e);
