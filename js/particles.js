@@ -1,11 +1,11 @@
-// Particle Background System
+// Modern "Floating Dust" Particle System
 class ParticleBackground {
     constructor() {
         this.canvas = document.createElement('canvas');
         this.ctx = this.canvas.getContext('2d');
         this.particles = [];
-        this.mouse = { x: null, y: null, radius: 150 };
-        this.particleCount = 80; // Subtle amount
+        this.mouse = { x: null, y: null, radius: 200 };
+        this.particleCount = 60; // Fewer particles for a cleaner look
 
         this.init();
     }
@@ -19,9 +19,10 @@ class ParticleBackground {
         this.canvas.style.width = '100%';
         this.canvas.style.height = '100%';
         this.canvas.style.pointerEvents = 'none';
-        this.canvas.style.zIndex = '1';
-        this.canvas.style.opacity = '0.4'; // Subtle
+        this.canvas.style.zIndex = '-1'; // Behind everything
+        this.canvas.style.opacity = '0.6'; // Slightly more visible but soft
 
+        // Ensure it's the very first element to stay in background
         document.body.insertBefore(this.canvas, document.body.firstChild);
 
         this.resize();
@@ -41,19 +42,18 @@ class ParticleBackground {
             this.particles.push({
                 x: Math.random() * this.canvas.width,
                 y: Math.random() * this.canvas.height,
-                vx: (Math.random() - 0.5) * 0.5, // Slow movement
-                vy: (Math.random() - 0.5) * 0.5,
-                radius: Math.random() * 2 + 1,
-                originalX: 0,
-                originalY: 0
+                // Very slow, drift-like movement
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2,
+                // Varied sizes for depth (bokeh effect)
+                radius: Math.random() * 3 + 1,
+                // Alpha for transparency variation
+                alpha: Math.random() * 0.5 + 0.1,
+                // Pulse effect variables
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
             });
         }
-
-        // Store original positions
-        this.particles.forEach(p => {
-            p.originalX = p.x;
-            p.originalY = p.y;
-        });
     }
 
     setupEventListeners() {
@@ -73,65 +73,57 @@ class ParticleBackground {
         });
     }
 
-    drawParticle(particle) {
+    drawParticle(p) {
         this.ctx.beginPath();
-        this.ctx.arc(particle.x, particle.y, particle.radius, 0, Math.PI * 2);
-        this.ctx.fillStyle = '#FF7043'; // Match highlight color
+        this.ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+
+        // Soft white/off-white glow
+        this.ctx.fillStyle = `rgba(255, 255, 255, ${p.alpha})`;
         this.ctx.fill();
-    }
 
-    connectParticles() {
-        for (let i = 0; i < this.particles.length; i++) {
-            for (let j = i + 1; j < this.particles.length; j++) {
-                const dx = this.particles[i].x - this.particles[j].x;
-                const dy = this.particles[i].y - this.particles[j].y;
-                const distance = Math.sqrt(dx * dx + dy * dy);
-
-                if (distance < 120) { // Connection distance
-                    this.ctx.beginPath();
-                    this.ctx.strokeStyle = `rgba(255, 112, 67, ${0.2 * (1 - distance / 120)})`;
-                    this.ctx.lineWidth = 0.5;
-                    this.ctx.moveTo(this.particles[i].x, this.particles[i].y);
-                    this.ctx.lineTo(this.particles[j].x, this.particles[j].y);
-                    this.ctx.stroke();
-                }
-            }
+        // Optional: Very subtle glow for larger particles
+        if (p.radius > 2.5) {
+            this.ctx.shadowBlur = 10;
+            this.ctx.shadowColor = `rgba(255, 255, 255, ${p.alpha * 0.5})`;
+        } else {
+            this.ctx.shadowBlur = 0;
         }
     }
 
     updateParticles() {
-        this.particles.forEach(particle => {
-            // Mouse interaction - particles move away from cursor
+        this.particles.forEach(p => {
+            // Mouse interaction - subtle repulsion/drift
             if (this.mouse.x !== null && this.mouse.y !== null) {
-                const dx = particle.x - this.mouse.x;
-                const dy = particle.y - this.mouse.y;
+                const dx = p.x - this.mouse.x;
+                const dy = p.y - this.mouse.y;
                 const distance = Math.sqrt(dx * dx + dy * dy);
 
                 if (distance < this.mouse.radius) {
                     const force = (this.mouse.radius - distance) / this.mouse.radius;
                     const angle = Math.atan2(dy, dx);
-                    particle.x += Math.cos(angle) * force * 3;
-                    particle.y += Math.sin(angle) * force * 3;
+                    // Gentle push
+                    p.x += Math.cos(angle) * force * 1.5;
+                    p.y += Math.sin(angle) * force * 1.5;
                 }
             }
 
-            // Gentle drift back to original position
-            particle.x += (particle.originalX - particle.x) * 0.05;
-            particle.y += (particle.originalY - particle.y) * 0.05;
+            // Constant slow drift
+            p.x += p.vx;
+            p.y += p.vy;
 
-            // Add slight random movement
-            particle.x += particle.vx;
-            particle.y += particle.vy;
+            // Pulse opacity slightly for "alive" feel
+            p.alpha += Math.sin(p.pulse) * 0.005;
+            p.pulse += p.pulseSpeed;
 
-            // Bounce off edges
-            if (particle.x < 0 || particle.x > this.canvas.width) {
-                particle.vx *= -1;
-                particle.originalX = particle.x;
-            }
-            if (particle.y < 0 || particle.y > this.canvas.height) {
-                particle.vy *= -1;
-                particle.originalY = particle.y;
-            }
+            // Clamp alpha
+            if (p.alpha < 0.1) p.alpha = 0.1;
+            if (p.alpha > 0.6) p.alpha = 0.6;
+
+            // Wrap around screen (infinite space feel)
+            if (p.x < -50) p.x = this.canvas.width + 50;
+            if (p.x > this.canvas.width + 50) p.x = -50;
+            if (p.y < -50) p.y = this.canvas.height + 50;
+            if (p.y > this.canvas.height + 50) p.y = -50;
         });
     }
 
@@ -139,17 +131,16 @@ class ParticleBackground {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
         this.updateParticles();
-        this.connectParticles();
 
-        this.particles.forEach(particle => {
-            this.drawParticle(particle);
+        this.particles.forEach(p => {
+            this.drawParticle(p);
         });
 
         requestAnimationFrame(() => this.animate());
     }
 }
 
-// Initialize when DOM is ready
+// Initialize
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
         new ParticleBackground();
