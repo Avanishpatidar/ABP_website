@@ -1,5 +1,5 @@
 /* styles.css - Minimalist Text-Based Theme (No Cards) */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&family=Outfit:wght@500;600;700&display=swap');
 
 :root {
     /* Theme Palette */
@@ -282,7 +282,7 @@ body {
 
 @media (max-width: 768px) {
     .scroll-to-top {
-        bottom: 20px;
+        bottom: 60px;
         right: 20px;
         width: 44px;
         height: 44px;
@@ -311,8 +311,8 @@ body {
     margin-bottom: 40px;
     color: var(--primary-text);
     line-height: 1.2;
-    font-family: 'Fira Code', monospace;
-    /* Monospace for headings */
+    font-family: 'Outfit', sans-serif;
+    /* Modern Geometric Sans */
 }
 
 .section-title::before {
@@ -326,6 +326,8 @@ body {
     background: none;
     -webkit-text-fill-color: initial;
     color: var(--primary-text);
+    text-shadow: 0 0 20px rgba(255, 112, 67, 0.3);
+    /* Subtle Glow */
 }
 
 .section-text {
@@ -785,45 +787,7 @@ body {
     }
 }
 
-/* Blog List */
-#blog-posts-container {
-    display: flex;
-    flex-direction: column;
-    gap: 32px;
-}
-
-.blog-post {
-    display: block;
-    padding: 0;
-    border-bottom: none;
-    background: transparent;
-}
-
-.blog-post:hover {
-    background: transparent;
-}
-
-.blog-title {
-    font-size: 20px;
-    font-weight: 600;
-    margin-bottom: 8px;
-}
-
-.blog-title a {
-    color: var(--primary-text);
-    text-decoration: none;
-}
-
-.blog-title a:hover {
-    color: var(--highlight-color);
-}
-
-.blog-date {
-    display: block;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    color: var(--muted-text);
-}
+/* Blog List - Removed duplicate, keeping card design below */
 
 /* Blog Content */
 .blog-content {
@@ -899,4 +863,446 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
     background: #555;
+}
+
+/* Fixed CTA Buttons - Blur Glass with Attention Animation */
+.cta-btn {
+    position: fixed;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 22px;
+    border-radius: 999px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 998;
+    cursor: pointer;
+    overflow: visible;
+    left: 40px;
+    backdrop-filter: blur(12px) saturate(150%);
+    -webkit-backdrop-filter: blur(12px) saturate(150%);
+}
+
+/* Hire Me - Top of Stack (Pure Black + Animation) */
+.cta-hire-me {
+    bottom: 150px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1.5px solid rgba(255, 112, 67, 0.5);
+    color: var(--highlight-color);
+    box-shadow: 0 4px 20px rgba(255, 112, 67, 0.2),
+                0 0 0 0 rgba(255, 112, 67, 0.4);
+    animation: ctaPulseOrange 3s ease-in-out infinite;
+}
+
+.cta-hire-me:hover {
+    background: rgba(0, 0, 0, 0.98);
+    border-color: rgba(255, 112, 67, 0.8);
+    transform: translateX(4px);
+    box-shadow: 0 8px 30px rgba(255, 112, 67, 0.4);
+    color: #ffffff;
+    animation: none;
+}
+
+.cta-hire-me:active {
+    transform: translateX(2px);
+}
+
+/* Let's Talk - Bottom of Stack (Pure Black + Animation) */
+.cta-lets-talk {
+    bottom: 90px;
+    background: rgba(0, 0, 0, 0.95);
+    border: 1.5px solid rgba(37, 211, 102, 0.5);
+    color: #25D366;
+    box-shadow: 0 4px 20px rgba(37, 211, 102, 0.2),
+                0 0 0 0 rgba(37, 211, 102, 0.4);
+    animation: ctaPulseGreen 3s ease-in-out infinite 1.5s;
+}
+
+.cta-lets-talk:hover {
+    background: rgba(0, 0, 0, 0.98);
+    border-color: rgba(37, 211, 102, 0.8);
+    transform: translateX(4px);
+    box-shadow: 0 8px 30px rgba(37, 211, 102, 0.4);
+    color: #ffffff;
+    animation: none;
+}
+
+.cta-lets-talk:active {
+    transform: translateX(2px);
+}
+
+/* Attention-Grabbing Pulse Animations */
+@keyframes ctaPulseOrange {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(255, 112, 67, 0.2),
+                    0 0 0 0 rgba(255, 112, 67, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(255, 112, 67, 0.3),
+                    0 0 0 8px rgba(255, 112, 67, 0);
+    }
+}
+
+@keyframes ctaPulseGreen {
+    0%, 100% {
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.2),
+                    0 0 0 0 rgba(37, 211, 102, 0.4);
+    }
+    50% {
+        box-shadow: 0 4px 20px rgba(37, 211, 102, 0.3),
+                    0 0 0 8px rgba(37, 211, 102, 0);
+    }
+}
+
+/* CTA Icon Styling */
+.cta-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+    transition: transform 0.3s ease;
+    opacity: 0.9;
+}
+
+.cta-btn:hover .cta-icon {
+    transform: scale(1.15);
+    opacity: 1;
+}
+
+.cta-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* CTA Text */
+.cta-text {
+    font-weight: 500;
+    letter-spacing: 0.2px;
+    white-space: nowrap;
+}
+
+/* Desktop - Larger Screens */
+@media (min-width: 1025px) {
+    .cta-btn {
+        padding: 14px 26px;
+        font-size: 15px;
+    }
+    
+    .cta-icon {
+        width: 22px;
+        height: 22px;
+    }
+}
+
+/* Tablet Adjustments */
+@media (max-width: 1024px) {
+    .cta-btn {
+        left: 30px;
+    }
+    
+    .cta-hire-me {
+        bottom: 130px;
+    }
+    
+    .cta-lets-talk {
+        bottom: 75px;
+    }
+}
+
+/* Mobile - Stacked Compact Buttons */
+@media (max-width: 768px) {
+    .cta-btn {
+        left: 20px;
+        padding: 11px 18px;
+        font-size: 13px;
+        gap: 8px;
+        backdrop-filter: blur(18px) saturate(180%);
+    }
+    
+    .cta-hire-me {
+        bottom: 110px;
+    }
+    
+    .cta-lets-talk {
+        bottom: 60px;
+    }
+    
+    .cta-icon {
+        width: 18px;
+        height: 18px;
+    }
+}
+
+/* Small Mobile - Refined Stacked Design */
+@media (max-width: 480px) {
+    .cta-btn {
+        left: 16px;
+        padding: 10px 16px;
+        font-size: 12px;
+        gap: 8px;
+    }
+    
+    .cta-hire-me {
+        bottom: 100px;
+    }
+    
+    .cta-lets-talk {
+        bottom: 52px;
+    }
+    
+    .cta-icon {
+        width: 18px;
+        height: 18px;
+    }
+    
+    .cta-text {
+        font-size: 12px;
+    }
+}
+
+/* Extra Small Mobile - Icon Only Circles */
+@media (max-width: 380px) {
+    .cta-btn {
+        width: 46px;
+        height: 46px;
+        padding: 0;
+        justify-content: center;
+        border-radius: 50%;
+        gap: 0;
+        left: 16px;
+    }
+    
+    .cta-text {
+        display: none;
+    }
+    
+    .cta-icon {
+        width: 20px;
+        height: 20px;
+    }
+    
+    .cta-hire-me {
+        bottom: 90px;
+    }
+    
+    .cta-lets-talk {
+        bottom: 40px;
+    }
+    
+    /* Tooltip on tap */
+    .cta-btn::after {
+        content: attr(aria-label);
+        position: absolute;
+        left: calc(100% + 12px);
+        top: 50%;
+        transform: translateY(-50%) scale(0.9);
+        background: rgba(0, 0, 0, 0.95);
+        color: white;
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-size: 12px;
+        white-space: nowrap;
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.2s ease;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .cta-btn:active::after {
+        opacity: 1;
+        transform: translateY(-50%) scale(1);
+    }
+    
+    /* Arrow pointer */
+    .cta-btn::before {
+        content: '';
+        position: absolute;
+        left: calc(100% + 6px);
+        top: 50%;
+        transform: translateY(-50%);
+        width: 0;
+        height: 0;
+        border-top: 6px solid transparent;
+        border-bottom: 6px solid transparent;
+        border-right: 6px solid rgba(0, 0, 0, 0.95);
+        opacity: 0;
+        pointer-events: none;
+        transition: all 0.2s ease;
+    }
+    
+    .cta-btn:active::before {
+        opacity: 1;
+    }
+}
+
+/* Touch Device Optimization */
+@media (hover: none) and (pointer: coarse) {
+    .cta-btn:active {
+        transform: scale(0.96);
+    }
+    
+    .cta-hire-me:hover {
+        transform: translateX(0);
+    }
+    
+    .cta-lets-talk:hover {
+        transform: translateX(0);
+    }
+}
+
+/* Accessibility - Focus States */
+.cta-btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25);
+}
+
+.cta-btn:focus-visible {
+    outline: 2px solid var(--highlight-color);
+    outline-offset: 3px;
+}
+
+/* Ensure CTAs are above scroll button but below mobile menu */
+.scroll-to-top {
+    z-index: 997;
+}
+/* Featured Badge */
+.featured-badge {
+    display: inline-block;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+    color: #000;
+    background: var(--highlight-color);
+    padding: 2px 6px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+    transform: translateY(-2px);
+}
+
+/* Blog Content Images */
+.blog-content img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    margin: 32px 0;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Blog Card Design */
+#blog-posts-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 24px;
+    margin-top: 40px;
+}
+
+.blog-card {
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    padding: 24px;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+}
+
+/* Mobile Blog Cards */
+@media (max-width: 768px) {
+    #blog-posts-container {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+    
+    .blog-card {
+        padding: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    #blog-posts-container {
+        gap: 16px;
+    }
+    
+    .blog-card {
+        padding: 18px;
+        border-radius: 10px;
+    }
+}
+
+.blog-card:hover {
+    transform: translateY(-4px);
+    background: rgba(255, 255, 255, 0.04);
+    border-color: var(--highlight-color);
+    box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.5);
+}
+
+.blog-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--highlight-color), transparent);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.blog-card:hover::before {
+    opacity: 1;
+}
+
+.blog-card-date {
+    font-size: 12px;
+    color: var(--muted-text);
+    margin-bottom: 12px;
+    font-family: 'Fira Code', monospace;
+}
+
+.blog-card-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--primary-text);
+    margin-bottom: 12px;
+    font-family: 'Outfit', sans-serif;
+    line-height: 1.4;
+}
+
+.blog-card-summary {
+    font-size: 14px;
+    color: var(--secondary-text);
+    margin-bottom: 20px;
+    line-height: 1.6;
+    flex-grow: 1;
+}
+
+.blog-card-link {
+    font-size: 14px;
+    color: var(--highlight-color);
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.blog-card-link svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.blog-card:hover .blog-card-link svg {
+    transform: translateX(4px);
 }

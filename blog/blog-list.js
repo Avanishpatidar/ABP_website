@@ -1,15 +1,15 @@
 // Array of blog posts with metadata
 const blogPosts = [
     {
-        title: "When Gadgets Go Wild",
-        slug: "Tech Shitpost",
-        date: "12 mar, 2025",
-        summary: "What if When Your Fridge Gets Smarter Than You"
+        title: "The Rise of Agentic AI: From Chatbots to Autonomous Workers",
+        slug: "agentic-ai",
+        date: "Nov 23, 2025",
+        summary: "Why AI is moving from 'talking' to 'doing', and what it means for the future of work."
     },
     {
-        title: "AI Hype or Signk?",
-        slug: "ai-hype-signk",
-        date: "25 mar, 2025",
-        summary: "When AI’s big talk might sink us—dot-com vibes, anyone?"
+        title: "Coding in 2025: How AI Agents are Redefining Software Engineering",
+        slug: "coding-2025",
+        date: "Nov 23, 2025",
+        summary: "The shift from syntax to semantics: How AI architects are building the next generation of software."
     }
 ];

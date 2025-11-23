@@ -159,7 +159,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
 
             projectElement.innerHTML = `
-                <div class="work-title">${project.title}</div>
+                <div class="work-title">
+                    ${project.title}
+                    ${project.featured ? '<span class="featured-badge">Featured</span>' : ''}
+                </div>
                 <p class="work-description">${project.description}</p>
                 <div class="work-links">${buttons}</div>
             `;
