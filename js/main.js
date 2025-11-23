@@ -72,38 +72,58 @@ function setupSectionAnimations() {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Add skills to the skills container
+    // Add categorized skills to the skills container
     const skillsContainer = document.getElementById('skills-container');
-    if (skillsContainer) {
-        skills.forEach(skill => {
-            const skillElement = document.createElement('div');
-            skillElement.className = 'skill-tag';
+    if (skillsContainer && typeof skillsData !== 'undefined') {
+        Object.entries(skillsData).forEach(([category, skills]) => {
+            // Create category container
+            const categoryDiv = document.createElement('div');
+            categoryDiv.className = 'skill-category';
 
-            // Define which logos need an outline (white drop-shadow)
-            const outlineSkills = ["Node.js", "Express.js", "Next.js"];
-            const imgClass = outlineSkills.includes(skill.name) ? 'skill-logo outline' : 'skill-logo';
+            // Create category title
+            const categoryTitle = document.createElement('div');
+            categoryTitle.className = 'skill-category-title';
+            categoryTitle.textContent = category;
+            categoryDiv.appendChild(categoryTitle);
 
-            skillElement.innerHTML = `
-          <img src="${skill.logoUrl}" width="16" height="16" alt="${skill.name} logo" class="${imgClass}" style="vertical-align:middle; margin-right:4px;"/>
-          ${skill.name}
-        `;
+            // Create skills grid
+            const skillsGrid = document.createElement('div');
+            skillsGrid.className = 'skill-category-grid';
 
-            // Apply dynamic hover effect based on skill color
-            skillElement.addEventListener('mouseenter', () => {
-                skillElement.style.borderColor = skill.color;
-                skillElement.style.backgroundColor = `${skill.color}15`; // 15 is approx 8% opacity in hex
-                skillElement.style.boxShadow = `0 4px 12px -2px ${skill.color}40`; // 40 is approx 25% opacity
-                skillElement.style.color = "#fff";
+            // Add skills to grid
+            skills.forEach(skill => {
+                const skillElement = document.createElement('div');
+                skillElement.className = 'skill-tag';
+
+                // Define which logos need an outline (white drop-shadow)
+                const outlineSkills = ["Node.js", "Express.js", "Next.js", "Payload CMS", "Vercel", "Railway"];
+                const imgClass = outlineSkills.includes(skill.name) ? 'skill-logo outline' : 'skill-logo';
+
+                skillElement.innerHTML = `
+                    <img src="${skill.logoUrl}" alt="${skill.name} logo" class="${imgClass}" />
+                    ${skill.name}
+                `;
+
+                // Apply dynamic hover effect based on skill color
+                skillElement.addEventListener('mouseenter', () => {
+                    skillElement.style.borderColor = skill.color;
+                    skillElement.style.backgroundColor = `${skill.color}15`;
+                    skillElement.style.boxShadow = `0 8px 20px -4px ${skill.color}40`;
+                    skillElement.style.color = "#fff";
+                });
+
+                skillElement.addEventListener('mouseleave', () => {
+                    skillElement.style.borderColor = '';
+                    skillElement.style.backgroundColor = '';
+                    skillElement.style.boxShadow = '';
+                    skillElement.style.color = '';
+                });
+
+                skillsGrid.appendChild(skillElement);
             });
 
-            skillElement.addEventListener('mouseleave', () => {
-                skillElement.style.borderColor = '';
-                skillElement.style.backgroundColor = '';
-                skillElement.style.boxShadow = '';
-                skillElement.style.color = '';
-            });
-
-            skillsContainer.appendChild(skillElement);
+            categoryDiv.appendChild(skillsGrid);
+            skillsContainer.appendChild(categoryDiv);
         });
     }
 
