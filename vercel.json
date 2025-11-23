@@ -1,9 +1,1 @@
-{
-  "version": 2,
-  "routes": [
-    { "handle": "filesystem" },
-    { "src": "/writings", "dest": "/pages/writings.html" },
-    { "src": "/blogs", "dest": "/pages/writings.html" },
-    { "src": "/(.*)", "dest": "/$1" }
-  ]
-}
+{}
