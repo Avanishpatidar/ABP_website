@@ -2342,7 +2342,7 @@ body.light-mode .cta-btn:hover {
 /* Mobile Container Padding to prevent content overlap */
 @media (max-width: 768px) {
     .container {
-        padding-bottom: 180px !important; /* Extra space for the stacked buttons */
+        padding-bottom: 220px !important; /* Extra space for the stacked buttons */
     }
 }
 
