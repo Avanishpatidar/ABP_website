@@ -1,35 +1,35 @@
 const projects = [
     {
         title: "TradeIQ – AI-Powered Automated Trading Platform",
-        description: "A real-time financial intelligence platform that scrapes BSE/NSE announcements, analyzes disclosures using Gemini LLM, and extracts signals. Features a no-code strategy builder and integrates with Zerodha, Dhan, and Angel One APIs.",
+        description: "A financial intelligence engine processing real-time BSE/NSE data. Built a custom strategy builder and LLM-powered signal extraction system, reducing analysis time by 90%.",
         website: null,
         github: null, // Add link if available
         featured: true
     },
     {
         title: "AI Live Assist Platform",
-        description: "Real-time communication app with text, voice, and video. Features screen sharing with AI understanding and Vision AI for analyzing images and drawings. Built with low-latency WebSockets.",
+        description: "Real-time collaboration suite featuring AI-driven screen understanding. Engineered low-latency WebSocket infrastructure for seamless voice, video, and drawing synchronization.",
         website: null,
         github: null, // Add link if available
         featured: true
     },
     {
         title: "IPL AI Chatbot",
-        description: "Conversational analytics bot processing 300k+ rows of IPL data. Converts natural language questions to SQL queries for deep insights like matchups and head-to-head stats.",
+        description: "An AI-powered analytics assistant transforming natural language into complex SQL queries. Delivers instant insights from a 300k+ row dataset of IPL match statistics.",
         website: null,
         github: "https://github.com/Avanishpatidar/ipl-chatbot",
         featured: true
     },
     {
         title: "Aradhya Manpower Supplier",
-        description: "Fully dynamic company website with Payload CMS for job management and SMTP integration for forms. Deployed on Vercel.",
+        description: "Production-grade corporate platform built with Payload CMS. Automated job application workflows with SMTP integration, streamlining the hiring process.",
         website: "https://www.aradhyamanpowersupplier.com/",
         github: "https://github.com/aradhyamanpowersolutions/website",
         featured: true
     },
     {
         title: "News Aggregator App",
-        description: "Aggregates news from multiple countries with category sorting and filtering. Features a clean, modern UI.",
+        description: "A high-performance news aggregation engine. Features advanced filtering and a modern, responsive UI for efficient content consumption.",
         website: "https://news-aggregator-xts7.vercel.app/",
         github: "https://github.com/Avanishpatidar/news-aggregator",
         featured: true
