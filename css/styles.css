@@ -20,6 +20,10 @@
     --radius-pill: 9999px;
     --transition-fast: 0.2s ease;
     --transition-smooth: 0.4s ease;
+
+    /* --- ALIGNMENT FIXES FOR MOBILE/TABLET --- */
+    --bottom-bar-height: 24px;
+    --bottom-bar-gap: 60px;
 }
 
 * {
@@ -317,8 +321,6 @@ body {
 /* Scroll to Top Button - Modern Design */
 .scroll-to-top {
     position: fixed;
-    bottom: 100px;
-    right: 30px;
     width: 50px;
     height: 50px;
     background: rgba(0, 0, 0, 0.9);
@@ -378,7 +380,6 @@ body {
 
 @media (max-width: 768px) {
     .scroll-to-top {
-        bottom: 90px;
         right: 20px;
         width: 48px;
         height: 48px;
@@ -1019,6 +1020,12 @@ body {
 }
 
 /* Fixed CTA Buttons - Blur Glass with Attention Animation */
+:root {
+    /* ...existing variables... */
+    --bottom-bar-height: 24px;
+    --bottom-bar-gap: 60px;
+}
+
 .cta-btn {
     position: fixed;
     display: flex;
@@ -1041,7 +1048,6 @@ body {
 
 /* Hire Me - Top of Stack (Pure Black + Animation) */
 .cta-hire-me {
-    bottom: 90px;
     background: #000000;
     border: 1.5px solid rgba(255, 112, 67, 0.5);
     color: #ffffff;
@@ -1065,7 +1071,6 @@ body {
 
 /* Let's Talk - Bottom of Stack (Pure Black + Animation) */
 .cta-lets-talk {
-    bottom: 30px;
     background: #000000;
     border: 1.5px solid rgba(37, 211, 102, 0.5);
     color: #ffffff;
@@ -1540,7 +1545,7 @@ body.light-mode .cta-lets-talk:hover {
 
 /* 1. The Trigger Button (Styled like CTAs) */
 .cta-ask-abp {
-    bottom: 40px;
+    bottom: var(--bottom-bar-height);
     right: 40px; /* Positioned on the right */
     left: auto; /* Override default CTA left positioning */
     background: #000000;
@@ -1549,7 +1554,7 @@ body.light-mode .cta-lets-talk:hover {
     box-shadow: 0 4px 20px rgba(255, 112, 67, 0.2),
                 0 0 0 0 rgba(255, 112, 67, 0.4);
     animation: ctaPulseOrange 3s ease-in-out infinite 0.75s; /* Staggered animation */
-    z-index: 2000;
+    z-index: 998;
 }
 
 .cta-ask-abp:hover {
@@ -2310,4 +2315,77 @@ body.light-mode .cta-btn:hover {
 
 /* FINAL OVERRIDES - Ensure Brand Colors Win */
 /* This section is intentionally left empty as the rules have been consolidated above */
+
+/* --- ALIGNMENT FIXES FOR MOBILE/TABLET --- */
+
+/* Ensure consistent bottom spacing for all fixed elements */
+:root {
+    --bottom-bar-height: 30px;
+    --bottom-bar-gap: 70px;
+}
+
+/* Desktop Alignment - All buttons aligned */
+.cta-lets-talk {
+    bottom: var(--bottom-bar-height);
+    left: 40px;
+}
+
+.cta-hire-me {
+    bottom: calc(var(--bottom-bar-height) + var(--bottom-bar-gap));
+    left: 40px;
+}
+
+.cta-ask-abp {
+    bottom: var(--bottom-bar-height);
+    right: 40px;
+}
+
+.scroll-to-top {
+    bottom: calc(var(--bottom-bar-height) + var(--bottom-bar-gap));
+    right: 40px;
+}
+
+/* Mobile Container Padding to prevent content overlap */
+@media (max-width: 768px) {
+    .container {
+        padding-bottom: 180px !important; /* Extra space for the stacked buttons */
+    }
+}
+
+/* Unified Mobile Stack for Fixed Buttons */
+@media (max-width: 768px) {
+    /* Left Stack: Let's Talk & Hire Me */
+    .cta-lets-talk {
+        bottom: var(--bottom-bar-height) !important;
+        left: 20px !important;
+    }
+
+    .cta-hire-me {
+        bottom: calc(var(--bottom-bar-height) + var(--bottom-bar-gap)) !important;
+        left: 20px !important;
+    }
+
+    /* Right Stack: Ask ABP & Scroll Top */
+    .cta-ask-abp {
+        bottom: var(--bottom-bar-height) !important;
+        right: 20px !important;
+        left: auto !important;
+    }
+
+    .scroll-to-top {
+        bottom: calc(var(--bottom-bar-height) + var(--bottom-bar-gap)) !important;
+        right: 20px !important;
+    }
+}
+
+/* Small Mobile Adjustments */
+@media (max-width: 380px) {
+    .cta-lets-talk, .cta-hire-me {
+        left: 16px !important;
+    }
+    
+    .cta-ask-abp, .scroll-to-top {
+        right: 16px !important;
+    }
+}
 
