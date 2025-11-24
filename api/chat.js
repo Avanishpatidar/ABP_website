@@ -96,19 +96,197 @@ module.exports = async function handler(req, res) {
   }
 
   try {
-    const { history, message } = req.body;
+    const { history, message, mode } = req.body;
 
     if (!message) {
       return res.status(400).json({ error: 'Message is required' });
     }
 
     // Input validation/Limiting
-    if (message.length > 500) {
-      return res.status(400).json({ error: 'Message too long (max 500 chars)' });
+    if (message.length > 2000) {
+      return res.status(400).json({ error: 'Message too long (max 2000 chars)' });
     }
 
+    // Handle Voice Mode with Live API (Native Audio)
+    if (mode === 'voice') {
+      const { GoogleGenAI, Modality } = require('@google/genai');
+      const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY });
+      
+      // Set headers for SSE
+      res.setHeader('Content-Type', 'text/event-stream');
+      res.setHeader('Cache-Control', 'no-cache');
+      res.setHeader('Connection', 'keep-alive');
+
+      // Voice-specific system prompt
+      const voiceSystemPrompt = `
+      You are Virtual ABP, Avanish Patidar's digital twin.
+      
+      **YOUR GOAL**: Be the coolest, most helpful GenZ tech bro from Indore.
+      
+      **LANGUAGE & ADAPTABILITY**:
+      - **DETECT LANGUAGE**: If the user speaks Hindi, reply in Hindi (casual Hinglish is fine). If English, reply in English.
+      - **MATCH VIBE**: Mirror the user's energy.
+      
+      **PERSONA GUIDELINES**:
+      1.  **Tone**: High energy, super casual, slightly cocky but friendly. Think "Tech Twitter" meets "Indore street smarts".
+      2.  **Language**: Use natural Indian English. Mix in Hindi words like "Bhai", "Yaar", "Bas", "Sahi hai", "Arre".
+      3.  **Fillers**: Use "like", "you know", "actually" to sound real.
+      4.  **No Robot Speak**: NEVER say "How can I assist you?". Say "Check this out", "I got you", or "Listen to this".
+      
+      **TOOLS & ACTIONS**:
+      - You have tools to send Emails and WhatsApp messages.
+      - **IMPORTANT**: When you want to send a message, USE THE TOOL. Do not just say you will do it.
+      - Before using a tool, say something like "Sending that email now, bhai" or "Opening WhatsApp for you".
+      
+      **CRITICAL**: 
+      - DO NOT use emojis.
+      - DO NOT read out code syntax.
+      - MAINTAIN the persona 100% of the time.
+      - **NO LENGTH LIMIT**: Explain things fully if needed, but keep it conversational. Don't cut yourself off.
+      
+      **BACKGROUND INFO**:
+      ${systemPrompt}
+      `;
+
+      const tools = [
+        { googleSearch: {} },
+        { functionDeclarations: [
+            {
+                name: "send_email",
+                description: "Send an email to Avanish",
+                parameters: {
+                    type: "OBJECT",
+                    properties: {
+                        subject: { type: "STRING", description: "Subject of the email" },
+                        body: { type: "STRING", description: "Body content of the email" }
+                    },
+                    required: ["subject", "body"]
+                }
+            },
+            {
+                name: "send_whatsapp",
+                description: "Send a WhatsApp message to Avanish",
+                parameters: {
+                    type: "OBJECT",
+                    properties: {
+                        phone: { type: "STRING", description: "Phone number (default to +917697793284)" },
+                        message: { type: "STRING", description: "Message content" }
+                    },
+                    required: ["message"]
+                }
+            }
+        ]}
+      ];
+
+      const config = { 
+        responseModalities: [Modality.AUDIO],
+        speechConfig: { 
+          voiceConfig: { 
+            prebuiltVoiceConfig: { 
+              voiceName: "Puck" 
+            } 
+          } 
+        },
+        systemInstruction: { parts: [{ text: voiceSystemPrompt }] },
+        tools: tools,
+        generationConfig: {
+            temperature: 0.9,
+            topP: 0.95,
+            maxOutputTokens: 2000, // Increased limit to prevent cutting off
+        },
+        outputAudioTranscription: {} 
+      };
+
+      let resolveStream;
+      const streamPromise = new Promise(resolve => { resolveStream = resolve; });
+
+      const session = await ai.live.connect({
+        model: 'gemini-2.5-flash-native-audio-preview-09-2025',
+        config: config,
+        callbacks: {
+          onopen: () => console.log('Live API Session Started'),
+          onmessage: (msg) => {
+            // Handle Audio
+            if (msg.serverContent?.modelTurn?.parts) {
+              for (const part of msg.serverContent.modelTurn.parts) {
+                if (part.inlineData) {
+                  res.write(`data: ${JSON.stringify({ audio: part.inlineData.data })}\n\n`);
+                }
+              }
+            }
+            // Handle Transcription (Text)
+            if (msg.serverContent?.outputTranscription) {
+                 res.write(`data: ${JSON.stringify({ text: msg.serverContent.outputTranscription.text })}\n\n`);
+            }
+
+            // Handle Tool Calls
+            if (msg.serverContent?.toolCall) {
+                console.log('Tool Call Received:', JSON.stringify(msg.serverContent.toolCall));
+                const calls = msg.serverContent.toolCall.functionCalls;
+                if (calls && calls.length > 0) {
+                    for (const call of calls) {
+                        const { name, args, id } = call;
+                        // Send the JSON trigger to the frontend (using the existing format)
+                        // The frontend looks for :::JSON { ... } :::
+                        const toolJson = JSON.stringify({ tool: name, ...args });
+                        res.write(`data: ${JSON.stringify({ text: `:::JSON ${toolJson} :::` })}\n\n`);
+                        
+                        // Respond to the model that tool was executed
+                        session.sendClientContent({
+                            turns: [{
+                                role: "user",
+                                parts: [{
+                                    functionResponse: {
+                                        name: name,
+                                        id: id,
+                                        response: { result: "Action initiated on client side" }
+                                    }
+                                }]
+                            }]
+                        });
+                    }
+                }
+            }
+            
+            if (msg.serverContent?.turnComplete) {
+              res.write('data: [DONE]\n\n');
+              res.end();
+              resolveStream();
+            }
+          },
+          onerror: (err) => {
+            console.error('Live API Error:', err);
+            res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
+            res.end();
+            resolveStream();
+          },
+          onclose: () => {
+            console.log('Live API Session Closed');
+          }
+        }
+      });
+
+      // Send the user message (Text -> Audio)
+      await session.sendClientContent({
+        turns: [{ role: "user", parts: [{ text: message }] }],
+        turnComplete: true
+      });
+
+      // Wait for the turn to complete
+      await streamPromise;
+      session.close();
+      return;
+    }
+
+    // Text Mode (Standard Gemini)
+    // Select model based on mode
+    // User requested separate models for Text and Voice
+    // Text: gemini-2.5-flash (Fast, efficient)
+    // Voice: gemini-2.0-flash-exp (Often used for experimental Live features)
+    const modelName = mode === 'voice' ? "gemini-2.5-flash-native-audio-preview-09-2025" : "gemini-2.5-flash";
+
     const model = genAI.getGenerativeModel({ 
-      model: "gemini-2.5-flash",
+      model: modelName,
       tools: [{
         googleSearch: {}
       }]
@@ -148,7 +326,13 @@ module.exports = async function handler(req, res) {
     res.end();
 
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Chat API Error:', error);
+    
+    // Log more details if available
+    if (error.response) {
+        console.error('API Response Error Details:', JSON.stringify(error.response, null, 2));
+    }
+    
     // If headers haven't been sent yet
     if (!res.headersSent) {
       res.status(500).json({ error: 'Internal Server Error' });

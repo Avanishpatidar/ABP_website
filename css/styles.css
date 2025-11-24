@@ -1939,12 +1939,6 @@ body.light-mode .cta-ask-abp:hover {
         padding: 16px 12px 12px;
         gap: 8px;
     }
-
-    .quick-btn {
-        padding: 10px 12px;
-        font-size: 12px;
-        gap: 6px;
-    }
 }
 
 /* Light Mode Variables */
@@ -2568,5 +2562,388 @@ body.light-mode .cta-btn:hover {
     .cta-ask-abp, .scroll-to-top {
         right: 16px !important;
     }
+}
+
+/* Chatbot Mode Selection */
+.chatbot-mode-selection {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.chatbot-mode-selection.hidden {
+    display: none;
+}
+
+.mode-card {
+    background: rgba(0, 0, 0, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 40px;
+    text-align: center;
+    max-width: 400px;
+    width: 90%;
+    backdrop-filter: blur(20px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+.mode-title {
+    font-size: 24px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 30px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.mode-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.mode-btn {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 20px;
+    border-radius: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    width: 100%;
+}
+
+.mode-btn:hover {
+    background: rgba(255, 112, 67, 0.1);
+    border-color: var(--highlight-color);
+    transform: translateY(-2px);
+}
+
+.mode-icon {
+    font-size: 24px;
+}
+
+.mode-label {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 4px;
+}
+
+.mode-desc {
+    display: block;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.close-mode-selection {
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 14px;
+    cursor: pointer;
+    padding: 8px 16px;
+    border-radius: 999px;
+    transition: all 0.2s;
+}
+
+.close-mode-selection:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Chatbot Voice Interface - Redesigned */
+.chatbot-voice-interface {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+    background: radial-gradient(circle at center, rgba(255, 112, 67, 0.05) 0%, transparent 70%);
+}
+
+.chatbot-voice-interface.hidden {
+    display: none;
+}
+
+.voice-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 40px;
+}
+
+.voice-header {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    right: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 10;
+}
+
+.voice-title {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+}
+
+/* Central Visualizer */
+.voice-visualizer {
+    position: relative;
+    width: 300px;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 40px;
+}
+
+/* Glowing Orb Effect */
+.voice-circle {
+    width: 120px;
+    height: 120px;
+    background: var(--highlight-color);
+    border-radius: 50%;
+    opacity: 0.1;
+    position: absolute;
+    filter: blur(20px);
+    transition: all 0.5s ease;
+}
+
+/* Rings */
+.voice-visualizer::before,
+.voice-visualizer::after {
+    content: '';
+    position: absolute;
+    border-radius: 50%;
+    border: 1px solid rgba(255, 112, 67, 0.2);
+    transition: all 0.5s ease;
+}
+
+.voice-visualizer::before {
+    width: 180px;
+    height: 180px;
+    animation: spin 10s linear infinite;
+    border-top-color: transparent;
+    border-bottom-color: transparent;
+}
+
+.voice-visualizer::after {
+    width: 240px;
+    height: 240px;
+    animation: spinReverse 15s linear infinite;
+    border-left-color: transparent;
+    border-right-color: transparent;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spinReverse { to { transform: rotate(-360deg); } }
+
+/* Waveform Bars */
+.voice-waves {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    height: 60px;
+    z-index: 2;
+}
+
+.voice-waves span {
+    display: block;
+    width: 8px;
+    height: 8px;
+    background: #fff;
+    border-radius: 4px;
+    transition: all 0.2s ease;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+/* States */
+/* Listening: Gentle Pulse */
+.voice-waves.active span {
+    animation: breathe 2s infinite ease-in-out;
+    background: var(--highlight-color);
+    box-shadow: 0 0 15px var(--highlight-color);
+}
+
+.voice-waves.active span:nth-child(1) { animation-delay: 0.0s; }
+.voice-waves.active span:nth-child(2) { animation-delay: 0.2s; }
+.voice-waves.active span:nth-child(3) { animation-delay: 0.4s; }
+.voice-waves.active span:nth-child(4) { animation-delay: 0.2s; }
+.voice-waves.active span:nth-child(5) { animation-delay: 0.0s; }
+
+@keyframes breathe {
+    0%, 100% { height: 8px; opacity: 0.5; }
+    50% { height: 20px; opacity: 1; }
+}
+
+/* Speaking: High Energy */
+.voice-waves.speaking span {
+    animation: soundWave 0.4s infinite ease-in-out;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+}
+
+.voice-waves.speaking span:nth-child(1) { animation-duration: 0.4s; }
+.voice-waves.speaking span:nth-child(2) { animation-duration: 0.5s; }
+.voice-waves.speaking span:nth-child(3) { animation-duration: 0.3s; }
+.voice-waves.speaking span:nth-child(4) { animation-duration: 0.6s; }
+.voice-waves.speaking span:nth-child(5) { animation-duration: 0.4s; }
+
+/* Processing: Rotating/Thinking */
+.voice-waves.processing span {
+    background: #FFD700; /* Gold */
+    height: 10px;
+    animation: wave 1s infinite linear;
+}
+
+/* Status Text */
+.voice-status {
+    font-size: 24px;
+    font-weight: 300;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 20px;
+    letter-spacing: 0.05em;
+    text-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+/* Transcript (Subtitles Style) */
+.voice-transcript {
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.7);
+    max-width: 600px;
+    text-align: center;
+    line-height: 1.6;
+    min-height: 60px;
+    font-weight: 400;
+    background: rgba(0, 0, 0, 0.3);
+    padding: 16px 24px;
+    border-radius: 12px;
+    backdrop-filter: blur(4px);
+}
+
+/* Action Display (Tool Calls) */
+.voice-action-display {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 20;
+    pointer-events: none;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    transform: translate(-50%, 20px);
+}
+
+.voice-action-display.active {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.action-card {
+    background: rgba(20, 20, 20, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 16px 24px;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+    backdrop-filter: blur(12px);
+}
+
+.action-icon {
+    font-size: 28px;
+    background: rgba(255, 255, 255, 0.1);
+    width: 48px;
+    height: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 12px;
+}
+
+.action-text {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 500;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Mobile Adjustments */
+@media (max-width: 768px) {
+    .voice-visualizer {
+        width: 240px;
+        height: 240px;
+    }
+    
+    .voice-visualizer::before { width: 160px; height: 160px; }
+    .voice-visualizer::after { width: 200px; height: 200px; }
+    
+    .voice-status { font-size: 20px; }
+    .voice-transcript { font-size: 16px; padding: 12px 16px; width: 90%; }
+    
+    .voice-header {
+        top: 20px;
+        left: 20px;
+        right: 20px;
+    }
+}
+
+/* Preserved Utilities */
+.chatbot-terminal.hidden {
+    display: none;
+}
+
+.switch-mode-btn {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #fff;
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-family: 'Fira Code', monospace;
+    font-size: 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: all 0.2s ease;
+}
+
+.switch-mode-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: var(--highlight-color);
+    color: var(--highlight-color);
+}
+
+.switch-mode-btn .icon {
+    font-size: 14px;
+}
+
+.terminal-controls, .voice-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.chatbot-mode-selection {
+    display: none !important;
 }
 
