@@ -266,7 +266,22 @@ document.addEventListener('DOMContentLoaded', () => {
     const connectVoiceWs = () => {
         return new Promise((resolve, reject) => {
             const proto = location.protocol === 'https:' ? 'wss' : 'ws';
-            const ws = new WebSocket(`${proto}://${location.host}/voice`);
+
+            // Check if we are on localhost vs production 
+            const isLocal = location.hostname === 'localhost' || location.hostname === '127.0.0.1';
+            let wsUrl = '';
+
+            if (isLocal) {
+                wsUrl = `${proto}://${location.host}/voice`;
+            } else {
+                // Adjust this URL to point to a valid WebSocket server 
+                // If Vercel serverless functions don't support continuous WebSockets, 
+                // you'll need a dedicated backend URL like Render/Railway here.
+                // For now, defaulting to the same host but be aware of Vercel WS limits.
+                wsUrl = `${proto}://${location.host}/voice`;
+            }
+
+            const ws = new WebSocket(wsUrl);
 
             ws.onopen = () => resolve(ws);
 
