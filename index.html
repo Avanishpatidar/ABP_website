@@ -9,9 +9,9 @@
     <title>Avanish Patidar - GenAI Engineer & Full-Stack Developer</title>
     <meta name="title" content="Avanish Patidar - GenAI Engineer & Full-Stack Developer">
     <meta name="description"
-        content="I engineer autonomous AI agents and scalable systems that drive business automation. Currently at RentPrompts, building cutting-edge AI solutions with Python, TypeScript, and Next.js.">
+        content="I design and lead production-grade Agentic AI systems. Currently Tech Lead at HiringAnt and Agentic AI Lead at RentPrompts. I bridge the gap between experimental LLMs and scalable business automation.">
     <meta name="keywords"
-        content="AI Engineer, GenAI, Full-Stack Developer, Python, TypeScript, Next.js, AI Agents, RAG, LangChain, FastAPI, Avanish Patidar, Software Engineer, Indore">
+        content="Agentic AI, Multi-Agent Systems, RAG, GenAI Engineer, Full-Stack Developer, Python, TypeScript, Next.js, AI Agents, LangChain, FastAPI, Avanish Patidar, Software Engineer, Indore">
     <meta name="author" content="Avanish Patidar">
     <meta name="robots" content="index, follow">
     <link rel="canonical" href="https://avanishpatidar.me/">
@@ -21,7 +21,7 @@
     <meta property="og:url" content="https://avanishpatidar.me/">
     <meta property="og:title" content="Avanish Patidar - GenAI Engineer & Full-Stack Developer">
     <meta property="og:description"
-        content="I engineer autonomous AI agents and scalable systems that drive business automation. Currently at RentPrompts, building cutting-edge AI solutions.">
+        content="I design and lead production-grade Agentic AI systems. Currently Tech Lead at HiringAnt and Agentic AI Lead at RentPrompts.">
     <meta property="og:image" content="https://avanishpatidar.me/images/og-image.png">
     <meta property="og:site_name" content="Avanish Patidar Portfolio">
 
@@ -30,7 +30,7 @@
     <meta property="twitter:url" content="https://avanishpatidar.me/">
     <meta property="twitter:title" content="Avanish Patidar - GenAI Engineer & Full-Stack Developer">
     <meta property="twitter:description"
-        content="I engineer autonomous AI agents and scalable systems that drive business automation. Currently at RentPrompts.">
+        content="I design and lead production-grade Agentic AI systems. Currently Tech Lead at HiringAnt and Agentic AI Lead at RentPrompts.">
     <meta property="twitter:image" content="https://avanishpatidar.me/images/og-image.png">
 
     <!-- Favicon -->
@@ -40,6 +40,7 @@
 
     <!-- Additional SEO -->
     <meta name="theme-color" content="#000000">
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
 
@@ -74,15 +75,24 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Mermaid.js for architecture diagrams -->
+    <script type="module">
+        import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10/dist/mermaid.esm.min.mjs';
+        mermaid.initialize({ startOnLoad: true, theme: 'dark' });
+    </script>
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body>
+    <div class="background-canvas">
+        <div class="background-canvas-glows"></div>
+    </div>
     <div class="container">
         <div class="sidebar">
             <nav class="nav">
                 <a href="#about" class="nav-link active">about</a>
                 <a href="#experience" class="nav-link">experience</a>
+                <a href="#case-studies" class="nav-link">case studies</a>
                 <a href="#projects" class="nav-link">projects</a>
                 <a href="#skills" class="nav-link">skills</a>
                 <!-- <a href="#github" class="nav-link">github</a> -->
@@ -146,12 +156,12 @@
                     </div>
 
                     <div class="bio-container">
-                        <p class="role-badge">GenAI Engineer · Full-Stack Developer</p>
+                        <p class="role-badge">Agentic AI Lead · Tech Lead</p>
                         <p class="section-text">
-                            I engineer <strong>autonomous AI agents</strong> and <strong>scalable systems</strong> that
-                            drive business automation.
-                            Currently at <strong>RentPrompts</strong>, bridging the gap between cutting-edge LLMs and
-                            production-grade software.
+                            I design and lead production-grade <strong>Agentic AI</strong> systems.
+                            Currently <strong>Tech Lead at HiringAnt</strong> and <strong>Agentic AI Lead at
+                                RentPrompts</strong>.
+                            I bridge the gap between experimental LLMs and scalable business automation.
                         </p>
                     </div>
 
@@ -209,16 +219,52 @@
                 <h2 class="section-title">Experience</h2>
 
                 <div class="work-item" style="margin-bottom: 30px;">
-                    <div class="work-title">RentPrompts – GenAI Developer (Full-Time)</div>
-                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Aug 2025 – Present · Indore ·
+                    <div class="work-title">HiringAnt – Tech Lead</div>
+                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Feb 2026 – Present · Indore ·
+                        Hybrid</p>
+                    <div class="work-links" style="margin-bottom: 20px;">
+                        <a href="https://hiringant.ai/" target="_blank" class="work-link">hiringant.ai</a>
+                    </div>
+                    <p class="work-description">
+                        Leading the technology vision and execution at HiringAnt, an AI-powered recruitment automation
+                        platform.
+                    </p>
+                    <ul class="section-text" style="list-style: disc; padding-left: 20px;">
+                        <li><strong>System Architecture:</strong> Designing scalable AI-first system architecture.</li>
+                        <li><strong>AI Workflows:</strong> Building agent-based hiring workflows (screening, matching,
+                            shortlisting).</li>
+                        <li><strong>Engineering:</strong> Overseeing backend, AI, and product engineering.</li>
+                        <li><strong>Solutions:</strong> Translating business problems into applied AI solutions.</li>
+                    </ul>
+                </div>
+
+                <div class="work-item" style="margin-bottom: 30px;">
+                    <div class="work-title">RentPrompts – Agentic AI Lead</div>
+                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Jan 2026 – Present · Indore ·
                         Hybrid</p>
                     <div class="work-links" style="margin-bottom: 20px;">
                         <a href="https://rentprompts.com/" target="_blank" class="work-link">rentprompts.com</a>
-                        <a href="https://rentprompts.ai/" target="_blank" class="work-link">rentprompts.ai</a>
                     </div>
                     <p class="work-description">
-                        At RentPrompts, I build AI-driven automation products using <strong>Python, TypeScript, and
-                            Next.js</strong>.
+                        Leading the design and development of Agentic AI systems at RentPrompts.
+                    </p>
+                    <ul class="section-text" style="list-style: disc; padding-left: 20px;">
+                        <li><strong>Multi-Agent Systems:</strong> Architecting multi-agent workflows using LLMs.</li>
+                        <li><strong>Autonomous Agents:</strong> Building autonomous AI agents with memory, tools, and
+                            reasoning.</li>
+                        <li><strong>Prompt Systems:</strong> Designing prompt systems for production-grade AI use cases.
+                        </li>
+                        <li><strong>Product Integration:</strong> Collaborating with product & design to ship AI-powered
+                            features.</li>
+                    </ul>
+                </div>
+
+                <div class="work-item" style="margin-bottom: 30px;">
+                    <div class="work-title">RentPrompts – GenAI Developer</div>
+                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Aug 2025 – Jan 2026 · Indore ·
+                        Hybrid</p>
+                    <p class="work-description">
+                        Built AI-driven automation products and AI agents at RentPrompts.
                     </p>
                     <ul class="section-text" style="list-style: disc; padding-left: 20px;">
                         <li><strong>AI Systems & Agents:</strong> Built multi-tool AI agents with structured reasoning,
@@ -229,23 +275,31 @@
                         <li><strong>Payload CMS + Next.js:</strong> Built CMS dashboards for internal content
                             management, integrated AI tools inside dashboard UI, and created custom admin interfaces.
                         </li>
-                        <li><strong>Infrastructure:</strong> Dockerized full stack (API + workers + Redis + PostgreSQL),
-                            managed Ubuntu servers, set up Nginx reverse proxy with SSL, and managed Celery
-                            workers/Redis.</li>
+                        <li><strong>Infrastructure:</strong> Dockerized full stack, managed Ubuntu servers, set up Nginx
+                            reverse proxy with SSL, and managed Celery workers/Redis.</li>
                     </ul>
                 </div>
 
                 <div class="work-item">
                     <div class="work-title">RentPrompts – GenAI Intern</div>
-                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Jun 2025 – Aug 2025 · Indore ·
-                        Hybrid</p>
+                    <p class="section-text" style="font-size: 14px; margin-bottom: 10px;">Jun 2025 – Aug 2025 · Indore
+                    </p>
                     <ul class="section-text" style="list-style: disc; padding-left: 20px;">
-                        <li>Worked on RAG pipelines & agent tools.</li>
-                        <li>Cleaned and optimized TypeScript backend utilities.</li>
-                        <li>Built automated email classification and reply agents.</li>
-                        <li>Gained production experience with multi-service systems.</li>
+                        <li>Worked on developing intelligent AI agents using LangChain and large language models.</li>
+                        <li>Built multi-tool agents capable of handling complex queries by integrating RAG pipelines.
+                        </li>
+                        <li>Gained hands-on experience in building Applied AI prototypes.</li>
                     </ul>
                 </div>
+            </section>
+
+            <section id="case-studies" class="section">
+                <h2 class="section-title">Case Studies & Architecture</h2>
+                <p class="section-text" style="margin-bottom: 30px;">
+                    A look under the hood at how I design production-grade Agentic systems.
+                </p>
+
+                <div id="case-studies-container"></div>
             </section>
 
             <section id="projects" class="section">
@@ -302,7 +356,8 @@
         <div class="mobile-menu-overlay" id="mobile-menu-overlay">
             <a href="#about" class="mobile-nav-link" style="transition-delay: 0.1s;">about</a>
             <a href="#experience" class="mobile-nav-link" style="transition-delay: 0.2s;">experience</a>
-            <a href="#projects" class="mobile-nav-link" style="transition-delay: 0.3s;">projects</a>
+            <a href="#case-studies" class="mobile-nav-link" style="transition-delay: 0.3s;">case studies</a>
+            <a href="#projects" class="mobile-nav-link" style="transition-delay: 0.4s;">projects</a>
             <a href="#skills" class="mobile-nav-link" style="transition-delay: 0.4s;">skills</a>
             <a href="#github" class="mobile-nav-link" style="transition-delay: 0.5s;">github</a>
             <a href="#contact" class="mobile-nav-link" style="transition-delay: 0.6s;">contact</a>
@@ -311,28 +366,31 @@
 
         <!-- Scroll to Top Button -->
         <button id="scroll-to-top" class="scroll-to-top" aria-label="Scroll to Top">
-            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M12 19V5M5 12l7-7 7 7"/>
+            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor"
+                stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 19V5M5 12l7-7 7 7" />
             </svg>
         </button>
 
         <!-- Theme Toggle Button -->
         <button id="theme-toggle" class="theme-toggle" aria-label="Toggle Theme">
             <!-- Sun Icon (shown in dark mode) -->
-            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <circle cx="12" cy="12" r="5"/>
-                <line x1="12" y1="1" x2="12" y2="3"/>
-                <line x1="12" y1="21" x2="12" y2="23"/>
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-                <line x1="1" y1="12" x2="3" y2="12"/>
-                <line x1="21" y1="12" x2="23" y2="12"/>
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+            <svg class="sun-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
             </svg>
             <!-- Moon Icon (shown in light mode) -->
-            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+            <svg class="moon-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
             </svg>
             <span class="theme-toggle-text">Dark</span>
         </button>
@@ -352,12 +410,14 @@
             <div class="cta-icon">
                 <!-- Gmail Icon -->
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="#EA4335">
-                    <path d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z"/>
+                    <path
+                        d="M24 5.457v13.909c0 .904-.732 1.636-1.636 1.636h-3.819V11.73L12 16.64l-6.545-4.91v9.273H1.636A1.636 1.636 0 0 1 0 19.366V5.457c0-2.023 2.309-3.178 3.927-1.964L5.455 4.64 12 9.548l6.545-4.91 1.528-1.145C21.69 2.28 24 3.434 24 5.457z" />
                 </svg>
             </div>
             <span class="cta-text">Hire Me</span>
         </a>
 
+        <script src="data/case-studies.js"></script>
         <script src="data/skills.js"></script>
         <script src="data/projects.js"></script>
         <script src="blog/blog-list.js"></script>

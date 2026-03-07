@@ -15,11 +15,19 @@ const skillsData = {
     { name: "Express.js", logoUrl: "https://cdn.simpleicons.org/express", color: "#000000" },
     { name: "Payload CMS", logoUrl: "https://cdn.simpleicons.org/payloadcms", color: "#000000" }
   ],
+  "Agentic Stack": [
+    { name: "LangGraph", logoUrl: "https://langchain-langchain.vercel.app/favicon.ico", color: "#1C3C3C" }, // Using LangChain logo as placeholder 
+    { name: "CrewAI", logoUrl: "https://cdn.simpleicons.org/openai", color: "#FF4B4B" }, // Placeholder logo
+    { name: "Pinecone", logoUrl: "https://cdn.simpleicons.org/pinecone", color: "#000000" },
+    { name: "ChromaDB", logoUrl: "https://docs.trychroma.com/img/chroma.svg", color: "#F37859" }, // Placeholder URL
+    { name: "LangSmith", logoUrl: "https://cdn.simpleicons.org/langchain", color: "#1C3C3C" }
+  ],
   "AI & Automation": [
+    { name: "AI Agents", logoUrl: "https://cdn.simpleicons.org/openai", color: "#412991" },
     { name: "LangChain", logoUrl: "https://cdn.simpleicons.org/langchain", color: "#1C3C3C" },
     { name: "n8n", logoUrl: "https://cdn.simpleicons.org/n8n", color: "#EA4B71" },
     { name: "OpenAI", logoUrl: "https://cdn.simpleicons.org/openai", color: "#412991" },
-    { name: "Google Gemini", logoUrl: "https://cdn.simpleicons.org/googlegemini", color: "#8E75B2" }
+    { name: "Gemini", logoUrl: "https://cdn.simpleicons.org/googlegemini", color: "#8E75B2" }
   ],
   "Databases": [
     { name: "PostgreSQL", logoUrl: "https://cdn.simpleicons.org/postgresql", color: "#336791" },

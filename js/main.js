@@ -207,6 +207,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    // Render Case Studies
+    const caseStudiesContainer = document.getElementById('case-studies-container');
+    if (caseStudiesContainer && typeof caseStudies !== 'undefined') {
+        caseStudies.forEach(study => {
+            const studyElement = document.createElement('div');
+            studyElement.className = 'work-item';
+            studyElement.style.marginBottom = '40px';
+
+            studyElement.innerHTML = `
+                <div class="work-title" style="color: var(--highlight-color);">${study.title}</div>
+                <p class="section-text" style="font-size: 14px; margin-bottom: 20px;">
+                    <strong>Challenge:</strong> ${study.challenge}<br>
+                    <strong>Solution:</strong> ${study.solution}
+                </p>
+                <div class="mermaid" style="background: rgba(255,255,255,0.03); padding: 15px; border-radius: 8px;">
+                    ${study.mermaid}
+                </div>
+            `;
+
+            caseStudiesContainer.appendChild(studyElement);
+        });
+
+        // Initialize mermaid diagrams for newly injected content
+        setTimeout(() => {
+            if (window.mermaid) {
+                window.mermaid.init(undefined, document.querySelectorAll('.mermaid'));
+            }
+        }, 100);
+    }
+
     // Mobile Menu Logic
     const mobileBtn = document.getElementById('mobile-menu-btn');
     const mobileOverlay = document.getElementById('mobile-menu-overlay');
@@ -217,7 +247,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mobileBtn.addEventListener('click', () => {
             isMenuOpen = !isMenuOpen;
             const chatbotToggle = document.getElementById('chatbot-toggle');
-            
+
             if (isMenuOpen) {
                 mobileOverlay.classList.add('active');
                 mobileBtn.textContent = '// CLOSE';
@@ -262,18 +292,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 behavior: 'smooth'
             });
         });
-        scrollTopBtn.addEventListener('click', () => {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
     }
 
-    // Mobile Scroll Animation Observer
-    const animatedItems = document.querySelectorAll('.work-item, .strength-card');
+    // Mobile Scroll Animation Observer (defer so blog cards on writings page are included)
+    const setupScrollObserver = () => {
+        const animatedItems = document.querySelectorAll('.work-item, .strength-card, .blog-card');
 
-    const scrollObserver = new IntersectionObserver((entries) => {
+        const scrollObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
             if (entry.isIntersecting) {
                 entry.target.classList.add('in-view');
@@ -286,9 +311,11 @@ document.addEventListener('DOMContentLoaded', () => {
         rootMargin: "0px 0px -10% 0px" // Trigger slightly before bottom
     });
 
-    animatedItems.forEach(item => {
-        scrollObserver.observe(item);
-    });
+        animatedItems.forEach(item => {
+            scrollObserver.observe(item);
+        });
+    };
+    setTimeout(setupScrollObserver, 0);
 
     // Initialize animations
     setupSectionAnimations();
@@ -310,7 +337,7 @@ document.addEventListener('DOMContentLoaded', () => {
             body.classList.toggle('light-mode');
             const isLight = body.classList.contains('light-mode');
             localStorage.setItem('theme', isLight ? 'light' : 'dark');
-            
+
             // Update text label
             if (themeText) {
                 themeText.textContent = isLight ? 'Light' : 'Dark';
