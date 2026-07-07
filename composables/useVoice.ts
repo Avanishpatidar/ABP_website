@@ -113,7 +113,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: 'v1alpha' } })
 
     let s: any = null
-    const connectConfig = isRawKey ? config : { responseModalities: [Modality.AUDIO], inputAudioTranscription: {}, outputAudioTranscription: {} }
+    const connectConfig = isRawKey ? config : { responseModalities: [Modality.AUDIO] }
     s = await ai.live.connect({
       model,
       config: connectConfig,
