@@ -287,7 +287,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     skills: 'your Skills section (Python, TypeScript, LangGraph)', contact: 'your Contact section'
   }
   function sendGreet() {
-    session?.sendSystem(`The visitor just opened voice mode. They are viewing ${SECTION_GREET[currentSection] || currentSection}. Give a brief, warm welcome and mention what they're looking at. Under 3 sentences.`)
+    session?.sendSystem(`The visitor just opened voice mode. They are viewing ${SECTION_GREET[currentSection] || currentSection}. Start your response exactly with "Hello, my name is Avanish" or "Hello, mera naam Avanish hai" (depending on their language). Keep the welcome warm, brief, and under 3 sentences.`)
   }
   function notifySection(id: string) {
     if (!id || id === currentSection) return
