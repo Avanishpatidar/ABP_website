@@ -38,6 +38,27 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   let stopAudio = false
   let sources: AudioBufferSourceNode[] = []
 
+  // ---- live lip-sync: analyse the AI's voice, publish a mouth level (0..1) ----
+  const iv = useInterview()
+  let analyser: AnalyserNode | null = null
+  let mouthData: Uint8Array | null = null
+  let mouthRaf = 0
+  const startMouthLoop = () => {
+    if (mouthRaf || !analyser || !mouthData) return
+    const tick = () => {
+      if (!analyser || !mouthData) { mouthRaf = 0; return }
+      analyser.getByteTimeDomainData(mouthData)
+      let sum = 0
+      for (let i = 0; i < mouthData.length; i++) { const v = (mouthData[i] - 128) / 128; sum += v * v }
+      const rms = Math.sqrt(sum / mouthData.length)
+      const target = sources.length ? Math.min(1, rms * 3.2) : 0
+      iv.mouth.value += (target - iv.mouth.value) * 0.35 // smooth
+      mouthRaf = requestAnimationFrame(tick)
+    }
+    mouthRaf = requestAnimationFrame(tick)
+  }
+  const stopMouthLoop = () => { if (mouthRaf) cancelAnimationFrame(mouthRaf); mouthRaf = 0; iv.mouth.value = 0 }
+
   const floatTo16 = (f32: Float32Array) => {
     const buf = new ArrayBuffer(f32.length * 2)
     const v = new DataView(buf)
@@ -203,13 +224,19 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     if (stopAudio) return
     if (!playCtx) playCtx = new (window.AudioContext || (window as any).webkitAudioContext)()
     if (playCtx.state === 'suspended') playCtx.resume()
+    if (!analyser) {
+      analyser = playCtx.createAnalyser(); analyser.fftSize = 512
+      mouthData = new Uint8Array(analyser.fftSize)
+      analyser.connect(playCtx.destination)
+    }
+    startMouthLoop()
     try {
       const bin = atob(b64); const bytes = new Uint8Array(bin.length)
       for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i)
       const i16 = new Int16Array(bytes.buffer); const f32 = new Float32Array(i16.length)
       for (let i = 0; i < i16.length; i++) f32[i] = i16[i] / 32768
       const buf = playCtx.createBuffer(1, f32.length, 24000); buf.getChannelData(0).set(f32)
-      const src = playCtx.createBufferSource(); src.buffer = buf; src.connect(playCtx.destination)
+      const src = playCtx.createBufferSource(); src.buffer = buf; src.connect(playCtx.destination); src.connect(analyser)
       const now = playCtx.currentTime; if (nextStart < now) nextStart = now
       src.start(nextStart); nextStart += buf.duration; sources.push(src)
       src.onended = () => {
@@ -271,7 +298,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   }
   function stop() {
     started.value = false; micOn.value = false; connected.value = false
-    stopStream(); stopAllAudio()
+    stopStream(); stopAllAudio(); stopMouthLoop()
     setState(''); status.value = ''
     if (session) { session.close(); session = null }
   }
