@@ -313,6 +313,12 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     started.value = true; startWithMic = withMic
     status.value = 'Connecting...'; setState('connecting'); micOn.value = false; stopAudio = false
     try {
+      if (!playCtx) playCtx = new (window.AudioContext || (window as any).webkitAudioContext)()
+      if (playCtx.state === 'suspended') playCtx.resume()
+    } catch (err) {
+      console.warn('[voice] Failed to init playCtx:', err)
+    }
+    try {
       session = await connect()
       sendGreet()
     } catch (e) {
