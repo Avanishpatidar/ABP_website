@@ -125,7 +125,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
           setState('idle');
         },
         onclose: (e: any) => {
-          console.log('[voice] Connection closed event:', { code: e?.code, reason: e?.reason, wasClean: e?.wasClean, event: e });
+          console.log(`[voice] Connection closed. Code: ${e?.code}, Reason: ${e?.reason || 'none'}, Clean: ${e?.wasClean}`);
           connected.value = false;
           const reason = String((e && e.reason) || '');
           if (started.value) endSession();

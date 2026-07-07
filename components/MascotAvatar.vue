@@ -12,6 +12,31 @@ const el = ref<HTMLCanvasElement | null>(null)
 const failed = ref(false)
 let cleanup: (() => void) | null = null
 
+const isBananaJumping = ref(false)
+let jumpStartTime = 0
+
+const handleMascotClick = () => {
+  if (isBananaJumping.value) return
+  isBananaJumping.value = true
+  jumpStartTime = Date.now()
+
+  try {
+    const utterance = new SpeechSynthesisUtterance("banana!")
+    utterance.pitch = 2.0
+    utterance.rate = 1.5
+    const voices = window.speechSynthesis.getVoices()
+    const preferred = voices.find(v => v.lang.startsWith('en') && (v.name.includes('Google') || v.name.includes('Natural') || v.name.includes('Female')))
+    if (preferred) utterance.voice = preferred
+    window.speechSynthesis.speak(utterance)
+  } catch (e) {
+    console.error('Speech synthesis failed:', e)
+  }
+
+  setTimeout(() => {
+    isBananaJumping.value = false
+  }, 800)
+}
+
 onMounted(async () => {
   if (!el.value) return
   try {
@@ -151,7 +176,12 @@ onMounted(async () => {
       t += 0.016
       const st = props.state
 
-      if (st === 'listening') emo = 'curious'
+      // Handle custom jump / click animation
+      let isJumping = isBananaJumping.value
+      let jumpTime = isJumping ? (Date.now() - jumpStartTime) / 800 : 0 // normalized 0..1
+
+      if (isJumping) emo = 'happy'
+      else if (st === 'listening') emo = 'curious'
       else if (st === 'speaking') emo = 'neutral'
       else {
         if (t > nextEmo) { emo = Math.random() < 0.65 ? 'happy' : 'surprised'; emoUntil = t + 1.2 + Math.random() * 0.9; nextEmo = t + 4 + Math.random() * 4 }
@@ -159,46 +189,98 @@ onMounted(async () => {
       }
 
       let tLidU = 0, tLidL = 0, tSmile = st === 'speaking' ? 0.25 : 0.4, tEyeS = 1
-      if (emo === 'happy') { tLidL = 0.55; tSmile = 1; }
+      if (emo === 'happy' || isJumping) { tLidL = 0.75; tLidU = 0.75; tSmile = 1; } // Squint happily
       else if (emo === 'surprised') { tEyeS = 1.16; tSmile = 0.1 }
       else if (emo === 'curious') { tSmile = 0.5 }
 
       blink += 0.016; let bl = 0
-      if (blink > 3.2) { const p = (blink - 3.2) / 0.13; if (p < 1) bl = Math.sin(p * Math.PI); else blink = 0 }
+      if (!isJumping && blink > 3.2) { const p = (blink - 3.2) / 0.13; if (p < 1) bl = Math.sin(p * Math.PI); else blink = 0 }
 
       cur.lidU += (Math.max(tLidU, bl) - cur.lidU) * 0.3
       cur.lidL += (Math.max(tLidL, bl) - cur.lidL) * 0.3
       cur.smile += (tSmile - cur.smile) * 0.12
       cur.eyeS += (tEyeS - cur.eyeS) * 0.12
 
-      // head follow + idle bob
-      rot.y += ((target.x * 0.36) - rot.y) * 0.05
-      rot.x += ((-target.y * 0.18) - rot.x) * 0.05
+      // head follow + look directly if speaking/jumping
+      let targetX = target.x
+      let targetY = target.y
+      if (st === 'speaking' || isJumping) {
+        targetX = 0
+        targetY = 0
+      }
+      rot.y += ((targetX * 0.36) - rot.y) * 0.05
+      rot.x += ((-targetY * 0.18) - rot.x) * 0.05
       char.rotation.y = rot.y; char.rotation.x = rot.x
-      char.rotation.z = Math.sin(t * 0.7) * 0.025
 
+      // Wobble spin during banana jump
+      if (isJumping) {
+        char.rotation.z = Math.sin(jumpTime * Math.PI * 2) * 0.2
+      } else {
+        char.rotation.z = Math.sin(t * 0.7) * 0.025
+      }
+
+      // Jump and bounce
       const bs = st === 'speaking' ? 5 : st === 'listening' ? 2.3 : 1.5
       const ba = st === 'speaking' ? 0.08 : st === 'listening' ? 0.045 : 0.03
       const bounce = Math.sin(t * bs)
-      char.position.y = 0.24 + bounce * ba
-      body.scale.set(1 - bounce * 0.025, 1 + bounce * 0.03, 1 - bounce * 0.025)
+      
+      let jumpY = 0
+      if (isJumping) {
+        // Parabole curve for jump height
+        jumpY = Math.sin(jumpTime * Math.PI) * 0.6
+      }
+      char.position.y = 0.24 + bounce * ba + jumpY
 
-      const ex = target.x * 0.09, ey = -target.y * 0.07
+      if (isJumping) {
+        // Stretch/squash on jump
+        body.scale.set(0.9, 1.15, 0.9)
+      } else {
+        body.scale.set(1 - bounce * 0.025, 1 + bounce * 0.03, 1 - bounce * 0.025)
+      }
+
+      const ex = targetX * 0.09, ey = -targetY * 0.07
       for (const e of eyes) {
         e.iris.position.set(ex, ey, 0.2); e.pupil.position.set(ex, ey, 0.28); e.glint.position.set(0.06 + ex, 0.06 + ey, 0.31)
         e.upper.scale.y = Math.max(0.001, cur.lidU); e.lower.scale.y = Math.max(0.001, cur.lidL)
         e.sclera.scale.setScalar(cur.eyeS)
       }
 
+      // Mouth opening logic
       let m = mouth.value
-      if (st === 'speaking' && m < 0.04) m = 0.15 + Math.abs(Math.sin(t * 11)) * 0.55
+      if (isJumping) {
+        m = 0.9 // Open mouth wide for banana scream!
+      } else if (st === 'speaking' && m < 0.04) {
+        m = 0.15 + Math.abs(Math.sin(t * 11)) * 0.55
+      }
       lip += (m - lip) * 0.5
       mouthMesh.scale.set(1.4 + cur.smile * 0.5, 0.22 + lip * 0.9, 0.5)
       mouthMesh.position.y = 0.02 - lip * 0.05
 
-      const wig = st === 'speaking' ? 0.5 : st === 'listening' ? 0.2 : 0.05
-      armL.rotation.z = 0.35 + Math.sin(t * bs) * wig
-      armR.rotation.z = -0.35 - Math.sin(t * bs) * wig
+      // Arms logic
+      const wig = st === 'speaking' ? 0.5 : st === 'listening' ? 0.08 : 0.05
+      if (isJumping) {
+        // Arms raise up celebrating
+        armL.rotation.z = 2.6
+        armR.rotation.z = -2.6
+      } else if (st === 'listening') {
+        // Hands on ears listening
+        armL.rotation.z = 2.4 + Math.sin(t * 2) * wig
+        armL.rotation.x = -0.3
+        armR.rotation.z = -2.4 - Math.sin(t * 2) * wig
+        armR.rotation.x = -0.3
+      } else if (st === 'speaking') {
+        // Gesturing while speaking
+        armL.rotation.z = 0.8 + Math.sin(t * bs) * wig
+        armR.rotation.z = -0.8 - Math.sin(t * bs) * wig
+        armL.rotation.x = 0
+        armR.rotation.x = 0
+      } else {
+        // Idle hanging arms
+        armL.rotation.z = 0.35 + Math.sin(t * bs) * wig
+        armR.rotation.z = -0.35 - Math.sin(t * bs) * wig
+        armL.rotation.x = 0
+        armR.rotation.x = 0
+      }
 
       renderer.render(scene, camera)
     }
@@ -217,7 +299,7 @@ onBeforeUnmount(() => cleanup?.())
 </script>
 
 <template>
-  <canvas v-show="!failed" ref="el" class="mascot-canvas"></canvas>
+  <canvas v-show="!failed" ref="el" class="mascot-canvas" @click="handleMascotClick"></canvas>
   <div v-if="failed" class="mascot-fallback">🟡</div>
 </template>
 

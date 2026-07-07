@@ -147,8 +147,8 @@ onBeforeUnmount(() => { voice.stop(); document.body.style.overflow = '' })
 
     <!-- Floating voice mascot (3D) -->
     <div id="voice-mascot" class="voice-mascot">
-      <div class="voice-mascot-inner">
-        <div class="voice-mascot-face" :class="voice.faceState.value" @click.stop="clickMascot">
+      <div class="voice-mascot-inner" style="cursor: pointer;" @click="clickMascot">
+        <div class="voice-mascot-face" :class="voice.faceState.value">
           <div class="mascot-face-ring"></div>
           <MascotAvatar :state="mascotState" :dark="!isLight" />
           <div class="mascot-face-waves" :class="voice.faceState.value"><span></span><span></span><span></span></div>
@@ -156,11 +156,11 @@ onBeforeUnmount(() => { voice.stop(); document.body.style.overflow = '' })
         <div class="voice-mascot-body">
           <div class="voice-mascot-status">{{ voice.started.value ? (voice.status.value || '') : 'Talk to Avanish' }}</div>
           <div class="voice-mascot-controls" :style="{ display: voice.started.value ? 'flex' : 'none' }">
-            <button class="mascot-mic-btn" :class="{ muted: !voice.micOn.value }" :title="voice.micOn.value ? 'Mute' : 'Unmute'" @click="voice.toggleMic()">
+            <button class="mascot-mic-btn" :class="{ muted: !voice.micOn.value }" :title="voice.micOn.value ? 'Mute' : 'Unmute'" @click.stop="voice.toggleMic()">
               <svg v-if="!voice.micOn.value" class="mic-off-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="1" y1="1" x2="23" y2="23"/><path d="M9 9v3a3 3 0 0 0 5.12 2.12M15 9.34V4a3 3 0 0 0-5.94-.6"/><path d="M17 16.95A7 7 0 0 1 5 12v-2m14 0v2c0 .76-.12 1.49-.35 2.17"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
               <svg v-else class="mic-on-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
             </button>
-            <button class="mascot-stop-btn" title="End" @click="voice.stop()">
+            <button class="mascot-stop-btn" title="End" @click.stop="voice.stop()">
               <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14"><rect x="6" y="6" width="12" height="12" rx="2"/></svg>
             </button>
           </div>
