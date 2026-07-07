@@ -96,19 +96,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     let s: any = null
     s = await ai.live.connect({
       model,
-      config: {
-        responseModalities: [Modality.AUDIO],
-        inputAudioTranscription: {},
-        outputAudioTranscription: {},
-        realtimeInputConfig: {
-          automaticActivityDetection: {
-            startOfSpeechSensitivity: 'START_SENSITIVITY_HIGH',
-            endOfSpeechSensitivity: 'END_SENSITIVITY_HIGH',
-            prefixPaddingMs: 20,
-            silenceDurationMs: 450
-          }
-        }
-      },
+      config: { responseModalities: [Modality.AUDIO], inputAudioTranscription: {}, outputAudioTranscription: {} },
       callbacks: {
         onopen: onOpen,
         onmessage: (msg: any) => {
@@ -131,15 +119,20 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
           }
           if (sc?.turnComplete && faceState.value !== 'speaking') setState(micOn.value ? 'listening' : 'idle')
         },
-        onerror: (err: any) => { console.error('[voice]', err?.message || err); status.value = 'Connection issue'; setState('idle') },
+        onerror: (err: any) => {
+          console.error('[voice] Connection error event:', err);
+          status.value = 'Connection issue';
+          setState('idle');
+        },
         onclose: (e: any) => {
-          connected.value = false
-          const reason = String((e && e.reason) || '')
-          if (started.value) endSession()
-          session = null
+          console.log('[voice] Connection closed event:', { code: e?.code, reason: e?.reason, wasClean: e?.wasClean, event: e });
+          connected.value = false;
+          const reason = String((e && e.reason) || '');
+          if (started.value) endSession();
+          session = null;
           // Surface the free-tier quota / rate-limit close (code 1011) clearly.
           if (/quota|exceed|rate limit|resource has been exhausted/i.test(reason)) {
-            status.value = 'Voice is rate-limited right now — try again in a minute'
+            status.value = 'Voice is rate-limited right now — try again in a minute';
           }
         }
       }
