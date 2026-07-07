@@ -212,7 +212,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   }
   const onChunk = (f32: Float32Array) => { if (!streaming) return; const pcm = floatTo16(f32); pcmBuffer.push(pcm); pcmLen += pcm.length }
   const flush = () => {
-    if (pcmLen === 0 || !session || !connected.value) return
+    if (pcmLen === 0 || !session || !connected.value || !streaming) return
     const combined = new Uint8Array(pcmLen); let off = 0
     for (const c of pcmBuffer) { combined.set(c, off); off += c.length }
     pcmBuffer = []; pcmLen = 0
