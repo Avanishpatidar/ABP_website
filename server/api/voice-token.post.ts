@@ -6,6 +6,7 @@ import { LIVE_AUDIO_MODEL, liveConfig } from '../utils/voiceConfig'
 
 export default defineEventHandler(async (event) => {
   const apiKey = process.env.GEMINI_API_KEY
+  console.log('[voice-token] Request received. env loaded API Key:', !!apiKey, `(length: ${apiKey?.length || 0}), model: ${LIVE_AUDIO_MODEL}`)
   if (!apiKey) {
     setResponseStatus(event, 500)
     return { error: 'Voice is not configured' }
