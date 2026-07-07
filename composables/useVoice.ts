@@ -274,38 +274,12 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     setTimeout(() => { stopAudio = false }, 100)
   }
 
-  // ---- page awareness ----
-  let currentSection = 'about'
-  const SECTION_GREET: Record<string, string> = {
-    about: 'the About section — my intro', experience: 'the Experience section — my work history',
-    'case-studies': "the Case Studies section — deep dives into systems I've built", projects: "the Projects section — things I've shipped",
-    skills: 'the Skills section — my tech stack', contact: 'the Contact section'
-  }
-  const SECTION_DESC: Record<string, string> = {
-    about: 'your About/intro section', experience: 'your Experience section (HiringAnt, RentPrompts)',
-    'case-studies': 'your Case Studies section with architecture breakdowns', projects: 'your Projects section (TradeIQ, IPL Chatbot, AI Live Assist)',
-    skills: 'your Skills section (Python, TypeScript, LangGraph)', contact: 'your Contact section'
-  }
+  // ---- page awareness (stubbed) ----
   function sendGreet() {
-    session?.sendSystem(`The visitor just opened voice mode. They are viewing ${SECTION_GREET[currentSection] || currentSection}. Start your response exactly with "Hello, my name is Avanish" or "Hello, mera naam Avanish hai" (depending on their language). Keep the welcome warm, brief, and under 3 sentences.`)
+    session?.sendSystem(`Start your response exactly with "Hello, my name is Avanish" or "Hello, mera naam Avanish hai" (depending on the language they are using), introduce yourself briefly, and invite them to chat. Keep it warm, brief, and under 3 sentences.`)
   }
-  function notifySection(id: string) {
-    if (!id || id === currentSection) return
-    currentSection = id
-    if (!session || !connected.value) return
-    session.sendSystem(`The visitor just scrolled to ${SECTION_DESC[id] || id}. If appropriate, briefly comment — one quick insight. Don't repeat yourself. If mid-answer, finish first.`)
-  }
-  function notifyHover(ctx: Ctx) {
-    if (!session || !connected.value || !ctx.title) return
-    const map: Record<string, string> = {
-      card: `The visitor is hovering a card "${ctx.title}"${ctx.description ? ` — "${ctx.description}"` : ''}. Say something brief and interesting. One sentence max.`,
-      skill: `The visitor is hovering the skill "${ctx.title}". One quick sentence about your experience with it, only if interesting.`,
-      strength: `The visitor is looking at your strength "${ctx.title}". Brief comment if relevant.`,
-      nav: `The visitor is hovering the "${ctx.title}" nav link. Comment only if they seem lost.`,
-      heading: `The visitor is looking at the heading "${ctx.title}". Comment only if it adds value.`
-    }
-    session.sendSystem(map[ctx.type] || `The visitor is hovering "${ctx.title}". Comment briefly only if interesting.`)
-  }
+  function notifySection(id: string) {}
+  function notifyHover(ctx: Ctx) {}
 
   // ---- lifecycle ----
   async function start(withMic = false) {
