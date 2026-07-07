@@ -150,7 +150,6 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   function onOpen() {
     connected.value = true
     setState('idle'); status.value = ''
-    sendGreet()
     if (startWithMic) {
       startWithMic = false
       micOn.value = true
@@ -313,7 +312,16 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     if (started.value) return
     started.value = true; startWithMic = withMic
     status.value = 'Connecting...'; setState('connecting'); micOn.value = false; stopAudio = false
-    try { session = await connect() } catch (e) { console.error('[voice] connect failed', e); status.value = 'Failed to connect'; started.value = false; connected.value = false; setState('') }
+    try {
+      session = await connect()
+      sendGreet()
+    } catch (e) {
+      console.error('[voice] connect failed', e)
+      status.value = 'Failed to connect'
+      started.value = false
+      connected.value = false
+      setState('')
+    }
   }
   function endSession() {
     started.value = false; setState(''); status.value = 'reconnect'; stopStream()

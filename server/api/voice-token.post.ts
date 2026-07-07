@@ -12,6 +12,12 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
+    const isDev = process.env.NODE_ENV === 'development' || process.env.ALLOW_RAW_KEY === 'true'
+    if (isDev) {
+      setHeader(event, 'Cache-Control', 'no-store')
+      return { token: apiKey, model: LIVE_AUDIO_MODEL, isRawKey: true }
+    }
+
     const ai = new GoogleGenAI({ apiKey, httpOptions: { apiVersion: 'v1alpha' } })
     const now = Date.now()
     const expireTime = new Date(now + 30 * 60 * 1000).toISOString()
