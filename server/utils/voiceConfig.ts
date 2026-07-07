@@ -95,5 +95,13 @@ export const liveConfig = {
   tools: voiceTools,
   contextWindowCompression: { triggerTokens: 25600, slidingWindow: { targetTokens: 12800 } },
   inputAudioTranscription: {},
-  outputAudioTranscription: {}
+  outputAudioTranscription: {},
+  realtimeInputConfig: {
+    automaticActivityDetection: {
+      startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
+      endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_LOW,
+      prefixPaddingMs: 20,
+      silenceDurationMs: 500
+    }
+  }
 }
