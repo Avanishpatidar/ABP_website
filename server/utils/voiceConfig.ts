@@ -3,9 +3,10 @@
 // can connect directly to Gemini Live (Vercel-native, no persistent socket).
 import { Modality, MediaResolution, StartSensitivity, EndSensitivity } from '@google/genai'
 
-// Current-gen low-latency Live model (per the official Live API docs). Falls
-// back gracefully if unavailable — override via GEMINI_LIVE_MODEL env if needed.
-export const LIVE_AUDIO_MODEL = process.env.GEMINI_LIVE_MODEL || 'gemini-3.1-flash-live-preview'
+// Native-audio Live model — natural voice and usable free-tier quota (the newer
+// gemini-3.1-flash-live-preview has near-zero free quota and drops sessions).
+// Override via GEMINI_LIVE_MODEL env (e.g. once you're on a paid key).
+export const LIVE_AUDIO_MODEL = process.env.GEMINI_LIVE_MODEL || 'gemini-2.5-flash-native-audio-preview-12-2025'
 export const LIVE_INPUT_AUDIO_MIME = 'audio/pcm;rate=16000'
 
 const getTodayDate = () =>

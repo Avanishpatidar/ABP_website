@@ -3,6 +3,10 @@ export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
 
+  // Redirects below are handled server-side by Nitro, so the client app manifest
+  // isn't needed — disabling it silences the dev "#app-manifest" resolve warnings.
+  experimental: { appManifest: false },
+
   // Global stylesheet — original rich design, recolored to monochrome.
   css: ['~/assets/css/styles.css', '~/assets/css/mascot.css'],
 

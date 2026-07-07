@@ -120,7 +120,16 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
           if (sc?.turnComplete && faceState.value !== 'speaking') setState(micOn.value ? 'listening' : 'idle')
         },
         onerror: (err: any) => { console.error('[voice]', err?.message || err); status.value = 'Connection issue'; setState('idle') },
-        onclose: () => { connected.value = false; if (started.value) endSession(); session = null }
+        onclose: (e: any) => {
+          connected.value = false
+          const reason = String((e && e.reason) || '')
+          if (started.value) endSession()
+          session = null
+          // Surface the free-tier quota / rate-limit close (code 1011) clearly.
+          if (/quota|exceed|rate limit|resource has been exhausted/i.test(reason)) {
+            status.value = 'Voice is rate-limited right now — try again in a minute'
+          }
+        }
       }
     })
 
