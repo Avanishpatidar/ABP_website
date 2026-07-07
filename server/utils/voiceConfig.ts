@@ -54,7 +54,7 @@ export const voiceTools = [
 
 export const liveConfig = {
   responseModalities: [Modality.AUDIO],
-  speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Kore' } } },
+  speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } } },
   systemInstruction: { parts: [{ text: voiceSystemPrompt }] },
   tools: voiceTools,
   realtimeInputConfig: {
