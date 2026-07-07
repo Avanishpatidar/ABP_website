@@ -1,4 +1,16 @@
+# Nuxt / build artifacts
+.nuxt
+.output
+.vercel
+.data
+dist
 node_modules
+
+# Env & local
 .env
-.DS_Store
+.env.local
+*.log
 npm-debug.log
+
+# OS
+.DS_Store
