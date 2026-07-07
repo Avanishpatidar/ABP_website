@@ -87,16 +87,17 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     const sdkP = warmSdk()
     const res = await fetch('/api/voice-token', { method: 'POST' })
     if (!res.ok) throw new Error('Could not create a voice session')
-    const { token, model } = await res.json()
+    const { token, model, isRawKey, config } = await res.json()
     if (!token) throw new Error('No voice token returned')
 
     const { GoogleGenAI, Modality } = await sdkP
     const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: 'v1alpha' } })
 
     let s: any = null
+    const connectConfig = isRawKey ? config : { responseModalities: [Modality.AUDIO], inputAudioTranscription: {}, outputAudioTranscription: {} }
     s = await ai.live.connect({
       model,
-      config: { responseModalities: [Modality.AUDIO], inputAudioTranscription: {}, outputAudioTranscription: {} },
+      config: connectConfig,
       callbacks: {
         onopen: onOpen,
         onmessage: (msg: any) => {
