@@ -92,15 +92,5 @@ export const liveConfig = {
   tools: voiceTools,
   contextWindowCompression: { triggerTokens: 25600, slidingWindow: { targetTokens: 12800 } },
   inputAudioTranscription: {},
-  outputAudioTranscription: {},
-  // Snappy turn-taking so it feels live: pick up speech fast and stop waiting
-  // for long silences before replying.
-  realtimeInputConfig: {
-    automaticActivityDetection: {
-      startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
-      endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_HIGH,
-      prefixPaddingMs: 20,
-      silenceDurationMs: 450
-    }
-  }
+  outputAudioTranscription: {}
 }
