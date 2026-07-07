@@ -75,7 +75,6 @@ You have Google Search and function calls for email/WhatsApp. Use them naturally
 `
 
 export const voiceTools = [
-  { googleSearch: {} },
   {
     functionDeclarations: [
       {

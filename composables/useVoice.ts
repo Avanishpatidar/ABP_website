@@ -96,7 +96,19 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     let s: any = null
     s = await ai.live.connect({
       model,
-      config: { responseModalities: [Modality.AUDIO], inputAudioTranscription: {}, outputAudioTranscription: {} },
+      config: {
+        responseModalities: [Modality.AUDIO],
+        inputAudioTranscription: {},
+        outputAudioTranscription: {},
+        realtimeInputConfig: {
+          automaticActivityDetection: {
+            startOfSpeechSensitivity: 'START_SENSITIVITY_HIGH',
+            endOfSpeechSensitivity: 'END_SENSITIVITY_HIGH',
+            prefixPaddingMs: 20,
+            silenceDurationMs: 450
+          }
+        }
+      },
       callbacks: {
         onopen: onOpen,
         onmessage: (msg: any) => {
