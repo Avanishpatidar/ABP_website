@@ -5,6 +5,11 @@ const LIVE_INPUT_MIME = 'audio/pcm;rate=16000'
 const SDK_URL = 'https://cdn.jsdelivr.net/npm/@google/genai@1.44.0/+esm'
 const RECORDER_WORKLET = 'pcm-recorder-processor'
 
+// Warm the (large) SDK download once, ahead of the first connect, so clicking
+// the mascot doesn't pay for the CDN fetch. Shared across all instances.
+let sdkPromise: Promise<any> | null = null
+const warmSdk = () => (sdkPromise ||= import(/* @vite-ignore */ SDK_URL))
+
 type Ctx = { type: string; title: string; description?: string }
 type ActionCard = { icon: string; text: string; sub?: string } | null
 
@@ -78,12 +83,14 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
 
   // ---- Gemini Live bridge (ephemeral token -> direct connection) ----
   async function connect() {
+    // Load the SDK and mint the token in parallel (SDK is usually already warm).
+    const sdkP = warmSdk()
     const res = await fetch('/api/voice-token', { method: 'POST' })
     if (!res.ok) throw new Error('Could not create a voice session')
     const { token, model } = await res.json()
     if (!token) throw new Error('No voice token returned')
 
-    const { GoogleGenAI, Modality } = await import(/* @vite-ignore */ SDK_URL)
+    const { GoogleGenAI, Modality } = await sdkP
     const ai = new GoogleGenAI({ apiKey: token, httpOptions: { apiVersion: 'v1alpha' } })
 
     let s: any = null
@@ -132,7 +139,8 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     sendGreet()
     if (startWithMic) {
       startWithMic = false
-      setTimeout(async () => { micOn.value = true; await startStream() }, 500)
+      micOn.value = true
+      startStream()
     }
   }
   function onInterrupted() {
@@ -315,6 +323,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
 
   return {
     started, connected, micOn, faceState, status, actionCard,
-    start, stop, toggleMic, interruptIfSpeaking, notifySection, notifyHover
+    start, stop, toggleMic, interruptIfSpeaking, notifySection, notifyHover,
+    prewarm: warmSdk
   }
 }

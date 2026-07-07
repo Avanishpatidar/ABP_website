@@ -96,6 +96,13 @@ const clickMascot = () => {
 watch(() => interview.queued.value, (q) => { if (q) { toggleChat(true); send(q); interview.queued.value = null } })
 watch(() => interview.wantVoice.value, (w) => { if (w) { voice.start(true); interview.wantVoice.value = false } })
 
+// Warm the voice SDK during idle time so the first click connects fast.
+onMounted(() => {
+  const warm = () => voice.prewarm()
+  if ('requestIdleCallback' in window) (window as any).requestIdleCallback(warm, { timeout: 3000 })
+  else setTimeout(warm, 1800)
+})
+
 onBeforeUnmount(() => { voice.stop(); document.body.style.overflow = '' })
 </script>
 

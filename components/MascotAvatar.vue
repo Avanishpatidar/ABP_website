@@ -22,8 +22,8 @@ onMounted(async () => {
     const parent = canvas.parentElement as HTMLElement
     const size = () => ({ w: parent.clientWidth || 300, h: parent.clientHeight || 300 })
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true })
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: true, powerPreference: 'high-performance' })
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio, 1.5))
     renderer.toneMapping = THREE.ACESFilmicToneMapping
     renderer.toneMappingExposure = 1.2
 
@@ -130,6 +130,11 @@ onMounted(async () => {
     const resize = () => { const { w, h } = size(); renderer.setSize(w, h, false); camera.aspect = w / h; camera.updateProjectionMatrix() }
     resize(); const ro = new ResizeObserver(resize); ro.observe(parent)
 
+    // Only render while on-screen and the tab is visible (saves CPU/battery).
+    let onScreen = true
+    const io = new IntersectionObserver(([e]) => { onScreen = e.isIntersecting }, { threshold: 0.01 })
+    io.observe(parent)
+
     const target = { x: 0, y: 0 }
     const onMove = (e: PointerEvent) => { target.x = (e.clientX / window.innerWidth - 0.5) * 2; target.y = (e.clientY / window.innerHeight - 0.5) * 2 }
     window.addEventListener('pointermove', onMove, { passive: true })
@@ -141,6 +146,8 @@ onMounted(async () => {
     const cur = { lidU: 0, lidL: 0, smile: 0, eyeS: 1 }
 
     const animate = () => {
+      raf = requestAnimationFrame(animate)
+      if (!onScreen || document.hidden) return // pause GPU work when not visible
       t += 0.016
       const st = props.state
 
@@ -194,13 +201,12 @@ onMounted(async () => {
       armR.rotation.z = -0.35 - Math.sin(t * bs) * wig
 
       renderer.render(scene, camera)
-      raf = requestAnimationFrame(animate)
     }
     animate()
 
     cleanup = () => {
       cancelAnimationFrame(raf); window.removeEventListener('pointermove', onMove)
-      ro.disconnect(); pmrem.dispose(); renderer.dispose(); disp.forEach((d) => d.dispose?.())
+      ro.disconnect(); io.disconnect(); pmrem.dispose(); renderer.dispose(); disp.forEach((d) => d.dispose?.())
     }
   } catch (e) {
     console.error('[mascot] failed', e); failed.value = true
