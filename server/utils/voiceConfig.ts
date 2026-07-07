@@ -87,7 +87,7 @@ export const voiceTools = [
 export const liveConfig = {
   responseModalities: [Modality.AUDIO],
   mediaResolution: MediaResolution.MEDIA_RESOLUTION_MEDIUM,
-  speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Zephyr' } } },
+  speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Charon' } } },
   systemInstruction: { parts: [{ text: voiceSystemPrompt }] },
   tools: voiceTools,
   contextWindowCompression: { triggerTokens: 25600, slidingWindow: { targetTokens: 12800 } },
