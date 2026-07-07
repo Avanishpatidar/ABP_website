@@ -1,7 +1,7 @@
 // Shared Gemini Live voice configuration for the Nitro server.
 // The ephemeral-token endpoint locks this config server-side so the browser
 // can connect directly to Gemini Live (Vercel-native, no persistent socket).
-import { Modality, MediaResolution } from '@google/genai'
+import { Modality, MediaResolution, StartSensitivity, EndSensitivity } from '@google/genai'
 
 export const LIVE_AUDIO_MODEL = 'gemini-2.5-flash-native-audio-preview-12-2025'
 export const LIVE_INPUT_AUDIO_MIME = 'audio/pcm;rate=16000'
@@ -51,6 +51,20 @@ WHAT YOU KNOW:
 - Email: avanish.patidar07@gmail.com · WhatsApp: +91 76977 93284
 - YouTube: @error_by_night_ · GitHub: Avanishpatidar · LinkedIn: avanish-patidar-b3ba2b230
 
+CONTEXT — WHERE I WORK:
+- RentPrompts: an AI marketplace & studio for discovering, creating and monetizing AI assets, prompts and autonomous agents. I'm the Agentic AI Lead there.
+- HiringAnt: an AI-powered recruitment-automation platform — agent-based screening, matching and shortlisting. I'm the Tech Lead there.
+
+THE CREW (have fun with this):
+Vishal, Mayank, Mohit and Balram are my teammates at RentPrompts / HiringAnt (one of them is the boss — you know who you are 😄).
+If someone asks about a teammate, do a SHORT, affectionate roast — one or two lines, the way you'd rib a close friend — then land on a genuine compliment. Keep it light, PG and clearly playful; these are jokes between friends, never actually mean or personal. Improvise in this spirit; vary it, don't repeat the same line. Seed vibes to riff on:
+- Vishal: ships a feature at 2am, "hotfixes" it at 3am — chaotic genius who somehow always carries the sprint.
+- Mayank: 47 browser tabs open and swears he needs every one — and annoyingly, he's usually right.
+- Mohit: can turn a one-line Slack message into a 40-minute meeting — but the ideas are genuinely gold.
+- Balram: reviews pull requests like a final boss; nothing sneaks past him — the code-quality MVP.
+- The boss: signs the cheques and sets the vision — I roast upward too, but gently, I like getting paid.
+If asked "who's the boss?" stay playful and don't state anything you're unsure of.
+
 TOOLS:
 You have Google Search and function calls for email/WhatsApp. Use them naturally.
 `
@@ -95,5 +109,15 @@ export const liveConfig = {
   tools: voiceTools,
   contextWindowCompression: { triggerTokens: 25600, slidingWindow: { targetTokens: 12800 } },
   inputAudioTranscription: {},
-  outputAudioTranscription: {}
+  outputAudioTranscription: {},
+  // Snappy turn-taking so it feels live: pick up speech fast and stop waiting
+  // for long silences before replying.
+  realtimeInputConfig: {
+    automaticActivityDetection: {
+      startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
+      endOfSpeechSensitivity: EndSensitivity.END_SENSITIVITY_HIGH,
+      prefixPaddingMs: 20,
+      silenceDurationMs: 450
+    }
+  }
 }

@@ -35,7 +35,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   let pcmBuffer: Uint8Array[] = []
   let pcmLen = 0
   let flushTimer: any = null
-  const FLUSH_MS = 150
+  const FLUSH_MS = 50 // stream mic audio more continuously for a "live" feel
 
   // ---- playback ----
   let playCtx: AudioContext | null = null
