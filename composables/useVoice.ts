@@ -241,11 +241,18 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     if (!(await initMic())) { status.value = 'Mic access denied'; micOn.value = false; return }
     streaming = true; pcmBuffer = []; pcmLen = 0
     const source = micCtx!.createMediaStreamSource(micStream!)
+    let workletSuccess = false
     if (micCtx!.audioWorklet) {
-      await ensureWorklet()
-      const wn = new (window as any).AudioWorkletNode(micCtx, RECORDER_WORKLET, { numberOfInputs: 1, numberOfOutputs: 0, channelCount: 1 })
-      source.connect(wn); wn.port.onmessage = (e: any) => onChunk(e.data); workletNode = wn
-    } else {
+      try {
+        await ensureWorklet()
+        const wn = new (window as any).AudioWorkletNode(micCtx, RECORDER_WORKLET, { numberOfInputs: 1, numberOfOutputs: 0, channelCount: 1 })
+        source.connect(wn); wn.port.onmessage = (e: any) => onChunk(e.data); workletNode = wn
+        workletSuccess = true
+      } catch (err) {
+        console.warn('[voice] AudioWorklet failed, falling back to ScriptProcessor:', err)
+      }
+    }
+    if (!workletSuccess) {
       const sn = (micCtx as any).createScriptProcessor(4096, 1, 1)
       source.connect(sn); sn.connect(micCtx!.destination); sn.onaudioprocess = (e: any) => onChunk(e.inputBuffer.getChannelData(0)); workletNode = sn
     }
