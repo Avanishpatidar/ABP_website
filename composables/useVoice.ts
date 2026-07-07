@@ -160,25 +160,16 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
 
     return {
       sendAudio: (b64: string) => {
-        try {
-          if (s?.conn?.readyState === 1) {
-            s.sendRealtimeInput({ audio: { data: b64, mimeType: LIVE_INPUT_MIME } })
-          }
-        } catch {}
+        if (!connected.value) return
+        try { s.sendRealtimeInput({ audio: { data: b64, mimeType: LIVE_INPUT_MIME } }) } catch {}
       },
       sendText: (t: string) => {
-        try {
-          if (s?.conn?.readyState === 1) {
-            s.sendClientContent({ turns: [{ role: 'user', parts: [{ text: t }] }], turnComplete: true })
-          }
-        } catch {}
+        if (!connected.value) return
+        try { s.sendClientContent({ turns: [{ role: 'user', parts: [{ text: t }] }], turnComplete: true }) } catch {}
       },
       sendSystem: (t: string) => {
-        try {
-          if (s?.conn?.readyState === 1) {
-            s.sendClientContent({ turns: [{ role: 'user', parts: [{ text: `[SYSTEM: ${t}]` }] }], turnComplete: true })
-          }
-        } catch {}
+        if (!connected.value) return
+        try { s.sendClientContent({ turns: [{ role: 'user', parts: [{ text: `[SYSTEM: ${t}]` }] }], turnComplete: true }) } catch {}
       },
       close: () => { try { s?.close() } catch {} }
     }
