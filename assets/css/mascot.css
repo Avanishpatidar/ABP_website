@@ -1,0 +1,46 @@
+/* Supplemental styles: embed the 3D avatar into the existing mascot face,
+   the prominent hero mascot, and the interview prompt chips. Monochrome. */
+
+/* 3D canvas fills the floating mascot face (behind the ring/waves) */
+.voice-mascot-face { overflow: visible; }
+.voice-mascot-face .mascot-canvas {
+  position: absolute; inset: 0; width: 100%; height: 100%; z-index: 1; border-radius: 50%;
+}
+/* the old gradient blob is replaced by the avatar */
+.voice-mascot-face { background: transparent !important; box-shadow: none !important; }
+.voice-mascot-face::after { display: none; }
+
+/* Prominent hero mascot (home) */
+.mascot-hero {
+  width: min(360px, 82vw); aspect-ratio: 1; margin: 0 auto; position: relative;
+}
+.mascot-hero .mascot-canvas { width: 100%; height: 100%; }
+.mascot-hero::after {
+  content: ''; position: absolute; left: 50%; bottom: 4%; transform: translateX(-50%);
+  width: 55%; height: 26px; border-radius: 50%;
+  background: radial-gradient(ellipse, rgba(255,112,67,0.35), transparent 70%);
+  filter: blur(8px); opacity: .6; pointer-events: none;
+}
+.mascot-hero.is-live::before {
+  content: ''; position: absolute; inset: 8%; border-radius: 50%;
+  box-shadow: 0 0 60px 6px rgba(255,112,67,0.30); animation: heroPulse 1.8s ease-in-out infinite; pointer-events: none;
+}
+@keyframes heroPulse { 0%,100% { opacity: .3; } 50% { opacity: .8; } }
+
+.mascot-cap {
+  text-align: center; font-family: 'Fira Code', monospace; font-size: 0.8rem;
+  color: var(--muted-text); margin-top: 16px;
+}
+
+/* Interview prompt chips */
+.ask-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 20px; justify-content: center; }
+.ask-chip {
+  font-family: 'Fira Code', monospace; font-size: 0.78rem; color: var(--secondary-text);
+  border: 1px solid rgba(255, 255, 255, 0.14); border-radius: 9999px; padding: 8px 15px;
+  cursor: pointer; transition: all 0.2s ease; background: transparent;
+}
+.ask-chip:hover { color: var(--primary-text); border-color: var(--highlight-color); transform: translateY(-1px); }
+body.light-mode .ask-chip { border-color: rgba(0, 0, 0, 0.14); }
+
+/* suggestions inside the terminal intro */
+.terminal-suggest { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; justify-content: center; }
