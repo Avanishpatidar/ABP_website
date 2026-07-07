@@ -319,7 +319,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
 
   // ---- page awareness (stubbed) ----
   function sendGreet() {
-    session?.sendSystem(`Start your response exactly with "Hello, my name is Avanish" or "Hello, mera naam Avanish hai" (depending on the language they are using), introduce yourself briefly, and invite them to chat. Keep it warm, brief, and under 3 sentences.`)
+    session?.sendSystem(`Say exactly: "Mai hoon Avanish! Pucho kuch bhi mere ya mere kaam ke baare mein."`)
   }
   function notifySection(id: string) {}
   function notifyHover(ctx: Ctx) {}

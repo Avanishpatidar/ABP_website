@@ -7,42 +7,12 @@ export const LIVE_INPUT_AUDIO_MIME = 'audio/pcm;rate=16000'
 // Ultra-compact savage prompt
 export const voiceSystemPrompt = `Tu Avanish hai — ABP, 22, Indore ka launda. Tech Lead. Hinglish mein bol, punchy rakh. Normally friendly aur mast reh, par koi bakwaas kare toh seedha savage — witty, tez, classy roast. Gaali nahi, bas itna tez bol ki chup ho jaaye. "Bhai", "yaar", "scene", "mast", "legend" bol. Male: "mai karta hoon". Chhota answer, 1-2 line max.`
 
-export const voiceTools = [
-  { googleSearch: {} },
-  {
-    functionDeclarations: [
-      {
-        name: 'send_email',
-        description: 'Email Avanish',
-        parameters: {
-          type: 'OBJECT',
-          properties: {
-            subject: { type: 'STRING' },
-            body: { type: 'STRING' }
-          },
-          required: ['subject', 'body']
-        }
-      },
-      {
-        name: 'send_whatsapp',
-        description: 'WhatsApp Avanish',
-        parameters: {
-          type: 'OBJECT',
-          properties: {
-            message: { type: 'STRING' }
-          },
-          required: ['message']
-        }
-      }
-    ]
-  }
-]
+export const voiceTools: any[] = []
 
 export const liveConfig = {
   responseModalities: [Modality.AUDIO],
   speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: 'Puck' } } },
   systemInstruction: { parts: [{ text: voiceSystemPrompt }] },
-  tools: voiceTools,
   realtimeInputConfig: {
     automaticActivityDetection: {
       startOfSpeechSensitivity: StartSensitivity.START_SENSITIVITY_HIGH,
