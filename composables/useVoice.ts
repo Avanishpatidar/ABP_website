@@ -64,6 +64,25 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   }
   const stopMouthLoop = () => { if (mouthRaf) cancelAnimationFrame(mouthRaf); mouthRaf = 0; iv.mouth.value = 0 }
 
+  const resample = (f32: Float32Array, fromRate: number, toRate: number): Float32Array => {
+    const ratio = fromRate / toRate
+    const newLength = Math.round(f32.length / ratio)
+    const result = new Float32Array(newLength)
+    let offset = 0
+    for (let i = 0; i < newLength; i++) {
+      const nextOffset = Math.round((i + 1) * ratio)
+      let sum = 0
+      let count = 0
+      for (let j = Math.round(offset); j < nextOffset && j < f32.length; j++) {
+        sum += f32[j]
+        count++
+      }
+      result[i] = count > 0 ? sum / count : 0
+      offset = nextOffset
+    }
+    return result
+  }
+
   const floatTo16 = (f32: Float32Array) => {
     const buf = new ArrayBuffer(f32.length * 2)
     const v = new DataView(buf)
@@ -228,7 +247,14 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
       return true
     } catch (e) { console.error('Mic error:', e); return false }
   }
-  const onChunk = (f32: Float32Array) => { if (!streaming) return; const pcm = floatTo16(f32); pcmBuffer.push(pcm); pcmLen += pcm.length }
+  const onChunk = (f32: Float32Array) => {
+    if (!streaming) return
+    const fromRate = micCtx?.sampleRate || 16000
+    const resampled = fromRate === 16000 ? f32 : resample(f32, fromRate, 16000)
+    const pcm = floatTo16(resampled)
+    pcmBuffer.push(pcm)
+    pcmLen += pcm.length
+  }
   const flush = () => {
     if (pcmLen === 0 || !session || !connected.value || !streaming) return
     const combined = new Uint8Array(pcmLen); let off = 0
