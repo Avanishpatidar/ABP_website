@@ -48,12 +48,12 @@ export const about = {
 // Plain questions and answers about me. Shown on the About page, marked up as
 // FAQPage data, and included in the agent markdown so AI assistants can answer.
 export const faq = [
-  { q: 'Who is Avanish Patidar?', a: 'Avanish Patidar, also known as ABP, is an AI product engineer from Indore, India. He is the CTO of HiringAnt and the Agentic AI Lead at RentPrompts.' },
-  { q: 'What does Avanish Patidar build?', a: 'Scalable AI products, AI solutions and automation: multi-agent pipelines, real-time voice AI, and the full web products around them. His work includes HiringAnt, RentPrompts, PrepOwl, Yashraj Books, and client systems for Aradhya Manpower and Tharu & Sons.' },
-  { q: 'What is HiringAnt and what is his role there?', a: 'HiringAnt (hiringant.ai) is an AI hiring platform for job seekers and employers. Avanish is its CTO. He built it from the first commit and took it to paying users; more than 3,600 job seekers and 160 employers have signed up.' },
-  { q: 'Does he do marketing and video as well as engineering?', a: 'Yes. He markets HiringAnt himself, including SEO, Meta ad campaigns and reels he writes and edits (the top five have over 450,000 views), and runs Error by Night, a YouTube channel with 11.9K subscribers where he scripts, shoots and edits coding tutorials.' },
-  { q: 'Is Avanish Patidar available for projects?', a: 'He takes on a few projects as an AI product engineer and builder: zero-to-launch AI products, AI solutions and automation, voice and interview AI, launch content and growth, and production hardening.' },
-  { q: 'How do I contact Avanish Patidar?', a: 'By email at avanish.patidar07@gmail.com. Email is the only contact channel.' }
+  { q: 'Who is Avanish Patidar?', a: 'That is me. People call me ABP. I am an AI product engineer from Indore, India, CTO of HiringAnt and Agentic AI Lead at RentPrompts.' },
+  { q: 'What do you build?', a: 'AI products that have to work for real users: multi-agent pipelines, real-time voice AI, automation, and the full web product around them. HiringAnt, RentPrompts, PrepOwl and Yashraj Books are mine; I also built systems for Aradhya Manpower and Tharu & Sons.' },
+  { q: 'What is HiringAnt, and what did you do there?', a: 'HiringAnt (hiringant.ai) is an AI hiring platform for job seekers and employers. I am the CTO. I wrote the first commit, built most of it, and took it to paying users. More than 3,600 job seekers and 160 employers have signed up.' },
+  { q: 'Do you really do the marketing and videos too?', a: 'Yes. I run HiringAnt\'s SEO and Meta ads, and I write, shoot and edit the reels myself; the top five have over 450,000 views. I also run Error by Night, my YouTube channel with 11.9K subscribers.' },
+  { q: 'Are you available for projects?', a: 'Yes, for a few at a time. Send me what you are building: an AI product from scratch, an automation, a voice agent, a launch that needs users, or an AI feature that keeps breaking in production.' },
+  { q: 'How do I reach you?', a: 'Email me at avanish.patidar07@gmail.com. I read every email myself, and it is the only way to reach me.' }
 ]
 
 export interface Product { name: string; url: string; role: string; summary: string; points: string[]; stack: string }
