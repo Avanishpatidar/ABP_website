@@ -77,23 +77,55 @@ async function send(text: string) {
 }
 
 const close = () => { open.value = false }
-watch(open, (v) => { if (v) { voice.prewarmSdk(); scrollDown(); nextTick(() => inputEl.value?.focus()) } })
+// On phones the panel is full screen. The on-screen keyboard shrinks the
+// visible area without shrinking the page, so the panel is pinned to the
+// visible area (visualViewport) or its header and messages slide off the top.
+const panelEl = ref<HTMLElement | null>(null)
+const isPhone = () => window.matchMedia('(max-width: 560px)').matches
+const fit = () => {
+  const el = panelEl.value
+  const vv = window.visualViewport
+  if (!el) return
+  if (!isPhone() || !vv) { el.style.height = ''; el.style.top = ''; return }
+  el.style.height = `${vv.height}px`
+  el.style.top = `${vv.offsetTop}px`
+  scrollDown()
+}
+watch(open, (v) => {
+  document.documentElement.classList.toggle('twin-open', v)
+  if (!v) return
+  voice.prewarmSdk()
+  scrollDown()
+  nextTick(() => {
+    fit()
+    // Do not pop the keyboard on phones: let people read the suggestions first.
+    if (!isPhone()) inputEl.value?.focus()
+  })
+})
 watch(() => interview.queued.value, (q) => { if (q) { open.value = true; send(q); interview.queued.value = null } })
 watch(() => interview.wantVoice.value, (w) => { if (w) { open.value = true; voice.start(true); interview.wantVoice.value = false } })
 const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && open.value) close() }
 onMounted(() => {
   window.addEventListener('keydown', onKey)
+  window.visualViewport?.addEventListener('resize', fit)
+  window.visualViewport?.addEventListener('scroll', fit)
   // Fetch the voice SDK while the browser is idle so the first voice chat starts quickly.
   const warm = () => voice.prewarmSdk()
   'requestIdleCallback' in window ? (window as any).requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 2500)
 })
-onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop() })
+onBeforeUnmount(() => {
+  window.removeEventListener('keydown', onKey)
+  window.visualViewport?.removeEventListener('resize', fit)
+  window.visualViewport?.removeEventListener('scroll', fit)
+  document.documentElement.classList.remove('twin-open')
+  voice.stop()
+})
 </script>
 
 <template>
   <button v-if="!open" type="button" class="twin-fab" @click="open = true"><img src="/images/avanish.jpg" alt="" width="34" height="34" />Ask my AI twin</button>
 
-  <div v-else class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
+  <div v-else ref="panelEl" class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
     <div class="twin-head">
       <div><strong>Avanish's AI twin</strong><small>Ask by text, or tap the mic to talk.</small></div>
       <div>

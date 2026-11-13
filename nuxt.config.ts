@@ -55,7 +55,7 @@ export default defineNuxtConfig({
       title: home.title,
       meta: [
         { charset: 'UTF-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content' },
         { name: 'description', content: home.description },
         { name: 'author', content: profile.name },
         { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1' },
