@@ -150,7 +150,8 @@ figure { margin: 0; }
 figcaption { margin-top: 8px; font-size: 0.95rem; line-height: 1.4; }
 .videos { display: grid; gap: 28px; margin-top: 20px; }
 .video iframe { display: block; width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 8px; background: var(--panel); }
-.reels { display: flex; align-items: flex-start; gap: 16px; margin: 18px -24px 0; padding: 0 24px 10px; overflow-x: auto; scrollbar-width: thin; }
+.reels { display: flex; align-items: flex-start; gap: 16px; margin: 18px -24px 0; padding: 0 24px 10px; overflow-x: auto; scrollbar-width: none; }
+.reels::-webkit-scrollbar { display: none; }
 .reel { flex: none; width: 300px; }
 .reel-frame { height: 375px; overflow: hidden; border-radius: 10px; background: var(--panel); border: 1px solid var(--line); }
 .reel iframe { display: block; width: 300px; height: 760px; border: 0; }
