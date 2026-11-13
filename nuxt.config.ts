@@ -90,7 +90,7 @@ export default defineNuxtConfig({
                 alternateName: profile.aka,
                 url: SITE_URL,
                 image: OG_IMAGE,
-                jobTitle: 'AI Product Engineer, Co-Founder & CTO',
+                jobTitle: 'AI Product Engineer, CTO',
                 description: home.description,
                 worksFor: [
                   { '@type': 'Organization', name: 'HiringAnt', url: 'https://hiringant.ai' },

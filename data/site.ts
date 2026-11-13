@@ -10,7 +10,7 @@ export const profile = {
   aka: 'ABP',
   role: 'AI Product Engineer',
   headline: 'I build AI products that reach paying users, and the agents inside them.',
-  sub: 'Co-Founder & CTO at HiringAnt. Agentic AI Lead at RentPrompts. Based in Indore, India.',
+  sub: 'CTO at HiringAnt. Agentic AI Lead at RentPrompts. Based in Indore, India.',
   location: 'Indore, India',
   links: [
     { label: 'GitHub', url: 'https://github.com/Avanishpatidar' },
@@ -23,7 +23,7 @@ export const profile = {
 export const about = {
   intro: [
     'I am Avanish Patidar, an AI product engineer from Indore, India. Most people know me as ABP.',
-    'I joined RentPrompts as a GenAI intern in mid-2025. Within a year I was leading its agentic AI work and building HiringAnt as co-founder and CTO. I designed HiringAnt from the first commit, wrote most of it, and took it to paying users.',
+    'I joined RentPrompts as a GenAI intern in mid-2025. Within a year I was leading its agentic AI work and building HiringAnt as CTO. I designed HiringAnt from the first commit, wrote most of it, and took it to paying users.',
     'I like the whole job, not one layer of it: talking to the people who will use the thing, deciding what to build, shipping the frontend, the backend and the agents, then watching the numbers and fixing what they show.'
   ],
   principles: [
@@ -39,7 +39,7 @@ export const products: Product[] = [
   {
     name: 'HiringAnt',
     url: 'https://hiringant.ai',
-    role: 'Co-Founder & CTO',
+    role: 'CTO',
     summary: 'An AI hiring platform with two sides. Job seekers upload a résumé and an agent searches the live web for jobs they fit. Employers get AI screening, matching and a first-round AI interviewer.',
     points: [
       'Built from the first commit and taken to paying users, on both the job-seeker and employer side.',
@@ -86,7 +86,7 @@ export const builds: Build[] = [
 export interface Role { title: string; org: string; url?: string; time: string; points: string[] }
 export const experience: Role[] = [
   {
-    title: 'Co-Founder & CTO', org: 'HiringAnt', url: 'https://hiringant.ai', time: 'Feb 2026 to now · Indore',
+    title: 'CTO', org: 'HiringAnt', url: 'https://hiringant.ai', time: 'Feb 2026 to now · Indore',
     points: [
       'Own the product and the whole stack: architecture, agents, backend, frontend and infrastructure.',
       'Took the platform from an empty repository to paying job seekers and employers.',
@@ -180,12 +180,12 @@ export const nav = [
 
 export const pages: Record<string, { title: string; description: string }> = {
   '/': {
-    title: 'Avanish Patidar | AI Product Engineer, Co-Founder & CTO of HiringAnt',
-    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India. Co-Founder & CTO of HiringAnt and Agentic AI Lead at RentPrompts. He builds AI products and agents that reach paying users.'
+    title: 'Avanish Patidar | AI Product Engineer, CTO of HiringAnt',
+    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India. CTO of HiringAnt and Agentic AI Lead at RentPrompts. He builds AI products and agents that reach paying users.'
   },
   '/about': {
     title: 'About Avanish Patidar | AI Product Engineer in Indore, India',
-    description: 'Who Avanish Patidar is, how he works, and his path from GenAI intern to Co-Founder & CTO of HiringAnt in under a year. Experience, principles and stack.'
+    description: 'Who Avanish Patidar is, how he works, and his path from GenAI intern to CTO of HiringAnt in under a year. Experience, principles and stack.'
   },
   '/work': {
     title: 'Work | Products built by Avanish Patidar: HiringAnt, RentPrompts and more',

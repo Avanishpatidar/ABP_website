@@ -12,7 +12,7 @@ useHead({
 <template>
   <ModeView :md="markdownFor('/about')">
     <p class="eyebrow">About</p>
-    <h1>From GenAI intern to co-founder and CTO in under a year.</h1>
+    <h1>From GenAI intern to CTO in under a year.</h1>
     <div class="prose lede">
       <p v-for="p in about.intro" :key="p">{{ p }}</p>
     </div>
