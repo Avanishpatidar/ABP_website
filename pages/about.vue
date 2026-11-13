@@ -38,8 +38,9 @@ useHead({
       <ul class="list tight"><li v-for="pt in r.points" :key="pt"><span>{{ pt }}</span></li></ul>
     </template>
 
-    <h2>Stack</h2>
-    <ul class="list tight">
+    <h2>What I work with</h2>
+    <p>The whole path from an idea to a product people pay for, not only the AI part.</p>
+    <ul class="list" style="margin-top: 14px">
       <li v-for="(items, group) in stack" :key="group"><strong>{{ group }}:</strong> <span>{{ items.join(', ') }}</span></li>
     </ul>
 

@@ -14,7 +14,7 @@ export const profile = {
   location: 'Indore, India',
   links: [
     { label: 'GitHub', url: 'https://github.com/Avanishpatidar' },
-    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/avanish-patidar-b3ba2b230/' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/avanish-patidar/' },
     { label: 'X', url: 'https://x.com/Avanish_patidar' },
     { label: 'YouTube', url: 'https://www.youtube.com/@error_by_night_' }
   ]
@@ -155,12 +155,41 @@ export const experience: Role[] = [
 ]
 
 export const stack: Record<string, string[]> = {
-  'Agents & AI': ['OpenAI Agents SDK', 'LangGraph', 'LangChain', 'CrewAI', 'RAG', 'Realtime voice', 'Evals', 'n8n'],
-  'Product': ['TypeScript', 'Next.js', 'React', 'Nuxt', 'Tailwind CSS', 'Payload CMS'],
-  'Backend': ['Python', 'FastAPI', 'Node.js', 'Celery', 'Redis', 'WebSockets'],
-  'Data': ['MongoDB', 'PostgreSQL', 'pgvector', 'Pinecone', 'ChromaDB'],
-  'Infra': ['Docker', 'Nginx', 'Cloudflare', 'Vercel', 'GitHub Actions']
+  'AI and agents': ['OpenAI Agents SDK', 'Multi-agent pipelines', 'Function tools', 'Structured outputs', 'RAG', 'Evals and LLM-as-judge', 'Prompt versioning', 'LangGraph', 'LangChain', 'CrewAI', 'n8n'],
+  'Voice and real-time': ['LiveKit Agents', 'OpenAI Realtime', 'Gemini Live', 'Silero VAD', 'WebRTC', 'WebSockets', 'Server-sent events'],
+  'Frontend': ['TypeScript', 'Next.js 16', 'React 19', 'TanStack Query', 'Tailwind CSS', 'shadcn/ui and Radix', 'Framer Motion', 'Nuxt and Vue'],
+  'Backend': ['Python', 'FastAPI', 'Pydantic v2', 'Celery', 'Redis', 'Node.js', 'Payload CMS'],
+  'Data and storage': ['MongoDB', 'PostgreSQL', 'pgvector', 'Pinecone', 'ChromaDB', 'Cloudflare R2'],
+  'DevOps and reliability': ['Docker and Compose', 'Nginx', 'GitHub Actions CI gates', 'Vercel', 'Cloudflare', 'Sentry', 'Uptime probes', 'Load testing', 'Lighthouse budgets'],
+  'Product and growth': ['Razorpay payments', 'Transactional email', 'GA4 and PostHog', 'Technical SEO', 'Meta Ads', 'Video editing']
 }
+
+// The piece of HiringAnt I am asked about most.
+export const interviewer = {
+  title: 'The AI interviewer',
+  url: 'https://hiringant.ai/ai-interviewer',
+  intro: 'Anty is HiringAnt\'s AI interviewer. It runs a real first-round interview by voice, live, and I built it end to end.',
+  points: [
+    'A two-way conversation, not a one-way video: it asks, listens, and follows up on what the candidate actually said.',
+    'Structured rounds with the employer\'s own questions and hands-on tasks, done while the candidate shares their screen.',
+    'Every interview is recorded, with a timestamped transcript, a score for each question and a summary sent to the employer.',
+    'Integrity signals with timestamps: tab switches, lost window focus, a stopped screen share, answers that sound read out.',
+    'Candidates can practise on the same system with mock interviews before the real one.',
+    'The AI never decides who gets hired. It hands a ranked shortlist and the evidence to a person.'
+  ],
+  stack: 'LiveKit Agents · OpenAI · Silero VAD · WebRTC · FastAPI · Celery · Cloudflare R2'
+}
+
+export const hiringantLinks = [
+  { label: 'AI interviewer', url: 'https://hiringant.ai/ai-interviewer', note: 'live first-round voice interviews' },
+  { label: 'AI screening', url: 'https://hiringant.ai/ai-screening', note: 'every résumé scored against the job' },
+  { label: 'AI job search', url: 'https://hiringant.ai/ai-job-search', note: 'an agent that searches the live web for jobs you fit' },
+  { label: 'Résumé builder', url: 'https://hiringant.ai/resume-builder', note: 'free and ATS-friendly' },
+  { label: 'Career Pro', url: 'https://hiringant.ai/career-pro', note: 'Job Agents and mock interviews for job seekers' },
+  { label: 'For employers', url: 'https://hiringant.ai/employers', note: 'post a job, meet a shortlist' },
+  { label: 'For agencies', url: 'https://hiringant.ai/for-agencies', note: 'hiring on behalf of clients' },
+  { label: 'Jobs', url: 'https://hiringant.ai/jobs', note: 'the public job board' }
+]
 
 export interface Service { name: string; text: string; includes: string[] }
 export const services: Service[] = [
@@ -333,7 +362,7 @@ const mdAbout = () => [
   about.growth.points.map(p => `- ${p}`).join('\n'),
   `## Experience`,
   ...experience.map(r => [`### ${r.title}, ${link(r.org, r.url)}`, r.time, ...r.points.map(p => `- ${p}`)].join('\n')),
-  `## Stack`,
+  `## What I work with`,
   ...Object.entries(stack).map(([k, v]) => `- **${k}:** ${v.join(', ')}`),
   `## Questions and answers`,
   ...faq.map(f => `**${f.q}**\n${f.a}`)
@@ -348,6 +377,12 @@ const mdWork = () => [
     ...p.points.map(x => `- ${x}`),
     p.stack ? `Stack: ${p.stack}` : ''
   ].filter(Boolean).join('\n')),
+  `## ${interviewer.title} (${interviewer.url})`,
+  interviewer.intro,
+  interviewer.points.map(p => `- ${p}`).join('\n'),
+  `Stack: ${interviewer.stack}`,
+  `## Inside HiringAnt`,
+  hiringantLinks.map(l => `- ${link(l.label, l.url)}: ${l.note}`).join('\n'),
   `## Client work`,
   ...clients.map(c => [`### ${link(c.name, c.url)}`, c.text, ...c.points.map(x => `- ${x}`)].join('\n')),
   `## More builds`,

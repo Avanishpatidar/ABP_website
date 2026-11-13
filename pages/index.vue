@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { profile, products, clients, hiringantPosts, reels, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantLinks, hiringantPosts, reels, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
 const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.filter(r => r.kind === 'real').slice(0, 2)]
@@ -33,6 +33,9 @@ const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.fi
       <li v-for="p in products" :key="p.name">
         <a :href="p.url" target="_blank" rel="noopener">{{ p.name }}</a>
         <span> · {{ p.summary }}</span>
+        <span v-if="p.name === 'HiringAnt'" class="sub">
+          <a v-for="l in hiringantLinks.slice(0, 5)" :key="l.url" :href="l.url" target="_blank" rel="noopener">{{ l.label }}</a>
+        </span>
       </li>
     </ul>
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { products, clients, builds, markdownFor } from '~/data/site'
+import { products, clients, builds, interviewer, hiringantLinks, markdownFor } from '~/data/site'
 usePageSeo('/work')
 </script>
 
@@ -17,6 +17,21 @@ usePageSeo('/work')
       </ul>
       <p v-if="p.stack" class="muted small" style="margin-top: 8px">{{ p.stack }}</p>
     </template>
+
+    <h2>{{ interviewer.title }}</h2>
+    <p>{{ interviewer.intro }} <a :href="interviewer.url" target="_blank" rel="noopener">See it on HiringAnt</a>.</p>
+    <ul class="list" style="margin-top: 14px">
+      <li v-for="pt in interviewer.points" :key="pt"><span>{{ pt }}</span></li>
+    </ul>
+    <p class="muted small" style="margin-top: 8px">{{ interviewer.stack }}</p>
+
+    <h2>Inside HiringAnt</h2>
+    <p>Every part below is live. Open any of them.</p>
+    <ul class="list tight" style="margin-top: 14px">
+      <li v-for="l in hiringantLinks" :key="l.url">
+        <a :href="l.url" target="_blank" rel="noopener">{{ l.label }}</a><span> · {{ l.note }}</span>
+      </li>
+    </ul>
 
     <h2>Client work</h2>
     <template v-for="c in clients" :key="c.name">
