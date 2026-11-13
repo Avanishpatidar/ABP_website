@@ -10,6 +10,24 @@ const RECORDER_WORKLET = 'pcm-recorder-processor'
 let sdkPromise: Promise<any> | null = null
 const warmSdk = () => (sdkPromise ||= import(/* @vite-ignore */ SDK_URL))
 
+// A voice session token minted ahead of the click. Tokens must be used within
+// two minutes, so a cached one is only trusted for 90 seconds.
+let tokenCache: { at: number; p: Promise<any> } | null = null
+const fetchToken = () => fetch('/api/voice-token', { method: 'POST' }).then(r => { if (!r.ok) throw new Error('Could not create a voice session'); return r.json() })
+const warmToken = () => {
+  if (!tokenCache || Date.now() - tokenCache.at > 90_000) {
+    const entry = { at: Date.now(), p: fetchToken() }
+    entry.p.catch(() => { if (tokenCache === entry) tokenCache = null })
+    tokenCache = entry
+  }
+  return tokenCache.p
+}
+const takeToken = () => {
+  const fresh = tokenCache && Date.now() - tokenCache.at <= 90_000 ? tokenCache.p : null
+  tokenCache = null // single use
+  return fresh ? fresh.catch(fetchToken) : fetchToken()
+}
+
 type Ctx = { type: string; title: string; description?: string }
 type ActionCard = { icon: string; text: string; sub?: string } | null
 
@@ -104,9 +122,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   async function connect() {
     // Load the SDK and mint the token in parallel (SDK is usually already warm).
     const sdkP = warmSdk()
-    const res = await fetch('/api/voice-token', { method: 'POST' })
-    if (!res.ok) throw new Error('Could not create a voice session')
-    const { token, model, isRawKey, config } = await res.json()
+    const { token, model, isRawKey, config } = await takeToken()
     if (!token) throw new Error('No voice token returned')
 
     const { GoogleGenAI, Modality } = await sdkP
@@ -222,7 +238,9 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     await micCtx.audioWorklet.addModule(URL.createObjectURL(new Blob([src], { type: 'application/javascript' })))
     workletLoaded = true
   }
-  async function initMic() {
+  let micInit: Promise<boolean> | null = null
+  const initMic = () => (micInit ||= openMic().then(ok => { if (!ok) micInit = null; return ok }))
+  async function openMic() {
     if (micStream) return true
     try {
       micStream = await navigator.mediaDevices.getUserMedia({ audio: { channelCount: 1, sampleRate: 16000, echoCancellation: true, noiseSuppression: true, autoGainControl: true } })
@@ -311,7 +329,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
 
   // ---- page awareness (stubbed) ----
   function sendGreet() {
-    session?.sendSystem(`Say exactly: "Mai hoon Avanish! Pucho kuch bhi mere ya mere kaam ke baare mein."`)
+    session?.sendSystem(`Say exactly: "Hi, I'm Avanish. Ask me anything about my work."`)
   }
   function notifySection(id: string) {}
   function notifyHover(ctx: Ctx) {}
@@ -327,6 +345,8 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
     } catch (err) {
       console.warn('[voice] Failed to init playCtx:', err)
     }
+    // Ask for the microphone while the connection is being made, not after it.
+    if (withMic) initMic()
     try {
       session = await connect()
       sendGreet()
@@ -361,6 +381,7 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
   return {
     started, connected, micOn, faceState, status, actionCard,
     start, stop, toggleMic, interruptIfSpeaking, notifySection, notifyHover,
-    prewarm: warmSdk
+    prewarm: () => { warmSdk().catch(() => {}); warmToken().catch(() => {}) },
+    prewarmSdk: () => { warmSdk().catch(() => {}) }
   }
 }

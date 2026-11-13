@@ -18,7 +18,7 @@ const logEl = ref<HTMLElement | null>(null)
 const inputEl = ref<HTMLInputElement | null>(null)
 let id = 0
 
-const SUGGESTIONS = ['Why should I hire you?', 'Roast my startup idea', 'What did you actually build at HiringAnt?', 'Explain agents like I am five']
+const SUGGESTIONS = ['What did you build at HiringAnt?', 'Can you help with my project?', 'What is your stack?', 'How do you market what you build?']
 
 const scrollDown = () => nextTick(() => { if (logEl.value) logEl.value.scrollTop = logEl.value.scrollHeight })
 
@@ -71,17 +71,22 @@ async function send(text: string) {
       } catch {}
     }
   } catch (e) {
-    bot.text = `My brain just rate-limited itself. Embarrassing. Try again in a minute, or email the real Avanish at ${EMAIL}.`
+    bot.text = `I could not answer just now. Please try again in a minute, or email Avanish at ${EMAIL}.`
     console.error('[chat]', e)
   } finally { busy.value = false; scrollDown() }
 }
 
 const close = () => { open.value = false }
-watch(open, (v) => { if (v) { scrollDown(); nextTick(() => inputEl.value?.focus()) } })
+watch(open, (v) => { if (v) { voice.prewarmSdk(); scrollDown(); nextTick(() => inputEl.value?.focus()) } })
 watch(() => interview.queued.value, (q) => { if (q) { open.value = true; send(q); interview.queued.value = null } })
 watch(() => interview.wantVoice.value, (w) => { if (w) { open.value = true; voice.start(true); interview.wantVoice.value = false } })
 const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape' && open.value) close() }
-onMounted(() => window.addEventListener('keydown', onKey))
+onMounted(() => {
+  window.addEventListener('keydown', onKey)
+  // Fetch the voice SDK while the browser is idle so the first voice chat starts quickly.
+  const warm = () => voice.prewarmSdk()
+  'requestIdleCallback' in window ? (window as any).requestIdleCallback(warm, { timeout: 4000 }) : setTimeout(warm, 2500)
+})
 onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop() })
 </script>
 
@@ -90,12 +95,12 @@ onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop
 
   <div v-else class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
     <div class="twin-head">
-      <div><strong>ABP's AI twin</strong><small>Same opinions, fewer coffee breaks.</small></div>
+      <div><strong>Avanish's AI twin</strong><small>Ask by text, or tap the mic to talk.</small></div>
       <div>
-        <button type="button" class="icon-btn" :class="{ on: voice.started.value }" :aria-label="voice.started.value ? 'End voice call' : 'Talk by voice'" @click="voice.started.value ? voice.stop() : voice.start(true)">
+        <button type="button" class="icon-btn tip" :class="{ on: voice.started.value }" :data-tip="voice.started.value ? 'End voice chat' : 'Talk to me by voice'" :aria-label="voice.started.value ? 'End voice chat' : 'Talk to me by voice'" @pointerenter="voice.prewarm()" @focus="voice.prewarm()" @click="voice.started.value ? voice.stop() : voice.start(true)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><path d="M12 19v4" /></svg>
         </button>
-        <button type="button" class="icon-btn" aria-label="Close chat" @click="close">
+        <button type="button" class="icon-btn tip" data-tip="Close" aria-label="Close chat" @click="close">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18" /></svg>
         </button>
       </div>
@@ -103,7 +108,7 @@ onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop
 
     <div ref="logEl" class="twin-log" aria-live="polite">
       <div v-if="!messages.length" class="twin-empty">
-        I am Avanish's AI twin. I answer like him, only faster and with more confidence than is healthy. Ask me anything, or pick one:
+        I am Avanish's AI twin. Ask me about his work, his products or how he can help with yours.
         <div><button v-for="s in SUGGESTIONS" :key="s" type="button" class="chip" @click="send(s)">{{ s }}</button></div>
       </div>
       <div v-for="m in messages" :key="m.id" class="msg" :class="m.role" v-html="md(m.text) || '…'"></div>
