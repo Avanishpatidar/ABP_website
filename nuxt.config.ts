@@ -2,6 +2,7 @@ import { EMAIL, SITE_URL, pages, profile, ownPosts } from './data/site'
 
 const home = pages['/']
 const OG_IMAGE = `${SITE_URL}/images/og-image.png`
+const PHOTO = `${SITE_URL}/images/avanish.jpg`
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -64,8 +65,8 @@ export default defineNuxtConfig({
         { property: 'og:image:height', content: '630' },
         { name: 'twitter:card', content: 'summary_large_image' },
         { name: 'twitter:image', content: OG_IMAGE },
-        { name: 'theme-color', content: '#faf9f6', media: '(prefers-color-scheme: light)' },
-        { name: 'theme-color', content: '#0f0f0d', media: '(prefers-color-scheme: dark)' }
+        { name: 'theme-color', content: '#f7f4ec', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#1a1917', media: '(prefers-color-scheme: dark)' }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
@@ -73,7 +74,7 @@ export default defineNuxtConfig({
         { rel: 'alternate', type: 'text/plain', title: 'Site as markdown for agents', href: '/llms.txt' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap' }
       ],
       script: [
         // Apply a saved theme before first paint so the page never flashes.
@@ -89,7 +90,7 @@ export default defineNuxtConfig({
                 name: profile.name,
                 alternateName: profile.aka,
                 url: SITE_URL,
-                image: OG_IMAGE,
+                image: PHOTO,
                 jobTitle: 'AI Product Engineer, CTO',
                 description: home.description,
                 worksFor: [

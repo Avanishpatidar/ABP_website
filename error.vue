@@ -6,10 +6,7 @@ useHead({ title: is404.value ? 'Page not found | Avanish Patidar' : 'Something w
 
 <template>
   <NuxtLayout>
-    <div class="page">
-      <p class="eyebrow">{{ is404 ? '404' : 'Error' }}</p>
-      <h1>{{ is404 ? 'That page does not exist.' : 'Something went wrong.' }}</h1>
-      <div class="actions"><a class="btn primary" href="/">Go home</a></div>
-    </div>
+    <h1>{{ is404 ? 'That page does not exist.' : 'Something went wrong.' }}</h1>
+    <p><a href="/">Go to the home page</a></p>
   </NuxtLayout>
 </template>

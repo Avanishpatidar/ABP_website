@@ -11,14 +11,14 @@ const copy = async () => {
 </script>
 
 <template>
-  <div class="page">
+  <div>
     <div v-show="mode === 'human'"><slot /></div>
     <div v-if="mode === 'agent'">
       <div class="agent-bar">
-        <span class="label">Markdown for agents</span>
+        <span>This page as markdown</span>
         <div>
           <button type="button" @click="copy">{{ copied ? 'Copied' : 'Copy' }}</button>
-          <a href="/llms.txt">Whole site: /llms.txt</a>
+          <a href="/llms.txt">Whole site</a>
         </div>
       </div>
       <pre class="agent-md">{{ md }}</pre>

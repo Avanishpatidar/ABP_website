@@ -11,51 +11,27 @@ useHead({
 
 <template>
   <ModeView :md="markdownFor('/about')">
-    <p class="eyebrow">About</p>
-    <h1>From GenAI intern to CTO in under a year.</h1>
-    <div class="prose lede">
-      <p v-for="p in about.intro" :key="p">{{ p }}</p>
-    </div>
+    <h1>About</h1>
+    <p v-for="p in about.intro" :key="p">{{ p }}</p>
 
-    <section>
-      <span class="label">01</span>
-      <h2 id="how-i-work">How I work</h2>
-      <div class="grid2">
-        <div v-for="p in about.principles" :key="p.title" class="cell">
-          <h3>{{ p.title }}</h3>
-          <p>{{ p.text }}</p>
-        </div>
-      </div>
-    </section>
+    <h2>How I work</h2>
+    <ul class="list">
+      <li v-for="p in about.principles" :key="p.title"><strong>{{ p.title }}.</strong> <span>{{ p.text }}</span></li>
+    </ul>
 
-    <section>
-      <span class="label">02</span>
-      <h2 id="experience">Experience</h2>
-      <div class="rows">
-        <div v-for="r in experience" :key="r.title + r.org" class="row">
-          <div class="row-head">
-            {{ r.title }}
-            <span class="row-meta">
-              <a v-if="r.url" :href="r.url" target="_blank" rel="noopener">{{ r.org }}</a><template v-else>{{ r.org }}</template>
-              <br />{{ r.time }}
-            </span>
-          </div>
-          <ul><li v-for="pt in r.points" :key="pt">{{ pt }}</li></ul>
-        </div>
-      </div>
-    </section>
+    <h2>Experience</h2>
+    <template v-for="r in experience" :key="r.title + r.org">
+      <h3>
+        {{ r.title }},
+        <a v-if="r.url" :href="r.url" target="_blank" rel="noopener">{{ r.org }}</a><template v-else>{{ r.org }}</template>
+        <small>{{ r.time }}</small>
+      </h3>
+      <ul class="list tight"><li v-for="pt in r.points" :key="pt"><span>{{ pt }}</span></li></ul>
+    </template>
 
-    <section>
-      <span class="label">03</span>
-      <h2 id="stack">Stack</h2>
-      <div class="rows">
-        <div v-for="(items, group) in stack" :key="group" class="row">
-          <div class="row-head">{{ group }}</div>
-          <div class="tags"><span v-for="i in items" :key="i">{{ i }}</span></div>
-        </div>
-      </div>
-    </section>
-
-    <ContactBlock title="Want the longer version?" text="Ask my AI twin anything about my work, or write to me directly." />
+    <h2>Stack</h2>
+    <ul class="list tight">
+      <li v-for="(items, group) in stack" :key="group"><strong>{{ group }}:</strong> <span>{{ items.join(', ') }}</span></li>
+    </ul>
   </ModeView>
 </template>

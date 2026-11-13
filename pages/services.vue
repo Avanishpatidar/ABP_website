@@ -18,34 +18,23 @@ useHead({
 
 <template>
   <ModeView :md="markdownFor('/services')">
-    <p class="eyebrow">Open to select projects</p>
-    <h1>An AI product engineer who builds the whole thing.</h1>
-    <p class="lede">I work with founders and small teams who need an AI product or agent shipped, not a slide about one. I have done it for my own company, so I know which parts decide whether users pay.</p>
-    <div class="actions">
-      <a class="btn primary" :href="`mailto:${EMAIL}?subject=${encodeURIComponent('Project enquiry')}`">Start a conversation</a>
-      <NuxtLink class="btn" to="/work">See the work</NuxtLink>
-    </div>
+    <h1>Work with me</h1>
+    <p>
+      I work with founders and small teams who need an AI product or agent shipped, not a slide about one. I have done
+      it for my own company, so I know which parts decide whether users pay.
+    </p>
+    <p>To start, write to <a :href="`mailto:${EMAIL}?subject=${encodeURIComponent('Project enquiry')}`">{{ EMAIL }}</a>.</p>
 
-    <section>
-      <span class="label">01</span>
-      <h2 id="what-i-do">What I do</h2>
-      <div class="grid2">
-        <div v-for="s in services" :key="s.name" class="cell">
-          <h3>{{ s.name }}</h3>
-          <p>{{ s.text }}</p>
-          <ul><li v-for="i in s.includes" :key="i">{{ i }}</li></ul>
-        </div>
-      </div>
-    </section>
+    <h2>What I do</h2>
+    <template v-for="s in services" :key="s.name">
+      <h3>{{ s.name }}</h3>
+      <p>{{ s.text }}</p>
+      <ul class="list tight" style="margin-top: 10px"><li v-for="i in s.includes" :key="i"><span>{{ i }}</span></li></ul>
+    </template>
 
-    <section>
-      <span class="label">02</span>
-      <h2 id="how-it-works">How it works</h2>
-      <ol class="steps">
-        <li v-for="s in howItWorks" :key="s.step"><div><strong>{{ s.step }}</strong><span>{{ s.text }}</span></div></li>
-      </ol>
-    </section>
-
-    <ContactBlock title="Tell me what you are building" />
+    <h2>How it works</h2>
+    <ol class="list">
+      <li v-for="s in howItWorks" :key="s.step"><strong>{{ s.step }}.</strong> <span class="muted">{{ s.text }}</span></li>
+    </ol>
   </ModeView>
 </template>

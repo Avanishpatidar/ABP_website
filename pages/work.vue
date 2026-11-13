@@ -5,42 +5,25 @@ usePageSeo('/work')
 
 <template>
   <ModeView :md="markdownFor('/work')">
-    <p class="eyebrow">Work</p>
-    <h1>Products I have built, with links you can open.</h1>
-    <p class="lede">Three are live businesses. The rest are how I learned to build them.</p>
+    <h1>Work</h1>
+    <p>Three are live businesses. The rest are how I learned to build them.</p>
 
-    <section>
-      <span class="label">01</span>
-      <h2 id="products">Products</h2>
-      <div class="rows">
-        <div v-for="p in products" :key="p.name" class="row">
-          <div class="row-head">
-            <a :href="p.url" target="_blank" rel="noopener" class="arrow">{{ p.name }}</a>
-            <span class="row-meta">{{ p.role }}</span>
-          </div>
-          <div>
-            <p class="strong">{{ p.summary }}</p>
-            <ul v-if="p.points.length"><li v-for="pt in p.points" :key="pt">{{ pt }}</li></ul>
-            <p v-if="p.stack" class="stackline">{{ p.stack }}</p>
-          </div>
-        </div>
-      </div>
-    </section>
+    <h2>Products</h2>
+    <template v-for="p in products" :key="p.name">
+      <h3><a :href="p.url" target="_blank" rel="noopener">{{ p.name }}</a> <small>{{ p.role }}</small></h3>
+      <p>{{ p.summary }}</p>
+      <ul v-if="p.points.length" class="list tight" style="margin-top: 10px">
+        <li v-for="pt in p.points" :key="pt"><span>{{ pt }}</span></li>
+      </ul>
+      <p v-if="p.stack" class="muted small" style="margin-top: 8px">{{ p.stack }}</p>
+    </template>
 
-    <section>
-      <span class="label">02</span>
-      <h2 id="more-builds">More builds</h2>
-      <div class="rows">
-        <div v-for="b in builds" :key="b.name" class="row">
-          <div class="row-head">
-            <a v-if="b.url" :href="b.url" target="_blank" rel="noopener" class="arrow">{{ b.name }}</a>
-            <template v-else>{{ b.name }}</template>
-          </div>
-          <p>{{ b.text }}</p>
-        </div>
-      </div>
-    </section>
-
-    <ContactBlock />
+    <h2>More builds</h2>
+    <ul class="list">
+      <li v-for="b in builds" :key="b.name">
+        <a v-if="b.url" :href="b.url" target="_blank" rel="noopener">{{ b.name }}</a><strong v-else>{{ b.name }}</strong>
+        <span> · {{ b.text }}</span>
+      </li>
+    </ul>
   </ModeView>
 </template>

@@ -5,33 +5,24 @@ usePageSeo('/writing')
 
 <template>
   <ModeView :md="markdownFor('/writing')">
-    <p class="eyebrow">Writing</p>
-    <h1>Notes from building, and guides for people looking for work.</h1>
-    <p class="lede">Most of what I write now goes on the HiringAnt blog. Older essays live here.</p>
+    <h1>Writing</h1>
+    <p>Most of what I write now goes on the HiringAnt blog. Older essays live here.</p>
 
-    <section>
-      <span class="label">01</span>
-      <h2 id="hiringant">On the HiringAnt blog</h2>
-      <div class="posts">
-        <a v-for="p in hiringantPosts" :key="p.url" :href="p.url" target="_blank" rel="noopener" class="post">
-          <span class="post-meta">{{ p.date }}</span>
-          <span class="post-title">{{ p.title }}</span>
-          <span class="post-sum">{{ p.summary }}</span>
-        </a>
-      </div>
-      <a :href="HIRINGANT_AUTHOR_URL" target="_blank" rel="noopener" class="more arrow">All my HiringAnt posts</a>
-    </section>
+    <h2>On the HiringAnt blog</h2>
+    <ul class="list">
+      <li v-for="p in hiringantPosts" :key="p.url">
+        <a :href="p.url" target="_blank" rel="noopener">{{ p.title }}</a>
+        <span class="small"> · {{ p.date }}</span>
+      </li>
+      <li><a :href="HIRINGANT_AUTHOR_URL" target="_blank" rel="noopener">All my HiringAnt posts</a></li>
+    </ul>
 
-    <section>
-      <span class="label">02</span>
-      <h2 id="essays">Essays on this site</h2>
-      <div class="posts">
-        <NuxtLink v-for="p in ownPosts" :key="p.slug" :to="`/writing/${p.slug}`" class="post">
-          <span class="post-meta">{{ p.date }}</span>
-          <span class="post-title">{{ p.title }}</span>
-          <span class="post-sum">{{ p.summary }}</span>
-        </NuxtLink>
-      </div>
-    </section>
+    <h2>Essays</h2>
+    <ul class="list">
+      <li v-for="p in ownPosts" :key="p.slug">
+        <NuxtLink :to="`/writing/${p.slug}`">{{ p.title }}</NuxtLink>
+        <span class="small"> · {{ p.date }}</span>
+      </li>
+    </ul>
   </ModeView>
 </template>

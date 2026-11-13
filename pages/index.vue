@@ -1,62 +1,49 @@
 <script setup lang="ts">
-import { profile, products, hiringantPosts, services, markdownFor, EMAIL } from '~/data/site'
+import { products, hiringantPosts, services, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
 </script>
 
 <template>
   <ModeView :md="markdownFor('/')">
-    <p class="eyebrow">{{ profile.role }} · {{ profile.location }}</p>
-    <h1>{{ profile.headline }}</h1>
-    <p class="lede">I am Avanish Patidar. {{ profile.sub }}</p>
-    <div class="actions">
-      <button type="button" class="btn primary" @click="interview.open()">Ask my AI twin</button>
-      <a class="btn" :href="`mailto:${EMAIL}`">Email me</a>
+    <div class="intro">
+      <img class="photo" src="/images/avanish.jpg" alt="Avanish Patidar" width="112" height="112" />
+      <div>
+        <p>
+          I am the CTO of <a href="https://hiringant.ai" target="_blank" rel="noopener">HiringAnt</a>, an AI hiring platform
+          I built from the first commit and took to paying users. I also lead agentic AI at
+          <a href="https://rentprompts.com" target="_blank" rel="noopener">RentPrompts</a>.
+        </p>
+        <p>
+          I am an AI product engineer in Indore, India. I build the whole product: the agents, the app around them, and
+          the parts that decide whether people pay. <NuxtLink to="/about">More</NuxtLink>
+        </p>
+      </div>
     </div>
 
-    <section>
-      <span class="label">01</span>
-      <h2 id="shipping">What I am shipping</h2>
-      <div class="rows">
-        <div v-for="p in products" :key="p.name" class="row">
-          <div class="row-head">
-            <a :href="p.url" target="_blank" rel="noopener" class="arrow">{{ p.name }}</a>
-            <span class="row-meta">{{ p.role }}</span>
-          </div>
-          <div>
-            <p>{{ p.summary }}</p>
-            <p v-if="p.points[0]" class="strong" style="margin-top: 8px">{{ p.points[0] }}</p>
-          </div>
-        </div>
-      </div>
-      <NuxtLink to="/work" class="more">All work</NuxtLink>
-    </section>
+    <h2>Building</h2>
+    <ul class="list">
+      <li v-for="p in products" :key="p.name">
+        <a :href="p.url" target="_blank" rel="noopener">{{ p.name }}</a>
+        <span> · {{ p.summary }}</span>
+      </li>
+      <li><NuxtLink to="/work">Everything I have built</NuxtLink></li>
+    </ul>
 
-    <section>
-      <span class="label">02</span>
-      <h2 id="services">What I can do for you</h2>
-      <div class="grid2">
-        <div v-for="s in services" :key="s.name" class="cell">
-          <h3>{{ s.name }}</h3>
-          <p>{{ s.text }}</p>
-        </div>
-      </div>
-      <NuxtLink to="/services" class="more">How I work with teams</NuxtLink>
-    </section>
+    <h2>Writing</h2>
+    <ul class="list">
+      <li v-for="p in hiringantPosts.slice(0, 4)" :key="p.url">
+        <a :href="p.url" target="_blank" rel="noopener">{{ p.title }}</a>
+      </li>
+      <li><NuxtLink to="/writing">All writing</NuxtLink></li>
+    </ul>
 
-    <section>
-      <span class="label">03</span>
-      <h2 id="writing">Recent writing</h2>
-      <div class="posts">
-        <a v-for="p in hiringantPosts.slice(0, 3)" :key="p.url" :href="p.url" target="_blank" rel="noopener" class="post">
-          <span class="post-meta">{{ p.where }} · {{ p.date }}</span>
-          <span class="post-title">{{ p.title }}</span>
-          <span class="post-sum">{{ p.summary }}</span>
-        </a>
-      </div>
-      <NuxtLink to="/writing" class="more">All writing</NuxtLink>
-    </section>
-
-    <ContactBlock />
+    <h2>Work with me</h2>
+    <p>
+      I take on a few projects as an AI product engineer and builder:
+      <template v-for="(s, i) in services" :key="s.name">{{ s.name.charAt(0).toLowerCase() + s.name.slice(1) }}{{ i < services.length - 2 ? ', ' : i === services.length - 2 ? ', and ' : '' }}</template>.
+      See <NuxtLink to="/services">how I work</NuxtLink>, <button type="button" class="talk" @click="interview.open()">ask my AI twin</button>,
+      or write to <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>.
+    </p>
   </ModeView>
 </template>

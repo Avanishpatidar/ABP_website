@@ -28,7 +28,6 @@ useHead({
 
 <template>
   <ModeView :md="raw!">
-    <NuxtLink to="/writing" class="back">← All writing</NuxtLink>
     <article class="article" v-html="html"></article>
   </ModeView>
 </template>

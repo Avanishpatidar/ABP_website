@@ -86,9 +86,7 @@ onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop
 </script>
 
 <template>
-  <button v-if="!open" type="button" class="twin-fab" @click="open = true"><i aria-hidden="true"></i>Ask my AI twin</button>
-
-  <div v-else class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
+  <div v-if="open" class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
     <div class="twin-head">
       <div><strong>Avanish's AI twin</strong><small>Answers as me. It can be wrong.</small></div>
       <div>
