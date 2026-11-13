@@ -38,6 +38,6 @@ onMounted(() => { initTheme(); initMode() })
       <button type="button" class="talk" @click="interview.open()">Ask my AI twin</button>
     </footer>
 
-    <ClientOnly><AiDock /></ClientOnly>
+    <ClientOnly><AiDock /><LinkPreview /></ClientOnly>
   </div>
 </template>

@@ -128,3 +128,17 @@ ol.list li { margin-bottom: 10px; padding-left: 4px; }
   .twin { right: 0; bottom: 0; width: 100vw; height: 100dvh; border: 0; border-radius: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+
+/* Link hover preview */
+.pv { position: fixed; z-index: 50; width: 320px; background: var(--bg); border: 1px solid var(--line); border-radius: 10px; overflow: hidden; box-shadow: 0 14px 44px rgb(0 0 0 / 0.22); pointer-events: none; font-size: 15px; line-height: 1.35; }
+.pv img { display: block; width: 320px; height: 200px; object-fit: cover; object-position: top; background: var(--panel); border-bottom: 1px solid var(--line); }
+.pv-text { padding: 9px 13px 11px; display: grid; }
+.pv-text span { color: var(--muted); }
+.pv-text small { font-family: var(--mono); font-size: 11.5px; color: var(--muted); margin-top: 3px; }
+.pv-enter-active { transition: opacity 0.14s ease, transform 0.14s ease; }
+.pv-leave-active { transition: opacity 0.08s ease; }
+.pv-enter-from { opacity: 0; transform: translateY(4px); }
+.pv-leave-to { opacity: 0; }
+
+/* Profile links under the bio */
+.social { display: flex; flex-wrap: wrap; gap: 6px 20px; margin-top: 18px; font-size: 1.02rem; }

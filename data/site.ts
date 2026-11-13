@@ -9,7 +9,7 @@ export const profile = {
   name: 'Avanish Patidar',
   aka: 'ABP',
   role: 'AI Product Engineer',
-  headline: 'I build AI products that reach paying users, and the agents inside them.',
+  headline: 'I build scalable AI products, solutions and automation that people pay for.',
   sub: 'CTO at HiringAnt. Agentic AI Lead at RentPrompts. Based in Indore, India.',
   location: 'Indore, India',
   links: [
@@ -23,9 +23,20 @@ export const profile = {
 export const about = {
   intro: [
     'I am Avanish Patidar, an AI product engineer from Indore, India. Most people know me as ABP.',
-    'I joined RentPrompts as a GenAI intern in mid-2025. Within a year I was leading its agentic AI work and building HiringAnt as CTO. I designed HiringAnt from the first commit, wrote most of it, and took it to paying users.',
+    'I joined RentPrompts as a GenAI intern in mid-2025. Within a year I was leading its agentic AI work and building HiringAnt as CTO. I designed HiringAnt from the first commit, wrote most of it, and took it to paying users. More than 3,600 job seekers and 160 employers have signed up, and it has read over 11 lakh job listings to find them matches.',
+    'Alongside the products, I build software for businesses that need it to simply work: a website and CMS for a staffing company, a payroll portal that turns a spreadsheet into 173 salary slips a month.',
     'I like the whole job, not one layer of it: talking to the people who will use the thing, deciding what to build, shipping the frontend, the backend and the agents, then watching the numbers and fixing what they show.'
   ],
+  growth: {
+    title: 'I also bring the users',
+    intro: 'Most engineers stop at the deploy. I keep going, because a product nobody finds is not finished.',
+    points: [
+      'I market HiringAnt myself: positioning, landing pages, SEO and the paid campaigns on Meta that bring job seekers and employers in.',
+      'I make the ad creatives and Instagram content with AI tools, from the idea to the final cut.',
+      'I run Error by Night, my YouTube channel, where I script, shoot and edit the videos.',
+      'So when I build something for you, I am already thinking about how it will be found, explained and sold.'
+    ]
+  },
   principles: [
     { title: 'Agents have to survive production', text: 'A demo that works once is easy. I spend most of my time on what makes it work the thousandth time: structured outputs, retries, evals, cost tracking and human-approval gates before anything irreversible.' },
     { title: 'Ship the product, not the model', text: 'Users pay for an outcome. I start from the job they need done and pick the simplest system that does it, which is often less AI than expected.' },
@@ -42,7 +53,8 @@ export const products: Product[] = [
     role: 'CTO',
     summary: 'An AI hiring platform with two sides. Job seekers upload a résumé and an agent searches the live web for jobs they fit. Employers get AI screening, matching and a first-round AI interviewer.',
     points: [
-      'Built from the first commit and taken to paying users, on both the job-seeker and employer side.',
+      'Built from the first commit and taken to paying users.',
+      '3,600+ job seekers and 160+ employers signed up; 5,100+ applications, 51,000+ job matches and 100+ AI interviews completed.',
       'A multi-agent pipeline for sourcing, screening, interviewing and decisions, with human approval before anything is sent.',
       'A real-time voice AI interviewer, a résumé builder, mock interviews and always-on Job Agents.',
       'Everything around the AI too: payments, SEO, email, admin tools, CI gates and production monitoring.'
@@ -62,6 +74,14 @@ export const products: Product[] = [
     stack: 'Python · LangChain · FastAPI · Next.js · Payload CMS · Docker · Celery'
   },
   {
+    name: 'PrepOwl',
+    url: 'https://prepowl.ai',
+    role: 'Builder',
+    summary: 'An AI mentor and tutor for government and entrance exams: SSC, Banking, Railway, JEE and NEET. It plans what to study each day, tutors in Hindi and English, and runs mock tests with full reports.',
+    points: [],
+    stack: ''
+  },
+  {
     name: 'Yashraj Books',
     url: 'https://yashrajbooks.com',
     role: 'Builder',
@@ -71,16 +91,26 @@ export const products: Product[] = [
   }
 ]
 
+export interface ClientWork { name: string; url: string; text: string; points: string[] }
+export const clients: ClientWork[] = [
+  {
+    name: 'Aradhya Manpower',
+    url: 'https://www.aradhyamanpowersupplier.com',
+    text: 'A manpower supplier for manufacturing and pharma plants in Indore and Pithampur. My first client.',
+    points: ['Built the whole thing: the public website and the CMS behind it.']
+  },
+  {
+    name: 'Tharu & Sons',
+    url: 'https://thurandsons.online',
+    text: 'An internal payroll portal. Staff upload the month\'s payroll workbook and the portal checks the totals and produces a printable salary slip for every employee.',
+    points: ['173 employees in a single month\'s sheet, 17 fields on every slip, one thing left to type: the pay date.']
+  }
+]
+
 export interface Build { name: string; url?: string; text: string }
 export const builds: Build[] = [
-  { name: 'JobFit Resume', url: 'https://job-fit-resume.vercel.app', text: 'An AI résumé analyser and ATS checker that tells you how well you fit a job before you apply.' },
-  { name: 'MediBot', url: 'https://ai-pharma.vercel.app', text: 'An AI assistant for medicine and pharmacy questions.' },
-  { name: 'Free Flow', url: 'https://free-flow-iota.vercel.app', text: 'Open public chat rooms. Jump in and talk in real time.' },
-  { name: 'Savo Technologies', url: 'https://sava-technologies.vercel.app', text: 'The website for a digital and AI services studio.' },
   { name: 'Error by Night', url: 'https://ebn-beta.vercel.app', text: 'The official site for the Error by Night community.' },
-  { name: 'TradeIQ', text: 'A trading intelligence engine on real-time BSE/NSE data, with a custom strategy builder and LLM signal extraction.' },
-  { name: 'AI Live Assist', text: 'Real-time voice, video and shared drawing with an AI that understands the screen.' },
-  { name: 'Aradhya Manpower', text: 'My first client project, the one that started it all.' }
+  { name: 'TradeIQ', text: 'A trading intelligence engine on real-time BSE/NSE data, with a custom strategy builder and LLM signal extraction.' }
 ]
 
 export interface Role { title: string; org: string; url?: string; time: string; points: string[] }
@@ -89,7 +119,7 @@ export const experience: Role[] = [
     title: 'CTO', org: 'HiringAnt', url: 'https://hiringant.ai', time: 'Feb 2026 to now · Indore',
     points: [
       'Own the product and the whole stack: architecture, agents, backend, frontend and infrastructure.',
-      'Took the platform from an empty repository to paying job seekers and employers.',
+      'Took the platform from an empty repository to paying users, with 3,600+ job seekers and 160+ employers signed up.',
       'Run the engineering process: PR gates, hermetic tests, contract checks, nightly performance and load runs.'
     ]
   },
@@ -124,19 +154,24 @@ export const stack: Record<string, string[]> = {
 export interface Service { name: string; text: string; includes: string[] }
 export const services: Service[] = [
   {
-    name: 'AI product, zero to launch',
+    name: 'Scalable AI products, zero to launch',
     text: 'You have an idea or a rough prototype. I design it, build it and put it in front of real users, including the unglamorous parts that decide whether people pay.',
-    includes: ['Scoping what to build first', 'Full-stack build: web app, API, database', 'Auth, payments, email, analytics', 'Launch, SEO and the first iterations']
+    includes: ['Scoping what to build first', 'Full-stack build: web app, API, database', 'Auth, payments, email, analytics', 'Queues, caching and infrastructure that hold up as usage grows', 'Launch, SEO and the first iterations']
   },
   {
-    name: 'Agents and automation',
+    name: 'AI solutions and automation',
     text: 'A workflow in your business that people repeat every day. I turn it into an agent pipeline that does the work and asks a human only when it should.',
-    includes: ['Multi-agent pipelines and tool design', 'RAG over your own data', 'Human-approval gates and audit trails', 'Eval sets so quality is measured, not guessed']
+    includes: ['Multi-agent pipelines and tool design', 'Internal tools, portals and CMS builds', 'RAG over your own data', 'Human-approval gates and audit trails', 'Eval sets so quality is measured, not guessed']
   },
   {
     name: 'Voice and interview AI',
     text: 'Real-time voice agents that hold a structured conversation: interviewers, screeners, intake and support.',
     includes: ['Low-latency speech in and out', 'Structured question plans and scoring', 'Recording, transcripts and review tools']
+  },
+  {
+    name: 'Launch, content and growth',
+    text: 'Getting the first users is part of the build. I set up the marketing that brings people in and make the content myself.',
+    includes: ['Positioning, landing pages and SEO', 'AI-made ad creatives and short videos', 'Meta ad campaigns, tracked to sign-ups and revenue', 'Video editing for product and social content']
   },
   {
     name: 'Production hardening and tech leadership',
@@ -181,19 +216,19 @@ export const nav = [
 export const pages: Record<string, { title: string; description: string }> = {
   '/': {
     title: 'Avanish Patidar | AI Product Engineer, CTO of HiringAnt',
-    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India. CTO of HiringAnt and Agentic AI Lead at RentPrompts. He builds AI products and agents that reach paying users.'
+    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India. CTO of HiringAnt and Agentic AI Lead at RentPrompts. He builds scalable AI products, solutions and automation that people pay for.'
   },
   '/about': {
     title: 'About Avanish Patidar | AI Product Engineer in Indore, India',
-    description: 'Who Avanish Patidar is, how he works, and his path from GenAI intern to CTO of HiringAnt in under a year. Experience, principles and stack.'
+    description: 'Who Avanish Patidar is: an AI product engineer who went from GenAI intern to CTO of HiringAnt in under a year, and who markets what he builds. Experience, principles and stack.'
   },
   '/work': {
-    title: 'Work | Products built by Avanish Patidar: HiringAnt, RentPrompts and more',
-    description: 'Products Avanish Patidar has built and shipped: HiringAnt (AI hiring platform), RentPrompts (AI marketplace), Yashraj Books, and earlier projects, each with a live link.'
+    title: 'Work | Products built by Avanish Patidar: HiringAnt, RentPrompts, PrepOwl and more',
+    description: 'Products and client systems Avanish Patidar has built: HiringAnt (AI hiring platform), RentPrompts, PrepOwl (AI exam mentor), Yashraj Books, Aradhya Manpower and Tharu & Sons, each with a live link.'
   },
   '/services': {
-    title: 'Hire an AI Product Engineer | Agents, voice AI and zero-to-launch builds',
-    description: 'Work with Avanish Patidar: AI products from zero to launch, agent pipelines and automation, real-time voice and interview AI, and production hardening for AI features.'
+    title: 'Hire an AI Product Engineer | Scalable AI products, solutions and automation',
+    description: 'Work with Avanish Patidar: scalable AI products from zero to launch, AI solutions and automation, voice and interview AI, launch content and growth, and production hardening.'
   },
   '/writing': {
     title: 'Writing | Avanish Patidar on AI agents, hiring and building products',
@@ -222,6 +257,9 @@ const mdAbout = () => [
   ...about.intro,
   `## How I work`,
   ...about.principles.map(p => `- **${p.title}.** ${p.text}`),
+  `## ${about.growth.title}`,
+  about.growth.intro,
+  about.growth.points.map(p => `- ${p}`).join('\n'),
   `## Experience`,
   ...experience.map(r => [`### ${r.title}, ${link(r.org, r.url)}`, r.time, ...r.points.map(p => `- ${p}`)].join('\n')),
   `## Stack`,
@@ -237,6 +275,8 @@ const mdWork = () => [
     ...p.points.map(x => `- ${x}`),
     p.stack ? `Stack: ${p.stack}` : ''
   ].filter(Boolean).join('\n')),
+  `## Client work`,
+  ...clients.map(c => [`### ${link(c.name, c.url)}`, c.text, ...c.points.map(x => `- ${x}`)].join('\n')),
   `## More builds`,
   builds.map(b => `- **${link(b.name, b.url)}**: ${b.text}`).join('\n')
 ].join('\n\n')
@@ -266,3 +306,16 @@ export const markdownFor = (path: string) => (byPath[path] || mdHome)()
 
 export const fullMarkdown = () =>
   [mdHome(), mdAbout(), mdWork(), mdServices(), mdWriting(), `## Contact\n\nEmail ${EMAIL}. That is the only contact channel.`].join('\n\n---\n\n') + '\n'
+
+// Hover previews: a screenshot and one line for links that point at these sites.
+// Keyed by hostname (and path for GitHub) so any link on the site picks it up.
+export const previews: Record<string, { img: string; title: string; note: string }> = {
+  'hiringant.ai': { img: '/previews/hiringant.jpg', title: 'HiringAnt', note: 'AI hiring platform · CTO' },
+  'rentprompts.com': { img: '/previews/rentprompts.jpg', title: 'RentPrompts', note: 'AI marketplace and studio · Agentic AI Lead' },
+  'prepowl.ai': { img: '/previews/prepowl.jpg', title: 'PrepOwl', note: 'AI mentor for exam preparation' },
+  'yashrajbooks.com': { img: '/previews/yashrajbooks.jpg', title: 'Yashraj Books', note: 'Digital bookstore for commerce students' },
+  'aradhyamanpowersupplier.com': { img: '/previews/aradhya.jpg', title: 'Aradhya Manpower', note: 'Website and CMS · client work' },
+  'thurandsons.online': { img: '/previews/tharu.jpg', title: 'Tharu & Sons', note: 'Payroll portal · client work' },
+  'ebn-beta.vercel.app': { img: '/previews/ebn.jpg', title: 'Error by Night', note: 'Community site' },
+  'github.com': { img: '/previews/github.jpg', title: 'GitHub', note: '@Avanishpatidar' }
+}

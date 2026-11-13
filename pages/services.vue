@@ -20,7 +20,7 @@ useHead({
   <ModeView :md="markdownFor('/services')">
     <h1>Work with me</h1>
     <p>
-      I work with founders and small teams who need an AI product or agent shipped, not a slide about one. I have done
+      I build scalable AI products, solutions and automation for founders and small teams who need them shipped, not a slide about one. I have done
       it for my own company, so I know which parts decide whether users pay.
     </p>
     <p>To start, write to <a :href="`mailto:${EMAIL}?subject=${encodeURIComponent('Project enquiry')}`">{{ EMAIL }}</a>.</p>

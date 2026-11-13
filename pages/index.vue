@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { products, hiringantPosts, services, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantPosts, services, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
 </script>
@@ -11,12 +11,18 @@ usePageSeo('/')
       <div>
         <p>
           I am the CTO of <a href="https://hiringant.ai" target="_blank" rel="noopener">HiringAnt</a>, an AI hiring platform
-          I built from the first commit and took to paying users. I also lead agentic AI at
+          I built from the first commit and took to paying users. More than 3,600 job seekers and 160 employers
+          have signed up. I also lead agentic AI at
           <a href="https://rentprompts.com" target="_blank" rel="noopener">RentPrompts</a>.
         </p>
         <p>
-          I am an AI product engineer in Indore, India. I build the whole product: the agents, the app around them, and
-          the parts that decide whether people pay. <NuxtLink to="/about">More</NuxtLink>
+          I am an AI product engineer in Indore, India. I build scalable AI products, solutions and automation, end to
+          end: the agents, the app around them, and the parts that decide whether people pay. Then I market them
+          myself, from the ads and videos to the SEO, so they get found. <NuxtLink to="/about">More</NuxtLink>
+        </p>
+        <p class="social">
+          <a v-for="l in profile.links" :key="l.url" :href="l.url" target="_blank" rel="noopener me">{{ l.label }}</a>
+          <a :href="`mailto:${EMAIL}`">Email</a>
         </p>
       </div>
     </div>
@@ -26,6 +32,14 @@ usePageSeo('/')
       <li v-for="p in products" :key="p.name">
         <a :href="p.url" target="_blank" rel="noopener">{{ p.name }}</a>
         <span> · {{ p.summary }}</span>
+      </li>
+    </ul>
+
+    <h2>Built for clients</h2>
+    <ul class="list">
+      <li v-for="c in clients" :key="c.name">
+        <a :href="c.url" target="_blank" rel="noopener">{{ c.name }}</a>
+        <span> · {{ c.text }}</span>
       </li>
       <li><NuxtLink to="/work">Everything I have built</NuxtLink></li>
     </ul>

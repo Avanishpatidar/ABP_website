@@ -19,6 +19,12 @@ useHead({
       <li v-for="p in about.principles" :key="p.title"><strong>{{ p.title }}.</strong> <span>{{ p.text }}</span></li>
     </ul>
 
+    <h2>{{ about.growth.title }}</h2>
+    <p>{{ about.growth.intro }}</p>
+    <ul class="list" style="margin-top: 14px">
+      <li v-for="p in about.growth.points" :key="p"><span>{{ p }}</span></li>
+    </ul>
+
     <h2>Experience</h2>
     <template v-for="r in experience" :key="r.title + r.org">
       <h3>
