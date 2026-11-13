@@ -16,6 +16,7 @@ export const profile = {
     { label: 'GitHub', url: 'https://github.com/Avanishpatidar' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/avanish-patidar/' },
     { label: 'X', url: 'https://x.com/Avanish_patidar' },
+    { label: 'Instagram', url: 'https://www.instagram.com/avanishpatidar/' },
     { label: 'YouTube', url: 'https://www.youtube.com/@error_by_night_' }
   ]
 }
