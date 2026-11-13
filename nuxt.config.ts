@@ -79,8 +79,8 @@ export default defineNuxtConfig({
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap' }
       ],
       script: [
-        // Apply a saved theme before first paint so the page never flashes.
-        { innerHTML: `try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`, tagPosition: 'head' },
+        // Apply this visit's theme choice before first paint so the page never flashes.
+        { innerHTML: `try{var t=sessionStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`, tagPosition: 'head' },
         {
           type: 'application/ld+json',
           innerHTML: JSON.stringify({

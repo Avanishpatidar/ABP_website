@@ -14,7 +14,7 @@ useHead({
 
 <template>
   <ModeView :md="markdownFor('/about')">
-    <h1>About</h1>
+    <h1>About Avanish Patidar</h1>
     <p v-for="p in about.intro" :key="p">{{ p }}</p>
 
     <h2>How I work</h2>

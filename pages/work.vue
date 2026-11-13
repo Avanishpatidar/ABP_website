@@ -5,7 +5,7 @@ usePageSeo('/work')
 
 <template>
   <ModeView :md="markdownFor('/work')">
-    <h1>Work</h1>
+    <h1>Work by Avanish Patidar</h1>
     <p>Products I run or lead, systems I have built for clients, and the earlier projects that taught me how.</p>
 
     <h2>Products</h2>

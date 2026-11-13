@@ -15,7 +15,7 @@ export const profile = {
   links: [
     { label: 'GitHub', url: 'https://github.com/Avanishpatidar' },
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/avanish-patidar-b3ba2b230/' },
-    { label: 'X', url: 'https://twitter.com/Avanish_patidar' },
+    { label: 'X', url: 'https://x.com/Avanish_patidar' },
     { label: 'YouTube', url: 'https://www.youtube.com/@error_by_night_' }
   ]
 }
@@ -212,7 +212,7 @@ export const hiringantPosts: Post[] = [
 export interface OwnPost { slug: string; title: string; date: string; iso: string; summary: string }
 export const ownPosts: OwnPost[] = [
   { slug: 'agentic-ai', title: 'The Rise of Agentic AI: From Chatbots to Autonomous Workers', date: 'Nov 2025', iso: '2025-11-23', summary: "Why AI is moving from talking to doing, and what it means for the future of work." },
-  { slug: 'coding-2025', title: 'Coding in 2025: How AI Agents are Redefining Software Engineering', date: 'Nov 2025', iso: '2025-11-23', summary: 'The shift from syntax to semantics, and how software gets built next.' },
+  { slug: 'coding-2025', title: 'Coding in 2025: How AI Agents are Redefining Software Engineering', date: 'Nov 2025', iso: '2025-11-23', summary: 'The shift from syntax to semantics, and how software will be built by people working alongside AI agents.' },
   { slug: 'cursor-vs-copilot', title: 'Cursor vs Copilot: My Honest Take After 3 Months', date: 'Nov 2024', iso: '2024-11-23', summary: 'I switched from GitHub Copilot to Cursor. Here is what actually happened.' }
 ]
 
@@ -220,17 +220,35 @@ export interface Video { id: string; title: string; views: string }
 export const videoIntro = 'I make the videos that market what I build: I write the script, shoot it or generate it with AI, and edit the final cut. The top five HiringAnt reels have over 450,000 views between them.'
 // Instagram reels from HiringAnt's page (the ID is the part after /reel/ in the
 // link). `kind` puts each one under "Made with AI" or "Shot for real".
-export interface Reel { id: string; kind: 'ai' | 'real' | 'brand' | 'edit'; title: string; views?: string }
+export interface Reel { id: string; kind: 'ai' | 'real' | 'brand' | 'edit'; title?: string; views?: string }
 export const INSTAGRAM_URL = 'https://www.instagram.com/hiring_ant/'
 export const reels: Reel[] = [
   { id: 'DZrAgvgyo0S', kind: 'ai', title: 'The HiringAnt ant', views: '250K views' },
   { id: 'DZAeFChyvR9', kind: 'ai', title: 'The cat on the road', views: '93K views' },
+  { id: 'DfhJ0HqRM52', kind: 'ai', title: 'Diwali' },
+  { id: 'DfThWaBxLSE', kind: 'ai' },
+  { id: 'DfPWCEYxlaO', kind: 'ai' },
+  { id: 'DfMPOOyRlJH', kind: 'ai', title: 'The Diwali gift' },
+  { id: 'DfKQhD2xpAt', kind: 'ai', title: 'Reading the résumé' },
+  { id: 'DfIHG0vRiyb', kind: 'ai', title: 'The dog recruiter' },
+  { id: 'DfE3HH-xnmS', kind: 'ai', title: 'The sheep in a suit' },
   { id: 'DZcZg_LxR6U', kind: 'ai', title: 'Hiring', views: '11K views' },
   { id: 'DZvF6o5RyhI', kind: 'ai', title: 'Shy founder', views: '5.7K views' },
+  { id: 'DeHapo5xQD_', kind: 'ai', title: 'Hi, I am a resignation email' },
+  { id: 'Dd9Bt3dRCz1', kind: 'ai', title: 'resume_final_FINAL_v3.pdf' },
+  { id: 'DY4Ze-hRogt', kind: 'ai', title: 'The cat in the car' },
   { id: 'DbbcErqxA5c', kind: 'real', title: 'Office sketch', views: '77K views' },
   { id: 'DbSLx4tRUC-', kind: 'real', title: 'Straight to camera', views: '24K views' },
   { id: 'DeUb-3Qxkzn', kind: 'real', title: 'Street interviews: how many places did you apply?', views: '2.8K views' },
   { id: 'DedtEliRAkG', kind: 'real', title: 'Everyone has a degree', views: '2.7K views' },
+  { id: 'DeSDz2ORigd', kind: 'real', title: 'You need one too', views: '2.2K views' },
+  { id: 'Dd1tZC9xNoj', kind: 'real', views: '1.9K views' },
+  { id: 'DePZ-gwRMiQ', kind: 'real', title: 'Who hires freshers?', views: '1.6K views' },
+  { id: 'DbnYVFyxASz', kind: 'real', views: '1.3K views' },
+  { id: 'DcQ1W8mSRuy', kind: 'real', views: '830 views' },
+  { id: 'DbTlfPhxwF-', kind: 'real', views: '818 views' },
+  { id: 'DdYOmUitIZk', kind: 'real', views: '762 views' },
+  { id: 'Ddq67-XxCPr', kind: 'real', views: '479 views' },
   { id: 'Dd89Fv8t7j3', kind: 'brand', title: 'RentPrompts: the robot is hiring' },
   { id: 'DeJwHwBhujk', kind: 'brand', title: 'RentPrompts: can you beat 80%?' },
   { id: 'DeCCwxxM33O', kind: 'brand', title: 'RentPrompts: turn AI from an expense into income' },
@@ -262,23 +280,23 @@ export const nav = [
 export const pages: Record<string, { title: string; description: string }> = {
   '/': {
     title: 'Avanish Patidar | AI Product Engineer, CTO of HiringAnt',
-    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India. CTO of HiringAnt and Agentic AI Lead at RentPrompts. He builds scalable AI products, solutions and automation that people pay for.'
+    description: 'Avanish Patidar (ABP) is an AI product engineer in Indore, India, and CTO of HiringAnt. He builds scalable AI products, solutions and automation that people pay for.'
   },
   '/about': {
     title: 'About Avanish Patidar | AI Product Engineer in Indore, India',
-    description: 'Who Avanish Patidar is: an AI product engineer who went from GenAI intern to CTO of HiringAnt in under a year, and who markets what he builds. Experience, principles and stack.'
+    description: 'About Avanish Patidar: an AI product engineer who went from GenAI intern to CTO of HiringAnt in under a year, and who markets what he builds.'
   },
   '/work': {
-    title: 'Work | Products built by Avanish Patidar: HiringAnt, RentPrompts, PrepOwl and more',
-    description: 'Products and client systems Avanish Patidar has built: HiringAnt (AI hiring platform), RentPrompts, PrepOwl (AI exam mentor), Yashraj Books, Aradhya Manpower and Tharu & Sons, each with a live link.'
+    title: 'Work by Avanish Patidar | HiringAnt, RentPrompts, PrepOwl',
+    description: 'Products and client systems built by Avanish Patidar: HiringAnt, RentPrompts, PrepOwl, Yashraj Books, Aradhya Manpower and Tharu & Sons, each with a live link.'
   },
   '/videos': {
-    title: 'Videos | AI ads, reels and coding tutorials by Avanish Patidar',
-    description: 'Videos written, shot and edited by Avanish Patidar: AI-made and real ad reels for HiringAnt with 450,000+ views, and coding tutorials on Error by Night, his YouTube channel.'
+    title: 'Videos by Avanish Patidar | AI ads, reels and tutorials',
+    description: 'Videos by Avanish Patidar: AI-made and real ad reels for HiringAnt with 450,000+ views, RentPrompts ads, and coding tutorials on his YouTube channel.'
   },
   '/services': {
-    title: 'Hire an AI Product Engineer | Scalable AI products, solutions and automation',
-    description: 'Work with Avanish Patidar: scalable AI products from zero to launch, AI solutions and automation, voice and interview AI, launch content and growth, and production hardening.'
+    title: 'Hire Avanish Patidar | AI Product Engineer and Builder',
+    description: 'Work with Avanish Patidar: scalable AI products from zero to launch, AI solutions and automation, voice AI, launch content and growth.'
   },
   '/writing': {
     title: 'Writing | Avanish Patidar on AI agents, hiring and building products',
@@ -350,7 +368,7 @@ const mdVideos = () => [
   ...reelGroups.map(g => [
     `## ${g.title}`,
     g.text,
-    reels.filter(r => r.kind === g.kind).map(r => `- ${link(r.title, `https://www.instagram.com/reel/${r.id}/`)}${r.views ? ` (${r.views})` : ''}`).join('\n')
+    reels.filter(r => r.kind === g.kind).map(r => `- ${link(r.title || 'Reel', `https://www.instagram.com/reel/${r.id}/`)}${r.views ? ` (${r.views})` : ''}`).join('\n')
   ].join('\n\n')),
   `## Error by Night (YouTube, 11.9K subscribers)`,
   youtube.map(v => `- ${link(v.title, `https://www.youtube.com/watch?v=${v.id}`)} (${v.views})`).join('\n'),

@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { profile, products, clients, hiringantPosts, services, reels, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantPosts, reels, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
+const twinPrompts = ['Why should I hire you?', 'What did you build at HiringAnt?', 'Roast my startup idea']
 const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.filter(r => r.kind === 'real').slice(0, 2)]
 </script>
 
@@ -25,6 +26,17 @@ const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.fi
           <a v-for="l in profile.links" :key="l.url" :href="l.url" target="_blank" rel="noopener me">{{ l.label }}</a>
           <a :href="`mailto:${EMAIL}`">Email</a>
         </p>
+      </div>
+    </div>
+
+    <div class="ask">
+      <div class="ask-head">
+        <img src="/images/avanish.jpg" alt="" width="36" height="36" />
+        <div>Ask my AI twin <span>· it answers as me, with jokes</span></div>
+      </div>
+      <div class="ask-chips">
+        <button v-for="q in twinPrompts" :key="q" type="button" @click="interview.ask(q)">{{ q }}</button>
+        <button type="button" @click="interview.startVoice()">Talk to it by voice</button>
       </div>
     </div>
 
@@ -62,8 +74,8 @@ const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.fi
 
     <h2>Work with me</h2>
     <p>
-      I take on a few projects as an AI product engineer and builder:
-      <template v-for="(s, i) in services" :key="s.name">{{ s.name.charAt(0).toLowerCase() + s.name.slice(1) }}{{ i < services.length - 2 ? ', ' : i === services.length - 2 ? ', and ' : '' }}</template>.
+      I take on a few projects as an AI product engineer and builder: scalable AI products from zero to launch, AI
+      solutions and automation, voice AI, launch content and growth, and production hardening.
       See <NuxtLink to="/services">how I work</NuxtLink>, <button type="button" class="talk" @click="interview.open()">ask my AI twin</button>,
       or write to <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>.
     </p>

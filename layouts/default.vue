@@ -13,7 +13,7 @@ onMounted(() => { initTheme(); initMode() })
 <template>
   <div class="wrap">
     <header class="top">
-      <NuxtLink to="/" class="name">{{ profile.name }}</NuxtLink>
+      <component :is="route.path === '/' ? 'h1' : 'div'" class="name-wrap"><NuxtLink to="/" class="name">{{ profile.name }}</NuxtLink></component>
       <div class="tools">
         <div class="mode" role="group" aria-label="Reading mode">
           <button type="button" :aria-pressed="mode === 'human'" @click="setMode('human')">Human</button>
@@ -35,7 +35,7 @@ onMounted(() => { initTheme(); initMode() })
     <footer class="foot">
       <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>
       <a v-for="l in profile.links" :key="l.url" :href="l.url" target="_blank" rel="noopener me">{{ l.label }}</a>
-      <button type="button" class="talk" @click="interview.open()">Ask my AI twin (it has jokes)</button>
+      <button type="button" class="talk" @click="interview.open()">Ask my AI twin</button>
     </footer>
 
     <ClientOnly><AiDock /><LinkPreview /></ClientOnly>

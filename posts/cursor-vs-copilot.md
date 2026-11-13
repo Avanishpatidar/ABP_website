@@ -1,4 +1,6 @@
-![AI Coding Tools](/images/blog/cursor_copilot_header.png)
+![AI Coding Tools](/images/blog/cursor_copilot_header.jpg)
+
+# Cursor vs Copilot: My Honest Take After 3 Months
 
 I've been coding for a while now, and honestly? The way we write code in late 2024 feels completely different from even six months ago. 
 

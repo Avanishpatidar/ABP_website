@@ -5,7 +5,7 @@ usePageSeo('/writing')
 
 <template>
   <ModeView :md="markdownFor('/writing')">
-    <h1>Writing</h1>
+    <h1>Writing by Avanish Patidar</h1>
     <p>Most of what I write now goes on the HiringAnt blog. Older essays live here.</p>
 
     <h2>On the HiringAnt blog</h2>

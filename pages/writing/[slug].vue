@@ -20,7 +20,7 @@ useHead({
     type: 'application/ld+json',
     innerHTML: JSON.stringify({
       '@context': 'https://schema.org', '@type': 'BlogPosting', headline: post.title, description: post.summary,
-      datePublished: post.iso, url, mainEntityOfPage: url, author: { '@id': `${SITE_URL}/#person` }
+      datePublished: post.iso, dateModified: post.iso, image: `${SITE_URL}/images/og.jpg`, publisher: { '@id': `${SITE_URL}/#person` }, url, mainEntityOfPage: url, author: { '@id': `${SITE_URL}/#person` }
     })
   }]
 })

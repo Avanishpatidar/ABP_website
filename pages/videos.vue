@@ -5,7 +5,7 @@ usePageSeo('/videos')
 
 <template>
   <ModeView :md="markdownFor('/videos')">
-    <h1>Videos</h1>
+    <h1>Videos by Avanish Patidar</h1>
     <p>{{ videoIntro }}</p>
 
     <template v-for="g in reelGroups" :key="g.kind">

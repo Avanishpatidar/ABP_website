@@ -1,6 +1,7 @@
-// Light / dark theme. Follows the system until the visitor picks one; the
-// choice is saved and applied before first paint by the inline script in
-// nuxt.config.ts (data-theme on <html>).
+// Light / dark theme. Every visit starts on the system's setting. The toggle
+// switches between light and dark for the rest of that visit only (kept in
+// sessionStorage and applied before first paint by the inline script in
+// nuxt.config.ts), so a new visit follows the system again.
 export const useTheme = () => {
   const theme = useState<'light' | 'dark'>('theme', () => 'light')
 
@@ -15,7 +16,7 @@ export const useTheme = () => {
   const toggle = () => {
     theme.value = theme.value === 'dark' ? 'light' : 'dark'
     document.documentElement.dataset.theme = theme.value
-    try { localStorage.setItem('theme', theme.value) } catch {}
+    try { sessionStorage.setItem('theme', theme.value) } catch {}
   }
 
   return { theme, toggle, init }
