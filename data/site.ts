@@ -220,7 +220,7 @@ export interface Video { id: string; title: string; views: string }
 export const videoIntro = 'I make the videos that market what I build: I write the script, shoot it or generate it with AI, and edit the final cut. The top five HiringAnt reels have over 450,000 views between them.'
 // Instagram reels from HiringAnt's page (the ID is the part after /reel/ in the
 // link). `kind` puts each one under "Made with AI" or "Shot for real".
-export interface Reel { id: string; kind: 'ai' | 'real' | 'edit'; title: string; views?: string }
+export interface Reel { id: string; kind: 'ai' | 'real' | 'brand' | 'edit'; title: string; views?: string }
 export const INSTAGRAM_URL = 'https://www.instagram.com/hiring_ant/'
 export const reels: Reel[] = [
   { id: 'DZrAgvgyo0S', kind: 'ai', title: 'The HiringAnt ant', views: '250K views' },
@@ -231,11 +231,15 @@ export const reels: Reel[] = [
   { id: 'DbSLx4tRUC-', kind: 'real', title: 'Straight to camera', views: '24K views' },
   { id: 'DeUb-3Qxkzn', kind: 'real', title: 'Street interviews: how many places did you apply?', views: '2.8K views' },
   { id: 'DedtEliRAkG', kind: 'real', title: 'Everyone has a degree', views: '2.7K views' },
+  { id: 'Dd89Fv8t7j3', kind: 'brand', title: 'RentPrompts: the robot is hiring' },
+  { id: 'DeJwHwBhujk', kind: 'brand', title: 'RentPrompts: can you beat 80%?' },
+  { id: 'DeCCwxxM33O', kind: 'brand', title: 'RentPrompts: turn AI from an expense into income' },
   { id: 'DfFTXrvMMfS', kind: 'edit', title: 'Is AI a new god?' }
 ]
 export const reelGroups = [
   { kind: 'ai' as const, title: 'Made with AI', text: 'Written by me, generated with AI video tools, cut and captioned by me.' },
   { kind: 'real' as const, title: 'Shot for real', text: 'I write the script, direct the shoot and edit the cut.' },
+  { kind: 'brand' as const, title: 'Animated product ads', text: 'Motion ads for RentPrompts: script, animation and edit.' },
   { kind: 'edit' as const, title: 'Edited for others', text: 'Editing work on other creators\' videos.' }
 ]
 export const YOUTUBE_URL = 'https://www.youtube.com/@error_by_night_'
