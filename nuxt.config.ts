@@ -1,17 +1,15 @@
+import { EMAIL, SITE_URL, pages, profile, ownPosts } from './data/site'
+
+const home = pages['/']
+const OG_IMAGE = `${SITE_URL}/images/og-image.png`
+
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   compatibilityDate: '2024-11-01',
   devtools: { enabled: false },
-
-  // Redirects below are handled server-side by Nitro, so the client app manifest
-  // isn't needed — disabling it silences the dev "#app-manifest" resolve warnings.
   experimental: { appManifest: false },
 
-  // Global stylesheet — original rich design, recolored to monochrome.
-  css: ['~/assets/css/styles.css', '~/assets/css/mascot.css'],
-
-  // Resolve components by filename regardless of subfolder (no path prefix).
-  components: [{ path: '~/components', pathPrefix: false }],
+  css: ['~/assets/css/main.css'],
 
   // GEMINI_API_KEY stays server-only; never exposed to the client.
   runtimeConfig: {
@@ -19,9 +17,18 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    // Legacy aliases from the old static site.
-    '/blogs': { redirect: '/writing' },
-    '/writings': { redirect: '/writing' },
+    // Old URLs keep working.
+    '/blogs': { redirect: { to: '/writing', statusCode: 301 } },
+    '/writings': { redirect: { to: '/writing', statusCode: 301 } },
+    '/experience': { redirect: { to: '/about', statusCode: 301 } },
+    '/contact': { redirect: { to: '/services', statusCode: 301 } },
+    // Content pages are static; build them once.
+    '/': { prerender: true },
+    '/about': { prerender: true },
+    '/work': { prerender: true },
+    '/services': { prerender: true },
+    '/writing': { prerender: true },
+    '/writing/**': { prerender: true },
     // Security headers on every route (microphone=self is required for voice).
     '/**': {
       headers: {
@@ -33,44 +40,44 @@ export default defineNuxtConfig({
     }
   },
 
+  nitro: {
+    prerender: {
+      crawlLinks: false,
+      routes: ['/', '/about', '/work', '/services', '/writing', ...ownPosts.map(p => `/writing/${p.slug}`)]
+    }
+  },
+
   app: {
     head: {
       htmlAttrs: { lang: 'en' },
-      title: 'Avanish Patidar - GenAI Engineer & Full-Stack Developer',
+      title: home.title,
       meta: [
         { charset: 'UTF-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1.0' },
-        { name: 'description', content: 'I design and lead production-grade Agentic AI systems. Currently Tech Lead at HiringAnt and Agentic AI Lead at RentPrompts. I bridge the gap between experimental LLMs and scalable business automation.' },
-        { name: 'keywords', content: 'Agentic AI, Multi-Agent Systems, RAG, GenAI Engineer, Full-Stack Developer, Python, TypeScript, Next.js, AI Agents, LangChain, FastAPI, Avanish Patidar, Software Engineer, Indore' },
-        { name: 'author', content: 'Avanish Patidar' },
-        { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1' },
-        // Open Graph
-        { property: 'og:type', content: 'website' },
-        { property: 'og:url', content: 'https://avanishpatidar.me/' },
-        { property: 'og:title', content: 'Avanish Patidar - GenAI Engineer & Full-Stack Developer' },
-        { property: 'og:description', content: 'I design and lead production-grade Agentic AI systems. Currently Tech Lead at HiringAnt and Agentic AI Lead at RentPrompts.' },
-        { property: 'og:image', content: 'https://avanishpatidar.me/images/og-image.png' },
+        { name: 'description', content: home.description },
+        { name: 'author', content: profile.name },
+        { name: 'robots', content: 'index, follow, max-image-preview:large, max-snippet:-1' },
+        { property: 'og:site_name', content: profile.name },
+        { property: 'og:locale', content: 'en_IN' },
+        { property: 'og:image', content: OG_IMAGE },
         { property: 'og:image:width', content: '1200' },
         { property: 'og:image:height', content: '630' },
-        { property: 'og:site_name', content: 'Avanish Patidar Portfolio' },
-        { property: 'og:locale', content: 'en_US' },
-        // Twitter
         { name: 'twitter:card', content: 'summary_large_image' },
-        { name: 'twitter:title', content: 'Avanish Patidar - GenAI Engineer & Full-Stack Developer' },
-        { name: 'twitter:description', content: 'I design and lead production-grade Agentic AI systems.' },
-        { name: 'twitter:image', content: 'https://avanishpatidar.me/images/og-image.png' },
-        { name: 'theme-color', content: '#000000' }
+        { name: 'twitter:image', content: OG_IMAGE },
+        { name: 'theme-color', content: '#faf9f6', media: '(prefers-color-scheme: light)' },
+        { name: 'theme-color', content: '#0f0f0d', media: '(prefers-color-scheme: dark)' }
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
-        { rel: 'canonical', href: 'https://avanishpatidar.me/' },
         { rel: 'manifest', href: '/manifest.webmanifest' },
+        { rel: 'alternate', type: 'text/plain', title: 'Site as markdown for agents', href: '/llms.txt' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
-        { rel: 'preconnect', href: 'https://cdn.jsdelivr.net', crossorigin: '' },
-        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap' }
+        { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap' }
       ],
       script: [
+        // Apply a saved theme before first paint so the page never flashes.
+        { innerHTML: `try{var t=localStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`, tagPosition: 'head' },
         {
           type: 'application/ld+json',
           innerHTML: JSON.stringify({
@@ -78,30 +85,28 @@ export default defineNuxtConfig({
             '@graph': [
               {
                 '@type': 'Person',
-                '@id': 'https://avanishpatidar.me/#person',
-                name: 'Avanish Patidar',
-                alternateName: 'ABP',
-                url: 'https://avanishpatidar.me',
-                image: 'https://avanishpatidar.me/images/og-image.png',
-                jobTitle: 'GenAI Engineer & Agentic AI Lead',
+                '@id': `${SITE_URL}/#person`,
+                name: profile.name,
+                alternateName: profile.aka,
+                url: SITE_URL,
+                image: OG_IMAGE,
+                jobTitle: 'AI Product Engineer, Co-Founder & CTO',
+                description: home.description,
                 worksFor: [
                   { '@type': 'Organization', name: 'HiringAnt', url: 'https://hiringant.ai' },
                   { '@type': 'Organization', name: 'RentPrompts', url: 'https://rentprompts.com' }
                 ],
-                address: { '@type': 'PostalAddress', addressLocality: 'Indore', addressCountry: 'IN' },
-                sameAs: [
-                  'https://github.com/Avanishpatidar',
-                  'https://www.linkedin.com/in/avanish-patidar-b3ba2b230/',
-                  'https://www.youtube.com/@error_by_night_'
-                ],
-                email: 'avanish.patidar07@gmail.com'
+                knowsAbout: ['AI agents', 'Agentic AI', 'Multi-agent systems', 'Voice AI', 'RAG', 'FastAPI', 'Next.js', 'AI product engineering'],
+                address: { '@type': 'PostalAddress', addressLocality: 'Indore', addressRegion: 'Madhya Pradesh', addressCountry: 'IN' },
+                sameAs: [...profile.links.map(l => l.url), 'https://hiringant.ai/blog/author/avanish-patidar'],
+                email: EMAIL
               },
               {
                 '@type': 'WebSite',
-                '@id': 'https://avanishpatidar.me/#website',
-                url: 'https://avanishpatidar.me',
-                name: 'Avanish Patidar Portfolio',
-                publisher: { '@id': 'https://avanishpatidar.me/#person' }
+                '@id': `${SITE_URL}/#website`,
+                url: SITE_URL,
+                name: profile.name,
+                publisher: { '@id': `${SITE_URL}/#person` }
               }
             ]
           })

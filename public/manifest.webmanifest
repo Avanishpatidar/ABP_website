@@ -1,14 +1,13 @@
 {
-  "name": "Avanish Patidar — GenAI Engineer",
+  "name": "Avanish Patidar | AI Product Engineer",
   "short_name": "ABP",
-  "description": "GenAI Engineer building production-grade Agentic AI and multi-agent systems.",
+  "description": "AI product engineer. Co-Founder & CTO of HiringAnt, Agentic AI Lead at RentPrompts.",
   "start_url": "/",
   "scope": "/",
   "display": "standalone",
-  "background_color": "#000000",
-  "theme_color": "#000000",
+  "background_color": "#faf9f6",
+  "theme_color": "#faf9f6",
   "icons": [
-    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
-    { "src": "/images/og-image.png", "sizes": "1200x630", "type": "image/png", "purpose": "maskable" }
+    { "src": "/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
   ]
 }

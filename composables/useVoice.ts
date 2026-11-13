@@ -211,14 +211,6 @@ export function useVoice(onMessage?: (m: VoiceMessage) => void) {
       setTimeout(() => window.open(`mailto:avanish.patidar07@gmail.com?subject=${encodeURIComponent(args.subject || '')}&body=${encodeURIComponent(args.body || '')}`, '_blank'), 1500)
       hideAction(4000)
     }
-    if (tool === 'send_whatsapp') {
-      showAction('📱', 'Opening WhatsApp')
-      setTimeout(() => {
-        const ph = (args.phone || '+917697793284').replace(/\+/g, '')
-        window.open(`https://wa.me/${ph}?text=${encodeURIComponent(args.message || '')}`, '_blank')
-      }, 1500)
-      hideAction(4000)
-    }
   }
   const showAction = (icon: string, text: string, sub = '') => { actionCard.value = { icon, text, sub } }
   const hideAction = (delay = 3000) => setTimeout(() => { actionCard.value = null }, delay)
