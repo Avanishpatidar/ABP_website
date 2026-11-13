@@ -13,7 +13,7 @@ usePageSeo('/videos')
       <p>{{ g.text }}</p>
       <ReelRow :reels="reels.filter(r => r.kind === g.kind)" />
     </template>
-    <p class="small muted" style="margin-top: 14px">All from <a :href="INSTAGRAM_URL" target="_blank" rel="noopener">HiringAnt on Instagram</a>.</p>
+    <p class="small muted" style="margin-top: 14px">The AI and real reels are from <a :href="INSTAGRAM_URL" target="_blank" rel="noopener">HiringAnt on Instagram</a>.</p>
 
     <h2>Error by Night</h2>
     <p>

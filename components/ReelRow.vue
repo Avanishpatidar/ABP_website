@@ -11,7 +11,7 @@ defineProps<{ reels: Reel[] }>()
       <div class="reel-frame">
         <iframe :src="`https://www.instagram.com/reel/${r.id}/embed/`" :title="r.title" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen scrolling="no"></iframe>
       </div>
-      <figcaption><strong>{{ r.title }}</strong> <span class="muted">· {{ r.views }}</span></figcaption>
+      <figcaption><strong>{{ r.title }}</strong> <span v-if="r.views" class="muted">· {{ r.views }}</span></figcaption>
     </figure>
   </div>
 </template>
