@@ -32,7 +32,7 @@ export const about = {
     intro: 'Most engineers stop at the deploy. I keep going, because a product nobody finds is not finished.',
     points: [
       'I market HiringAnt myself: positioning, landing pages, SEO and the paid campaigns on Meta that bring job seekers and employers in.',
-      'I make the ad creatives and Instagram content with AI tools, from the idea to the final cut.',
+      'I make the ad creatives and reels myself, some generated with AI and some shot for real, from the script to the final cut. The top five HiringAnt reels have over 450,000 views.',
       'I run Error by Night, my YouTube channel with 11.9K subscribers, where I script, shoot and edit coding tutorials. The most watched have over 160,000 views each.',
       'So when I build something for you, I am already thinking about how it will be found, explained and sold.'
     ]
@@ -51,7 +51,7 @@ export const faq = [
   { q: 'Who is Avanish Patidar?', a: 'Avanish Patidar, also known as ABP, is an AI product engineer from Indore, India. He is the CTO of HiringAnt and the Agentic AI Lead at RentPrompts.' },
   { q: 'What does Avanish Patidar build?', a: 'Scalable AI products, AI solutions and automation: multi-agent pipelines, real-time voice AI, and the full web products around them. His work includes HiringAnt, RentPrompts, PrepOwl, Yashraj Books, and client systems for Aradhya Manpower and Tharu & Sons.' },
   { q: 'What is HiringAnt and what is his role there?', a: 'HiringAnt (hiringant.ai) is an AI hiring platform for job seekers and employers. Avanish is its CTO. He built it from the first commit and took it to paying users; more than 3,600 job seekers and 160 employers have signed up.' },
-  { q: 'Does he do marketing and video as well as engineering?', a: 'Yes. He markets HiringAnt himself, including SEO, Meta ad campaigns and AI-made ad creatives, and runs Error by Night, a YouTube channel with 11.9K subscribers where he scripts, shoots and edits coding tutorials.' },
+  { q: 'Does he do marketing and video as well as engineering?', a: 'Yes. He markets HiringAnt himself, including SEO, Meta ad campaigns and reels he writes and edits (the top five have over 450,000 views), and runs Error by Night, a YouTube channel with 11.9K subscribers where he scripts, shoots and edits coding tutorials.' },
   { q: 'Is Avanish Patidar available for projects?', a: 'He takes on a few projects as an AI product engineer and builder: zero-to-launch AI products, AI solutions and automation, voice and interview AI, launch content and growth, and production hardening.' },
   { q: 'How do I contact Avanish Patidar?', a: 'By email at avanish.patidar07@gmail.com. Email is the only contact channel.' }
 ]
@@ -217,10 +217,25 @@ export const ownPosts: OwnPost[] = [
 ]
 
 export interface Video { id: string; title: string; views: string }
-export const videoIntro = 'I make the videos myself: I write the script, shoot or generate the footage with AI, and edit the final cut. Some sell a product, some teach.'
-// Instagram reel IDs (the part after /reel/ in the link). Add yours here and
-// they appear on the Videos page as playable embeds.
-export const reels: { id: string; title: string; note: string }[] = []
+export const videoIntro = 'I make the videos that market what I build: I write the script, shoot it or generate it with AI, and edit the final cut. The top five HiringAnt reels have over 450,000 views between them.'
+// Instagram reels from HiringAnt's page (the ID is the part after /reel/ in the
+// link). `kind` puts each one under "Made with AI" or "Shot for real".
+export interface Reel { id: string; kind: 'ai' | 'real'; title: string; views: string }
+export const INSTAGRAM_URL = 'https://www.instagram.com/hiring_ant/'
+export const reels: Reel[] = [
+  { id: 'DZrAgvgyo0S', kind: 'ai', title: 'The HiringAnt ant', views: '250K views' },
+  { id: 'DZAeFChyvR9', kind: 'ai', title: 'The cat on the road', views: '93K views' },
+  { id: 'DZcZg_LxR6U', kind: 'ai', title: 'Hiring', views: '11K views' },
+  { id: 'DZvF6o5RyhI', kind: 'ai', title: 'Shy founder', views: '5.7K views' },
+  { id: 'DbbcErqxA5c', kind: 'real', title: 'Office sketch', views: '77K views' },
+  { id: 'DbSLx4tRUC-', kind: 'real', title: 'Straight to camera', views: '24K views' },
+  { id: 'DeUb-3Qxkzn', kind: 'real', title: 'Street interviews: how many places did you apply?', views: '2.8K views' },
+  { id: 'DedtEliRAkG', kind: 'real', title: 'Everyone has a degree', views: '2.7K views' }
+]
+export const reelGroups = [
+  { kind: 'ai' as const, title: 'Made with AI', text: 'Written by me, generated with AI video tools, cut and captioned by me.' },
+  { kind: 'real' as const, title: 'Shot for real', text: 'I write the script, direct the shoot and edit the cut.' }
+]
 export const YOUTUBE_URL = 'https://www.youtube.com/@error_by_night_'
 export const youtube: Video[] = [
   { id: '1GbJQ7fHgqo', title: 'Build & Deploy an AI-Powered Calculator App', views: '165K views' },
@@ -252,8 +267,8 @@ export const pages: Record<string, { title: string; description: string }> = {
     description: 'Products and client systems Avanish Patidar has built: HiringAnt (AI hiring platform), RentPrompts, PrepOwl (AI exam mentor), Yashraj Books, Aradhya Manpower and Tharu & Sons, each with a live link.'
   },
   '/videos': {
-    title: 'Videos | Coding tutorials and ad videos by Avanish Patidar',
-    description: 'Videos written, shot and edited by Avanish Patidar: coding tutorials on Error by Night, his YouTube channel with 11.9K subscribers, and ad videos for the products he builds.'
+    title: 'Videos | AI ads, reels and coding tutorials by Avanish Patidar',
+    description: 'Videos written, shot and edited by Avanish Patidar: AI-made and real ad reels for HiringAnt with 450,000+ views, and coding tutorials on Error by Night, his YouTube channel.'
   },
   '/services': {
     title: 'Hire an AI Product Engineer | Scalable AI products, solutions and automation',
@@ -326,7 +341,11 @@ const mdServices = () => [
 const mdVideos = () => [
   `# Videos`,
   videoIntro,
-  ...(reels.length ? [`## Ads and reels`, reels.map(r => `- ${link(r.title, `https://www.instagram.com/reel/${r.id}/`)}: ${r.note}`).join('\n')] : []),
+  ...reelGroups.map(g => [
+    `## ${g.title} (HiringAnt reels)`,
+    g.text,
+    reels.filter(r => r.kind === g.kind).map(r => `- ${link(r.title, `https://www.instagram.com/reel/${r.id}/`)} (${r.views})`).join('\n')
+  ].join('\n\n')),
   `## Error by Night (YouTube, 11.9K subscribers)`,
   youtube.map(v => `- ${link(v.title, `https://www.youtube.com/watch?v=${v.id}`)} (${v.views})`).join('\n'),
   `Channel: ${YOUTUBE_URL}`

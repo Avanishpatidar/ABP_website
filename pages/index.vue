@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { profile, products, clients, hiringantPosts, services, youtube, YOUTUBE_URL, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantPosts, services, reels, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
+const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.filter(r => r.kind === 'real').slice(0, 2)]
 </script>
 
 <template>
@@ -54,13 +55,10 @@ usePageSeo('/')
 
     <h2>Video</h2>
     <p>
-      I write, shoot and edit my own videos, from AI-made ad reels for HiringAnt to coding tutorials on
-      <a :href="YOUTUBE_URL" target="_blank" rel="noopener me">Error by Night</a> (11.9K subscribers).
+      I write, shoot and edit the videos that market what I build. Some are generated with AI, some are shot for real.
+      The top five HiringAnt reels have over 450,000 views. <NuxtLink to="/videos">All videos</NuxtLink>
     </p>
-    <figure class="video" style="margin-top: 18px">
-      <iframe :src="`https://www.youtube-nocookie.com/embed/${youtube[0].id}?rel=0`" :title="youtube[0].title" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
-      <figcaption><strong>{{ youtube[0].title }}</strong> <span class="muted">· {{ youtube[0].views }}</span> · <NuxtLink to="/videos">All videos and reels</NuxtLink></figcaption>
-    </figure>
+    <ReelRow :reels="topReels" />
 
     <h2>Work with me</h2>
     <p>

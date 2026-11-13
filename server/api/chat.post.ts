@@ -39,7 +39,7 @@ Details: https://www.avanishpatidar.in/services . To start, they should email me
 
 MARKETING AND CONTENT (I also bring the users):
 - I market HiringAnt myself: positioning, landing pages, SEO and Meta ad campaigns that bring job seekers and employers in.
-- I make AI-generated ad creatives and Instagram content for HiringAnt, idea to final cut.
+- I make HiringAnt's reels myself, some AI-generated and some shot for real, script to final cut. The top five have 450K+ views (one has 250K).
 - I run Error by Night, my YouTube channel (11.9K subscribers), where I script, shoot and edit coding tutorials; the top videos have 160K+ views each. Videos page: https://www.avanishpatidar.in/videos
 
 HOW I THINK:

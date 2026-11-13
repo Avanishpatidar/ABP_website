@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { videoIntro, reels, youtube, YOUTUBE_URL, markdownFor } from '~/data/site'
+import { videoIntro, reels, reelGroups, youtube, YOUTUBE_URL, INSTAGRAM_URL, markdownFor } from '~/data/site'
 usePageSeo('/videos')
 </script>
 
@@ -8,13 +8,12 @@ usePageSeo('/videos')
     <h1>Videos</h1>
     <p>{{ videoIntro }}</p>
 
-    <h2 v-if="reels.length">Ads and reels</h2>
-    <div v-if="reels.length" class="reels">
-      <figure v-for="r in reels" :key="r.id" class="reel">
-        <iframe :src="`https://www.instagram.com/reel/${r.id}/embed/`" :title="r.title" loading="lazy" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen scrolling="no"></iframe>
-        <figcaption><strong>{{ r.title }}</strong> <span class="muted">· {{ r.note }}</span></figcaption>
-      </figure>
-    </div>
+    <template v-for="g in reelGroups" :key="g.kind">
+      <h2>{{ g.title }}</h2>
+      <p>{{ g.text }}</p>
+      <ReelRow :reels="reels.filter(r => r.kind === g.kind)" />
+    </template>
+    <p class="small muted" style="margin-top: 14px">All from <a :href="INSTAGRAM_URL" target="_blank" rel="noopener">HiringAnt on Instagram</a>.</p>
 
     <h2>Error by Night</h2>
     <p>
