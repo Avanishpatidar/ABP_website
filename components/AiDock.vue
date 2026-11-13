@@ -18,7 +18,7 @@ const logEl = ref<HTMLElement | null>(null)
 const inputEl = ref<HTMLInputElement | null>(null)
 let id = 0
 
-const SUGGESTIONS = ['What did you build at HiringAnt?', 'What is your stack?', 'Can you help with my project?']
+const SUGGESTIONS = ['Why should I hire you?', 'Roast my startup idea', 'What did you actually build at HiringAnt?', 'Explain agents like I am five']
 
 const scrollDown = () => nextTick(() => { if (logEl.value) logEl.value.scrollTop = logEl.value.scrollHeight })
 
@@ -71,7 +71,7 @@ async function send(text: string) {
       } catch {}
     }
   } catch (e) {
-    bot.text = `I could not answer just now. You can email Avanish at ${EMAIL}.`
+    bot.text = `My brain just rate-limited itself. Embarrassing. Try again in a minute, or email the real Avanish at ${EMAIL}.`
     console.error('[chat]', e)
   } finally { busy.value = false; scrollDown() }
 }
@@ -88,7 +88,7 @@ onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop
 <template>
   <div v-if="open" class="twin" role="dialog" aria-label="Chat with Avanish's AI twin">
     <div class="twin-head">
-      <div><strong>Avanish's AI twin</strong><small>Answers as me. It can be wrong.</small></div>
+      <div><strong>ABP's AI twin</strong><small>Same opinions, fewer coffee breaks.</small></div>
       <div>
         <button type="button" class="icon-btn" :class="{ on: voice.started.value }" :aria-label="voice.started.value ? 'End voice call' : 'Talk by voice'" @click="voice.started.value ? voice.stop() : voice.start(true)">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z" /><path d="M19 10v2a7 7 0 0 1-14 0v-2" /><path d="M12 19v4" /></svg>
@@ -101,7 +101,7 @@ onBeforeUnmount(() => { window.removeEventListener('keydown', onKey); voice.stop
 
     <div ref="logEl" class="twin-log" aria-live="polite">
       <div v-if="!messages.length" class="twin-empty">
-        Ask about my work, my stack or whether I can help with your project.
+        I am Avanish's AI twin. I answer like him, only faster and with more confidence than is healthy. Ask me anything, or pick one:
         <div><button v-for="s in SUGGESTIONS" :key="s" type="button" class="chip" @click="send(s)">{{ s }}</button></div>
       </div>
       <div v-for="m in messages" :key="m.id" class="msg" :class="m.role" v-html="md(m.text) || '…'"></div>

@@ -33,7 +33,7 @@ export const about = {
     points: [
       'I market HiringAnt myself: positioning, landing pages, SEO and the paid campaigns on Meta that bring job seekers and employers in.',
       'I make the ad creatives and Instagram content with AI tools, from the idea to the final cut.',
-      'I run Error by Night, my YouTube channel, where I script, shoot and edit the videos.',
+      'I run Error by Night, my YouTube channel with 11.9K subscribers, where I script, shoot and edit coding tutorials. The most watched have over 160,000 views each.',
       'So when I build something for you, I am already thinking about how it will be found, explained and sold.'
     ]
   },
@@ -44,6 +44,17 @@ export const about = {
     { title: 'Measure, then decide', text: 'Every feature gets an event and every agent gets an eval set. Opinions lose to the dashboard.' }
   ]
 }
+
+// Plain questions and answers about me. Shown on the About page, marked up as
+// FAQPage data, and included in the agent markdown so AI assistants can answer.
+export const faq = [
+  { q: 'Who is Avanish Patidar?', a: 'Avanish Patidar, also known as ABP, is an AI product engineer from Indore, India. He is the CTO of HiringAnt and the Agentic AI Lead at RentPrompts.' },
+  { q: 'What does Avanish Patidar build?', a: 'Scalable AI products, AI solutions and automation: multi-agent pipelines, real-time voice AI, and the full web products around them. His work includes HiringAnt, RentPrompts, PrepOwl, Yashraj Books, and client systems for Aradhya Manpower and Tharu & Sons.' },
+  { q: 'What is HiringAnt and what is his role there?', a: 'HiringAnt (hiringant.ai) is an AI hiring platform for job seekers and employers. Avanish is its CTO. He built it from the first commit and took it to paying users; more than 3,600 job seekers and 160 employers have signed up.' },
+  { q: 'Does he do marketing and video as well as engineering?', a: 'Yes. He markets HiringAnt himself, including SEO, Meta ad campaigns and AI-made ad creatives, and runs Error by Night, a YouTube channel with 11.9K subscribers where he scripts, shoots and edits coding tutorials.' },
+  { q: 'Is Avanish Patidar available for projects?', a: 'He takes on a few projects as an AI product engineer and builder: zero-to-launch AI products, AI solutions and automation, voice and interview AI, launch content and growth, and production hardening.' },
+  { q: 'How do I contact Avanish Patidar?', a: 'By email at avanish.patidar07@gmail.com. Email is the only contact channel.' }
+]
 
 export interface Product { name: string; url: string; role: string; summary: string; points: string[]; stack: string }
 export const products: Product[] = [
@@ -205,10 +216,24 @@ export const ownPosts: OwnPost[] = [
   { slug: 'cursor-vs-copilot', title: 'Cursor vs Copilot: My Honest Take After 3 Months', date: 'Nov 2024', iso: '2024-11-23', summary: 'I switched from GitHub Copilot to Cursor. Here is what actually happened.' }
 ]
 
+export interface Video { id: string; title: string; views: string }
+export const videoIntro = 'I make the videos myself: I write the script, shoot or generate the footage with AI, and edit the final cut. Some sell a product, some teach.'
+// Instagram reel IDs (the part after /reel/ in the link). Add yours here and
+// they appear on the Videos page as playable embeds.
+export const reels: { id: string; title: string; note: string }[] = []
+export const YOUTUBE_URL = 'https://www.youtube.com/@error_by_night_'
+export const youtube: Video[] = [
+  { id: '1GbJQ7fHgqo', title: 'Build & Deploy an AI-Powered Calculator App', views: '165K views' },
+  { id: 'hWhWdf2gsfQ', title: 'Django Mastery: Build 5 Websites in 5 Hours', views: '164K views' },
+  { id: 'NpPBBKXraP0', title: 'Build an AI Assistant Using Python (Jarvis-inspired)', views: '97K views' },
+  { id: 'BKMuqz-guec', title: 'Build an AI-Powered Virtual Assistant with Kivy + Gemini', views: '23K views' }
+]
+
 export const nav = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/work', label: 'Work' },
+  { to: '/videos', label: 'Videos' },
   { to: '/services', label: 'Services' },
   { to: '/writing', label: 'Writing' }
 ]
@@ -225,6 +250,10 @@ export const pages: Record<string, { title: string; description: string }> = {
   '/work': {
     title: 'Work | Products built by Avanish Patidar: HiringAnt, RentPrompts, PrepOwl and more',
     description: 'Products and client systems Avanish Patidar has built: HiringAnt (AI hiring platform), RentPrompts, PrepOwl (AI exam mentor), Yashraj Books, Aradhya Manpower and Tharu & Sons, each with a live link.'
+  },
+  '/videos': {
+    title: 'Videos | Coding tutorials and ad videos by Avanish Patidar',
+    description: 'Videos written, shot and edited by Avanish Patidar: coding tutorials on Error by Night, his YouTube channel with 11.9K subscribers, and ad videos for the products he builds.'
   },
   '/services': {
     title: 'Hire an AI Product Engineer | Scalable AI products, solutions and automation',
@@ -249,7 +278,10 @@ const mdHome = () => [
   [
     ...nav.filter(n => n.to !== '/').map(n => `- ${link(n.label, SITE_URL + n.to)}: ${pages[n.to].description}`),
     `- ${link('Everything in one file', SITE_URL + '/llms.txt')}`
-  ].join('\n')
+  ].join('\n'),
+  `## Quick facts`,
+  faq.map(f => `- **${f.q}** ${f.a}`).join('\n'),
+  `Each page is also available as markdown: add .md to its URL, for example ${SITE_URL}/about.md`
 ].join('\n\n')
 
 const mdAbout = () => [
@@ -263,7 +295,9 @@ const mdAbout = () => [
   `## Experience`,
   ...experience.map(r => [`### ${r.title}, ${link(r.org, r.url)}`, r.time, ...r.points.map(p => `- ${p}`)].join('\n')),
   `## Stack`,
-  ...Object.entries(stack).map(([k, v]) => `- **${k}:** ${v.join(', ')}`)
+  ...Object.entries(stack).map(([k, v]) => `- **${k}:** ${v.join(', ')}`),
+  `## Questions and answers`,
+  ...faq.map(f => `**${f.q}**\n${f.a}`)
 ].join('\n\n').replace(/\n\n- /g, '\n- ')
 
 const mdWork = () => [
@@ -289,6 +323,15 @@ const mdServices = () => [
   howItWorks.map((p, i) => `${i + 1}. **${p.step}.** ${p.text}`).join('\n')
 ].join('\n\n')
 
+const mdVideos = () => [
+  `# Videos`,
+  videoIntro,
+  ...(reels.length ? [`## Ads and reels`, reels.map(r => `- ${link(r.title, `https://www.instagram.com/reel/${r.id}/`)}: ${r.note}`).join('\n')] : []),
+  `## Error by Night (YouTube, 11.9K subscribers)`,
+  youtube.map(v => `- ${link(v.title, `https://www.youtube.com/watch?v=${v.id}`)} (${v.views})`).join('\n'),
+  `Channel: ${YOUTUBE_URL}`
+].join('\n\n')
+
 const mdWriting = () => [
   `# Writing`,
   `## On the HiringAnt blog`,
@@ -299,13 +342,14 @@ const mdWriting = () => [
 ].join('\n\n')
 
 const byPath: Record<string, () => string> = {
-  '/': mdHome, '/about': mdAbout, '/work': mdWork, '/services': mdServices, '/writing': mdWriting
+  '/': mdHome, '/about': mdAbout, '/work': mdWork, '/videos': mdVideos, '/services': mdServices, '/writing': mdWriting
 }
 
 export const markdownFor = (path: string) => (byPath[path] || mdHome)()
+export const markdownPaths = Object.keys(byPath)
 
 export const fullMarkdown = () =>
-  [mdHome(), mdAbout(), mdWork(), mdServices(), mdWriting(), `## Contact\n\nEmail ${EMAIL}. That is the only contact channel.`].join('\n\n---\n\n') + '\n'
+  [mdHome(), mdAbout(), mdWork(), mdVideos(), mdServices(), mdWriting(), `## Contact\n\nEmail ${EMAIL}. That is the only contact channel.`].join('\n\n---\n\n') + '\n'
 
 // Hover previews: a screenshot and one line for links that point at these sites.
 // Keyed by hostname (and path for GitHub) so any link on the site picks it up.

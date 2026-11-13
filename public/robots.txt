@@ -1,5 +1,21 @@
+# Everyone is welcome, including AI assistants and their crawlers.
 User-agent: *
 Allow: /
 Disallow: /api/
 
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: ClaudeBot
+User-agent: Claude-User
+User-agent: Claude-SearchBot
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+Disallow: /api/
+
+# Whole site as markdown: https://www.avanishpatidar.in/llms.txt
 Sitemap: https://www.avanishpatidar.in/sitemap.xml

@@ -1,8 +1,11 @@
 <script setup lang="ts">
-import { about, experience, stack, markdownFor, SITE_URL } from '~/data/site'
+import { about, experience, stack, faq, markdownFor, SITE_URL } from '~/data/site'
 usePageSeo('/about')
 useHead({
   script: [{
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'FAQPage', mainEntity: faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })) })
+  }, {
     type: 'application/ld+json',
     innerHTML: JSON.stringify({ '@context': 'https://schema.org', '@type': 'ProfilePage', url: `${SITE_URL}/about`, mainEntity: { '@id': `${SITE_URL}/#person` } })
   }]
@@ -39,5 +42,11 @@ useHead({
     <ul class="list tight">
       <li v-for="(items, group) in stack" :key="group"><strong>{{ group }}:</strong> <span>{{ items.join(', ') }}</span></li>
     </ul>
+
+    <h2>Questions and answers</h2>
+    <template v-for="f in faq" :key="f.q">
+      <h3>{{ f.q }}</h3>
+      <p>{{ f.a }}</p>
+    </template>
   </ModeView>
 </template>

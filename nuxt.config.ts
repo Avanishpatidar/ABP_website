@@ -1,7 +1,7 @@
 import { EMAIL, SITE_URL, pages, profile, ownPosts } from './data/site'
 
 const home = pages['/']
-const OG_IMAGE = `${SITE_URL}/images/og-image.png`
+const OG_IMAGE = `${SITE_URL}/images/og.jpg`
 const PHOTO = `${SITE_URL}/images/avanish.jpg`
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
@@ -28,6 +28,7 @@ export default defineNuxtConfig({
     '/about': { prerender: true },
     '/work': { prerender: true },
     '/services': { prerender: true },
+    '/videos': { prerender: true },
     '/writing': { prerender: true },
     '/writing/**': { prerender: true },
     // Security headers on every route (microphone=self is required for voice).
@@ -44,7 +45,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: false,
-      routes: ['/', '/about', '/work', '/services', '/writing', ...ownPosts.map(p => `/writing/${p.slug}`)]
+      routes: ['/', '/about', '/work', '/videos', '/services', '/writing', ...ownPosts.map(p => `/writing/${p.slug}`)]
     }
   },
 
@@ -70,6 +71,7 @@ export default defineNuxtConfig({
       ],
       link: [
         { rel: 'icon', type: 'image/svg+xml', href: '/favicon.svg' },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png' },
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'alternate', type: 'text/plain', title: 'Site as markdown for agents', href: '/llms.txt' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },

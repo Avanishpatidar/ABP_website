@@ -2,6 +2,8 @@
 // Shows the designed page in Human mode and the same content as markdown in
 // Agent mode. `md` comes from data/site.ts, so the two never disagree.
 const props = defineProps<{ md: string }>()
+const route = useRoute()
+const rawUrl = computed(() => (route.path.startsWith('/writing/') ? null : route.path === '/' ? '/index.md' : `${route.path}.md`))
 const { mode } = useMode()
 const copied = ref(false)
 
@@ -18,6 +20,7 @@ const copy = async () => {
         <span>This page as markdown</span>
         <div>
           <button type="button" @click="copy">{{ copied ? 'Copied' : 'Copy' }}</button>
+          <a v-if="rawUrl" :href="rawUrl">Raw .md</a>
           <a href="/llms.txt">Whole site</a>
         </div>
       </div>

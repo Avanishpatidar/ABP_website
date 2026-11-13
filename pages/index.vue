@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { profile, products, clients, hiringantPosts, services, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantPosts, services, youtube, YOUTUBE_URL, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
 </script>
@@ -51,6 +51,16 @@ usePageSeo('/')
       </li>
       <li><NuxtLink to="/writing">All writing</NuxtLink></li>
     </ul>
+
+    <h2>Video</h2>
+    <p>
+      I write, shoot and edit my own videos, from AI-made ad reels for HiringAnt to coding tutorials on
+      <a :href="YOUTUBE_URL" target="_blank" rel="noopener me">Error by Night</a> (11.9K subscribers).
+    </p>
+    <figure class="video" style="margin-top: 18px">
+      <iframe :src="`https://www.youtube-nocookie.com/embed/${youtube[0].id}?rel=0`" :title="youtube[0].title" loading="lazy" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; fullscreen" allowfullscreen></iframe>
+      <figcaption><strong>{{ youtube[0].title }}</strong> <span class="muted">· {{ youtube[0].views }}</span> · <NuxtLink to="/videos">All videos and reels</NuxtLink></figcaption>
+    </figure>
 
     <h2>Work with me</h2>
     <p>

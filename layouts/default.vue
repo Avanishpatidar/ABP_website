@@ -35,7 +35,7 @@ onMounted(() => { initTheme(); initMode() })
     <footer class="foot">
       <a :href="`mailto:${EMAIL}`">{{ EMAIL }}</a>
       <a v-for="l in profile.links" :key="l.url" :href="l.url" target="_blank" rel="noopener me">{{ l.label }}</a>
-      <button type="button" class="talk" @click="interview.open()">Ask my AI twin</button>
+      <button type="button" class="talk" @click="interview.open()">Ask my AI twin (it has jokes)</button>
     </footer>
 
     <ClientOnly><AiDock /><LinkPreview /></ClientOnly>
