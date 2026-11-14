@@ -191,3 +191,7 @@ figcaption { margin-top: 8px; font-size: 0.95rem; line-height: 1.4; }
 .kit-badge { align-self: flex-start; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 8px; border-radius: 999px; background: var(--panel); color: var(--accent); }
 .kit-text { color: var(--muted); font-size: 0.95rem; line-height: 1.45; }
 @media (max-width: 560px) { .kits { grid-template-columns: 1fr; } }
+.kit { position: relative; }
+.kit-link { position: absolute; inset: 0; z-index: 1; }
+.kit-alt { position: relative; z-index: 2; align-self: flex-start; margin-top: 4px; font-size: 0.9rem; color: var(--muted); }
+.kit-alt:hover { color: var(--accent); }

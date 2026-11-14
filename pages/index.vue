@@ -50,7 +50,7 @@ const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.fi
 
     <h2>Kits I sell</h2>
     <ul class="list">
-      <li v-for="k in kits.slice(0, 3)" :key="k.id">
+      <li v-for="k in kits.slice(0, 4)" :key="k.id">
         <a :href="kitUrl(k)" target="_blank" rel="noopener">{{ k.short }}</a>
         <span> · {{ kitPrice(k) }} · {{ k.text }}</span>
       </li>

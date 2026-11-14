@@ -300,9 +300,10 @@ export const youtube: Video[] = [
 
 // What I sell, on Gumroad at shop.avanishpatidar.in. Prices in US dollars.
 export const SHOP_URL = 'https://shop.avanishpatidar.in'
-export interface Kit { id: string; title: string; short: string; price: number; img: string; text: string; badge?: string }
+export interface Kit { id: string; title: string; short: string; price: number; img: string; text: string; badge?: string; rp?: string }
 export const kits: Kit[] = [
-  { id: 'lgokd', title: 'Ship AI Products That Survive Production: The ABP Playbook', short: 'The ABP Playbook', price: 29, img: '/shop/lgokd.jpg', badge: 'Start here', text: 'The system I use to take an AI product from demo to paying users without it falling over: a 42-page guide, 21 templates, 95 checks and a 30-day plan.' },
+  { id: 'lgokd', rp: 'https://rentprompts.com/product/ship-ai-products-that-survive-production-abp-playbook', title: 'Ship AI Products That Survive Production: The ABP Playbook', short: 'The ABP Playbook', price: 29, img: '/shop/lgokd.jpg', badge: 'Start here', text: 'The system I use to take an AI product from demo to paying users without it falling over: a 42-page guide, 21 templates, 95 checks and a 30-day plan.' },
+  { id: 'ai-video-editor-skill', rp: 'https://rentprompts.com/product/ai-video-editor-skill-for-claude-code-clips-to-reels', title: 'AI Video Editor Skill for Claude Code: Raw Clips In, Finished Video Out', short: 'AI Video Editor Skill', price: 49, img: '/shop/ai-video-editor-skill.jpg', badge: 'New', text: 'A ready-to-install Claude Code skill: give it your raw clips and a reference you like, get back a cut, captioned video. The way I edit my own reels.' },
   { id: 'uvonfa', title: 'Voice Agent Kit: Ship Voice AI That Survives Real Calls', short: 'Voice Agent Kit', price: 49, img: '/shop/uvonfa.jpg', text: 'What I learned building a live AI interviewer: how to stop a voice agent talking over people, waiting too long to reply, or mishearing numbers.' },
   { id: 'artlwe', title: 'The ABP Builder Bundle: Playbook + Voice Agent Kit', short: 'Builder Bundle', price: 59, img: '/shop/artlwe.jpg', badge: 'Best value', text: 'Both kits together: the system for the whole product and the kit for its voice, from the first idea to the first real phone call.' },
   { id: 'bjkgwb', title: 'LLM Evals Starter Kit: Know If Your AI Got Worse Before Your Users Do', short: 'LLM Evals Starter Kit', price: 19, img: '/shop/bjkgwb.jpg', text: 'Turn "it looked good when I tried it" into a measurement, so a prompt change on Friday cannot quietly break what worked on Thursday.' },
@@ -310,6 +311,14 @@ export const kits: Kit[] = [
   { id: 'fiedw', title: 'Ship-Ready: 95 Checks Before Your AI Product Ships', short: 'Ship-Ready checklist', price: 0, img: '/shop/fiedw.jpg', badge: 'Free', text: 'The 95 checks I run before anything ships, covering the wrong answers, runaway bills and broken releases that sink AI products three weeks after launch.' }
 ]
 export const kitUrl = (k: Kit) => `${SHOP_URL}/l/${k.id}`
+
+// AI apps I published on RentPrompts. People pay per run in Joules, RentPrompts' credits.
+export const RP_PROFILE = 'https://rentprompts.com/users/ABP'
+export const rpApps = [
+  { name: 'Magazine Print Ad Generator', url: 'https://rentprompts.com/ai-apps/magazine-print-ad-generator', img: '/shop/rp-magazine-ad.jpg', cost: '2.5 Joules a run', text: 'Type a product name and a colour theme, get a premium editorial-style print ad with headline, tagline and logo space.' },
+  { name: 'Anime Leak: viral anime filter', url: 'https://rentprompts.com/ai-apps/anime-leak-viral-ai-anime-filter-animify', img: '/shop/rp-anime-leak.jpg', cost: '15.66 Joules a run', text: 'Turn any photo into anime-style art, built on Nano Banana Pro.' },
+  { name: 'Anime Leak photo editor', url: 'https://rentprompts.com/ai-apps/transform-your-everyday-photos-into-stunning-anime-style-art-with-anime-leak-the-ai-powered-anime-filter-and-photo-editor', img: '/shop/rp-anime-editor.jpg', cost: '12.79 Joules a run', text: 'The same anime look on GPT Image, for photos that need finer detail.' }
+]
 export const kitPrice = (k: Kit) => (k.price === 0 ? 'Free' : `$${k.price}`)
 
 export const nav = [
@@ -341,7 +350,7 @@ export const pages: Record<string, { title: string; description: string }> = {
   },
   '/shop': {
     title: 'Shop | AI product kits by Avanish Patidar',
-    description: 'Kits from Avanish Patidar for shipping AI products: the ABP Playbook, a Voice Agent Kit, LLM evals, call scripts and a free 95-point launch checklist.'
+    description: 'Kits and AI apps by Avanish Patidar: the ABP Playbook, an AI video editor skill for Claude Code, a Voice Agent Kit, LLM evals and a free launch checklist.'
   },
   '/services': {
     title: 'Hire Avanish Patidar | AI Product Engineer and Builder',
@@ -442,7 +451,10 @@ const mdWriting = () => [
 const mdShop = () => [
   `# Shop`,
   `Kits I sell for people building AI products, made from what I learned shipping HiringAnt. Prices in US dollars. All on ${SHOP_URL}`,
-  kits.map(k => `- ${link(k.title, kitUrl(k))} (${kitPrice(k)}): ${k.text}`).join('\n')
+  kits.map(k => `- ${link(k.title, kitUrl(k))} (${kitPrice(k)}): ${k.text}${k.rp ? ` Also on RentPrompts: ${k.rp}` : ''}`).join('\n'),
+  `## AI apps on RentPrompts`,
+  `Apps I published on RentPrompts, paid per run in Joules. Profile: ${RP_PROFILE}`,
+  rpApps.map(a => `- ${link(a.name, a.url)} (${a.cost}): ${a.text}`).join('\n')
 ].join('\n\n')
 
 const byPath: Record<string, () => string> = {

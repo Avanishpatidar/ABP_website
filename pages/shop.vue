@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { kits, kitUrl, kitPrice, SHOP_URL, markdownFor, SITE_URL } from '~/data/site'
+import { kits, kitUrl, kitPrice, rpApps, RP_PROFILE, SHOP_URL, markdownFor, SITE_URL } from '~/data/site'
 usePageSeo('/shop')
 useHead({
   script: [{
@@ -29,7 +29,8 @@ useHead({
     </p>
 
     <div class="kits">
-      <a v-for="(k, i) in kits" :key="k.id" :href="kitUrl(k)" target="_blank" rel="noopener" class="kit">
+      <div v-for="(k, i) in kits" :key="k.id" class="kit">
+        <a :href="kitUrl(k)" target="_blank" rel="noopener" class="kit-link" :aria-label="`${k.short}, ${kitPrice(k)}, on Gumroad`"></a>
         <img :src="k.img" :alt="k.title" width="900" height="506" :loading="i < 2 ? 'eager' : 'lazy'" />
         <span class="kit-body">
           <span class="kit-top">
@@ -38,12 +39,29 @@ useHead({
           </span>
           <span v-if="k.badge" class="kit-badge">{{ k.badge }}</span>
           <span class="kit-text">{{ k.text }}</span>
+          <a v-if="k.rp" :href="k.rp" target="_blank" rel="noopener" class="kit-alt">Or buy with Joules on RentPrompts</a>
+        </span>
+      </div>
+    </div>
+
+    <h2>AI apps on RentPrompts</h2>
+    <p>
+      Apps I built and published on <a :href="RP_PROFILE" target="_blank" rel="noopener">RentPrompts</a>. Anyone can run
+      them; each run costs a few Joules, RentPrompts' credits.
+    </p>
+    <div class="kits">
+      <a v-for="a in rpApps" :key="a.url" :href="a.url" target="_blank" rel="noopener" class="kit kit-plain">
+        <img :src="a.img" :alt="a.name" width="900" height="506" loading="lazy" />
+        <span class="kit-body">
+          <span class="kit-top"><strong>{{ a.name }}</strong></span>
+          <span class="kit-badge">{{ a.cost }}</span>
+          <span class="kit-text">{{ a.text }}</span>
         </span>
       </a>
     </div>
 
     <p class="small muted" style="margin-top: 22px">
-      Payments and downloads are handled by Gumroad at <a :href="SHOP_URL" target="_blank" rel="noopener">shop.avanishpatidar.in</a>.
+      Kits are sold through Gumroad at <a :href="SHOP_URL" target="_blank" rel="noopener">shop.avanishpatidar.in</a>; apps run on <a :href="RP_PROFILE" target="_blank" rel="noopener">RentPrompts</a>.
     </p>
   </ModeView>
 </template>
