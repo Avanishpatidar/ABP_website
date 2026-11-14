@@ -298,12 +298,27 @@ export const youtube: Video[] = [
   { id: 'BKMuqz-guec', title: 'Build an AI-Powered Virtual Assistant with Kivy + Gemini', views: '23K views' }
 ]
 
+// What I sell, on Gumroad at shop.avanishpatidar.in. Prices in US dollars.
+export const SHOP_URL = 'https://shop.avanishpatidar.in'
+export interface Kit { id: string; title: string; short: string; price: number; img: string; text: string; badge?: string }
+export const kits: Kit[] = [
+  { id: 'lgokd', title: 'Ship AI Products That Survive Production: The ABP Playbook', short: 'The ABP Playbook', price: 29, img: '/shop/lgokd.jpg', badge: 'Start here', text: 'The system I use to take an AI product from demo to paying users without it falling over: a 42-page guide, 21 templates, 95 checks and a 30-day plan.' },
+  { id: 'uvonfa', title: 'Voice Agent Kit: Ship Voice AI That Survives Real Calls', short: 'Voice Agent Kit', price: 49, img: '/shop/uvonfa.jpg', text: 'What I learned building a live AI interviewer: how to stop a voice agent talking over people, waiting too long to reply, or mishearing numbers.' },
+  { id: 'artlwe', title: 'The ABP Builder Bundle: Playbook + Voice Agent Kit', short: 'Builder Bundle', price: 59, img: '/shop/artlwe.jpg', badge: 'Best value', text: 'Both kits together: the system for the whole product and the kit for its voice, from the first idea to the first real phone call.' },
+  { id: 'bjkgwb', title: 'LLM Evals Starter Kit: Know If Your AI Got Worse Before Your Users Do', short: 'LLM Evals Starter Kit', price: 19, img: '/shop/bjkgwb.jpg', text: 'Turn "it looked good when I tried it" into a measurement, so a prompt change on Friday cannot quietly break what worked on Thursday.' },
+  { id: 'ceraga', title: 'Voice Agent Call Scripts: 10 Ready Scripts for 10 Kinds of Business', short: 'Voice Agent Call Scripts', price: 19, img: '/shop/ceraga.jpg', text: 'Ten complete call scripts for ten kinds of business, so your voice agent follows a plan instead of improvising while a customer waits.' },
+  { id: 'fiedw', title: 'Ship-Ready: 95 Checks Before Your AI Product Ships', short: 'Ship-Ready checklist', price: 0, img: '/shop/fiedw.jpg', badge: 'Free', text: 'The 95 checks I run before anything ships, covering the wrong answers, runaway bills and broken releases that sink AI products three weeks after launch.' }
+]
+export const kitUrl = (k: Kit) => `${SHOP_URL}/l/${k.id}`
+export const kitPrice = (k: Kit) => (k.price === 0 ? 'Free' : `$${k.price}`)
+
 export const nav = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/work', label: 'Work' },
   { to: '/videos', label: 'Videos' },
   { to: '/services', label: 'Services' },
+  { to: '/shop', label: 'Shop' },
   { to: '/writing', label: 'Writing' }
 ]
 
@@ -323,6 +338,10 @@ export const pages: Record<string, { title: string; description: string }> = {
   '/videos': {
     title: 'Videos by Avanish Patidar | AI ads, reels and tutorials',
     description: 'Videos by Avanish Patidar: AI-made and real ad reels for HiringAnt with 450,000+ views, RentPrompts ads, and coding tutorials on his YouTube channel.'
+  },
+  '/shop': {
+    title: 'Shop | AI product kits by Avanish Patidar',
+    description: 'Kits from Avanish Patidar for shipping AI products: the ABP Playbook, a Voice Agent Kit, LLM evals, call scripts and a free 95-point launch checklist.'
   },
   '/services': {
     title: 'Hire Avanish Patidar | AI Product Engineer and Builder',
@@ -420,15 +439,21 @@ const mdWriting = () => [
   ownPosts.map(p => `- ${link(p.title, `${SITE_URL}/writing/${p.slug}`)} (${p.date}): ${p.summary}`).join('\n')
 ].join('\n\n')
 
+const mdShop = () => [
+  `# Shop`,
+  `Kits I sell for people building AI products, made from what I learned shipping HiringAnt. Prices in US dollars. All on ${SHOP_URL}`,
+  kits.map(k => `- ${link(k.title, kitUrl(k))} (${kitPrice(k)}): ${k.text}`).join('\n')
+].join('\n\n')
+
 const byPath: Record<string, () => string> = {
-  '/': mdHome, '/about': mdAbout, '/work': mdWork, '/videos': mdVideos, '/services': mdServices, '/writing': mdWriting
+  '/': mdHome, '/about': mdAbout, '/work': mdWork, '/videos': mdVideos, '/services': mdServices, '/shop': mdShop, '/writing': mdWriting
 }
 
 export const markdownFor = (path: string) => (byPath[path] || mdHome)()
 export const markdownPaths = Object.keys(byPath)
 
 export const fullMarkdown = () =>
-  [mdHome(), mdAbout(), mdWork(), mdVideos(), mdServices(), mdWriting(), `## Contact\n\nEmail ${EMAIL}. That is the only contact channel.`].join('\n\n---\n\n') + '\n'
+  [mdHome(), mdAbout(), mdWork(), mdVideos(), mdServices(), mdShop(), mdWriting(), `## Contact\n\nEmail ${EMAIL}. That is the only contact channel.`].join('\n\n---\n\n') + '\n'
 
 // Hover previews: a screenshot and one line for links that point at these sites.
 // Keyed by hostname (and path for GitHub) so any link on the site picks it up.

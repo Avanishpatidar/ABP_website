@@ -30,6 +30,7 @@ export default defineNuxtConfig({
     '/work': { prerender: true },
     '/services': { prerender: true },
     '/videos': { prerender: true },
+    '/shop': { prerender: true },
     '/writing': { prerender: true },
     '/writing/**': { prerender: true },
     // Security headers on every route (microphone=self is required for voice).
@@ -46,7 +47,7 @@ export default defineNuxtConfig({
   nitro: {
     prerender: {
       crawlLinks: false,
-      routes: ['/', '/about', '/work', '/videos', '/services', '/writing', ...ownPosts.map(p => `/writing/${p.slug}`)]
+      routes: ['/', '/about', '/work', '/videos', '/services', '/shop', '/writing', ...ownPosts.map(p => `/writing/${p.slug}`)]
     }
   },
 

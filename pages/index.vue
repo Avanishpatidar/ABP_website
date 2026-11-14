@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { profile, products, clients, hiringantLinks, hiringantPosts, reels, markdownFor, EMAIL } from '~/data/site'
+import { profile, products, clients, hiringantLinks, kits, kitUrl, kitPrice, hiringantPosts, reels, markdownFor, EMAIL } from '~/data/site'
 const interview = useInterview()
 usePageSeo('/')
 const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.filter(r => r.kind === 'real').slice(0, 2)]
@@ -46,6 +46,19 @@ const topReels = [...reels.filter(r => r.kind === 'ai').slice(0, 2), ...reels.fi
         <span> · {{ c.text }}</span>
       </li>
       <li><NuxtLink to="/work">Everything I have built</NuxtLink></li>
+    </ul>
+
+    <h2>Kits I sell</h2>
+    <ul class="list">
+      <li v-for="k in kits.slice(0, 3)" :key="k.id">
+        <a :href="kitUrl(k)" target="_blank" rel="noopener">{{ k.short }}</a>
+        <span> · {{ kitPrice(k) }} · {{ k.text }}</span>
+      </li>
+      <li>
+        <a :href="kitUrl(kits[kits.length - 1])" target="_blank" rel="noopener">{{ kits[kits.length - 1].short }}</a>
+        <span> · Free</span>
+      </li>
+      <li><NuxtLink to="/shop">All kits</NuxtLink></li>
     </ul>
 
     <h2>Writing</h2>
