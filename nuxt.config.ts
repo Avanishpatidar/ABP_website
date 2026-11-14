@@ -3,6 +3,7 @@ import { EMAIL, SITE_URL, pages, profile, ownPosts } from './data/site'
 const home = pages['/']
 const OG_IMAGE = `${SITE_URL}/images/og.jpg`
 const PHOTO = `${SITE_URL}/images/avanish.jpg`
+const GA_ID = 'G-LTK3YZ5Z11'
 
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
@@ -75,10 +76,15 @@ export default defineNuxtConfig({
         { rel: 'manifest', href: '/manifest.webmanifest' },
         { rel: 'alternate', type: 'text/plain', title: 'Site as markdown for agents', href: '/llms.txt' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
+        { rel: 'preconnect', href: 'https://www.googletagmanager.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;0,6..72,700;1,6..72,400&display=swap' }
       ],
       script: [
+        // Google Analytics (GA4). Page changes inside the site are picked up by
+        // GA's enhanced measurement, which listens to browser history events.
+        { src: `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`, async: true },
+        { innerHTML: `window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${GA_ID}');` },
         // Apply this visit's theme choice before first paint so the page never flashes.
         { innerHTML: `try{var t=sessionStorage.getItem('theme');if(t==='dark'||t==='light')document.documentElement.dataset.theme=t}catch(e){}`, tagPosition: 'head' },
         {
